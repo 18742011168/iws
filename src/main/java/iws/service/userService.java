@@ -15,12 +15,18 @@ public class userService {
 	   return userdao.queryAll();
    }
    public List<user> FindUserByName (String username){
+	   
 	   return userdao.FindUserByName(username);
    }
    public boolean adduser(user user) {
 	   return userdao.adduser(user);
    }
-   
+   public boolean deleteuser(String username) {
+	   return userdao.deleteuser(username);
+   }
+   public boolean updateuser(user user) {
+	   return userdao.updateuser(user);
+   }
    /*
     * 
     */
