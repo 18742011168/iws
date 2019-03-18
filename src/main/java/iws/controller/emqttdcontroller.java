@@ -14,7 +14,7 @@ public class emqttdcontroller {
     private MqttGateway mqttGateway;
 	 @RequestMapping("/emqttd")
 	    public String sendMqtt(){
-	        mqttGateway.sendToMqtt("123","hello");
+	        mqttGateway.sendToMqtt("12367","hello");
 	        return "OK";
 	    }
 	
