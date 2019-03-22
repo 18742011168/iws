@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>所有仓库</title>
+</head>
+<body>
+<table>
+  <tr th:each="wareHouse : ${warehousees}">
+    <td  th:text="'wareHouseId:' + ${wareHouse.wareHouseId} "></td>
+    <td  th:text="'volume:' + ${wareHouse.volume} "></td>
+    <td  th:text="'inventory:' + ${wareHouse.inventory} "></td>
+  </tr>
+</table>
+
+</body>
+</html>

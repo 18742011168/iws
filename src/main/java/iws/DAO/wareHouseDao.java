@@ -1,0 +1,42 @@
+package iws.DAO;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
+
+import iws.beans.goods;
+import iws.beans.wareHouse;
+
+@Component
+public class wareHouseDao {
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+	
+	public List<wareHouse> allwarehouse(){
+		String sql="select * from wareHouse";
+		List<wareHouse> warehouselist=jdbcTemplate.query(sql, new BeanPropertyRowMapper<wareHouse>(wareHouse.class));
+		return warehouselist;
+	}
+	
+	public boolean addwarehouse(wareHouse warehouse) {
+		 String sql="insert into wareHouse(wareHouseId,volume,inventory) values(?,?,?)";
+		 return jdbcTemplate.update(sql,new Object[]{warehouse.getWareHouseId(),warehouse.getVolume(),warehouse.getInventory()})==1;
+	}
+	
+	public boolean deletewarehouse(String wareHouseId) {
+		 String sql="delete from wareHouse where wareHouseId=?";
+		 return jdbcTemplate.update(sql,wareHouseId)==1;
+	}
+	
+	
+	public List<goods> findgoods(String warehouseid) {
+		String sql="select * from goods where wareHouseId='"+warehouseid+"'";
+		List<goods> goodslist=jdbcTemplate.query(sql, new BeanPropertyRowMapper<goods>(goods.class));
+		return goodslist;
+	}
+	
+
+}

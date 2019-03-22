@@ -25,7 +25,7 @@ public class orderDao {
 	 
 	 public boolean updateorder(String orderId) {
 		 String sql="update orders set state=? where orderId=?";
-		 return(jdbcTemplate.update(sql,new Object[] {"completed",orderId})==1);
+		 return(jdbcTemplate.update(sql,new Object[] {"已完成",orderId})==1);
 	 }
 	 
 	 public List<changeOrder> allorder(){
