@@ -13,5 +13,14 @@
     <td  th:text="'passwowrd:' + ${user.password} "></td>
   </tr>
 </table>
+
+ <form action="/login/users/adduser" method="post">
+    username:<input type="text" name = "username" ><p> 
+    password:<input type="password" name = "password" ><p>
+    position:<input type="text" name = "position" ><p>
+    <input type="submit" value="添加"> 
+  </form>
+  
+ 
 </body>
 </html>

@@ -19,6 +19,7 @@ public class userService {
 	   return userdao.FindUserByName(username);
    }
    public boolean adduser(user user) {
+	  
 	   return userdao.adduser(user);
    }
    public boolean deleteuser(String username) {
