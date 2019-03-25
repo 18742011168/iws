@@ -21,6 +21,13 @@ public class wareHouseDao {
 		return warehouselist;
 	}
 	
+	public List<wareHouse> findbyId(String wareHouseId){
+		
+		String sql="select * from wareHouse where wareHouseId='"+wareHouseId+"'";
+		List<wareHouse> warehouselist=jdbcTemplate.query(sql, new BeanPropertyRowMapper<wareHouse>(wareHouse.class));
+		return warehouselist;
+	}
+	
 	public boolean addwarehouse(wareHouse warehouse) {
 		 String sql="insert into wareHouse(wareHouseId,volume,inventory) values(?,?,?)";
 		 return jdbcTemplate.update(sql,new Object[]{warehouse.getWareHouseId(),warehouse.getVolume(),warehouse.getInventory()})==1;

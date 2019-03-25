@@ -27,9 +27,12 @@ public class orderController {
 	
 	@RequestMapping(value="/inorder/addinorder")
 	public String addinorder(@ModelAttribute("inOrder") inOrder inorder ) {
-		if(inorderdervice.addinorder(inorder))
+		int result=inorderdervice.addinorder(inorder);
+		if(result==1) 
 			System.out.println("插入成功");
+		else
+			System.out.println("插入失败");
 		return "hello";
 	}
-
+     
 }

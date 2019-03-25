@@ -10,14 +10,23 @@ import iws.beans.outOrder;
 
 @Component
 public class outOrderDao extends orderDao{
+	/*
 	public List<outOrder> alloutorder(){
 		String type="出库";
 		String sql="select orders.orderId,goodId,preWarehouseId,type,state "
 				+ "from orders join order_goods on orders.orderId=order_goods.orderId "
-				+ "orders.type='"+type+"'";
+				+ "where orders.type='"+type+"'";
 		List<outOrder> outorderlist=jdbcTemplate.query(sql, new BeanPropertyRowMapper<outOrder>(outOrder.class));
 		return outorderlist;
 	}
+	*/
+	public List<outOrder> alloutorder(){
+		String type="出库";
+		String sql="select orderId,goodId,preWarehouseId,type,state from orders where orders.type='"+type+"'";				
+		List<outOrder> outorderlist=jdbcTemplate.query(sql, new BeanPropertyRowMapper<outOrder>(outOrder.class));
+		return outorderlist;
+	}
+	
 	public boolean addoutorder(outOrder outorder ) {
 		String sql1="insert into orders(orderId,preWarehouseId,type,state) values(?,?,?,?)";
 		String sql2="insert into order_goods(orderId,goodId) values(?,?)";

@@ -10,11 +10,20 @@ import iws.beans.changeOrder;
 
 @Component
 public class changeOrderDao extends orderDao{
+	/*
 	 public List<changeOrder> allchangeorder(){
 		    String type="位置变更";
 			String sql="select orders.orderId,goodId,preWarehouseId,nextWarehouseId,type,state "
 					+ "from orders join order_goods on orders.orderId=order_goods.orderId "
 					+ "where orders.type='"+type+"'";
+			List<changeOrder> changeorderlist=jdbcTemplate.query(sql,new BeanPropertyRowMapper<changeOrder>(changeOrder.class));
+			return changeorderlist;
+		}
+	*/
+	 public List<changeOrder> allchangeorder(){
+		    String type="位置变更";
+			String sql="select orderId,goodId,preWarehouseId,nextWarehouseId,type,state from orders where orders.type='"+type+"'";
+					
 			List<changeOrder> changeorderlist=jdbcTemplate.query(sql,new BeanPropertyRowMapper<changeOrder>(changeOrder.class));
 			return changeorderlist;
 		}

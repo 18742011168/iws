@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 import iws.beans.changeOrder;
 
+import iws.beans.order;
+
 
 
 @Component
@@ -35,5 +37,13 @@ public class orderDao {
 			List<changeOrder> orderlist=jdbcTemplate.query(sql, new BeanPropertyRowMapper<changeOrder>(changeOrder.class));
 			return orderlist;
 		}
+	 
+	 //下发订单时查看订单号是否冲突
+	 public boolean hasorder(String orderId) {
+		 String sql="select orderId,type,state from orders where orderId='"+orderId+"'";
+					
+		 List<order> orderlist=jdbcTemplate.query(sql, new BeanPropertyRowMapper<order>(order.class));
+		 return !orderlist.isEmpty();
+	 }
 
 }
