@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import iws.beans.changeOrder;
 
 
+
 @Component
 public class changeOrderDao extends orderDao{
 	/*
@@ -34,5 +35,14 @@ public class changeOrderDao extends orderDao{
 		String sql2="insert into order_goods(orderId,goodId) values(?,?)";
 		int number2=jdbcTemplate.update(sql2,new Object[]{changeorder.getOrderId(),changeorder.getGoodId()});
 		return number1==number2;
+	}
+	
+	public List<changeOrder> findById(String orderId){
+		String type="位置变更";
+		String sql="select orderId,preWarehouseId,nextWarehouseId,type,state from orders "
+				+ "where type='"+type+"' and orderId='"+orderId+"'";
+				
+		List<changeOrder> changeorderlist=jdbcTemplate.query(sql, new BeanPropertyRowMapper<changeOrder>(changeOrder.class));
+		return changeorderlist;
 	}
 }

@@ -69,7 +69,7 @@ public class outOrderService {
 			return -2;
 		}
 		
-		if(preWareHouseId.equals(good.getWarehouseId())) {
+		if(!preWareHouseId.equals(good.getWarehouseId())) {
 			System.out.println("货物与仓库不匹配");
 			return -3;
 		}
