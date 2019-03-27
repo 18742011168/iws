@@ -25,7 +25,7 @@ public class inOrderDao extends orderDao{
 	*/
 	public List<inOrder> allinorder(){
 		String type="入库";
-		String sql="select orderId,goodId,nextWarehouseId,type,state from orders where type='"+type+"'";
+		String sql="select orderId,nextWarehouseId,type,state from orders where type='"+type+"'";
 				
 		List<inOrder> inorderlist=jdbcTemplate.query(sql, new BeanPropertyRowMapper<inOrder>(inOrder.class));
 		return inorderlist;
@@ -51,7 +51,7 @@ public class inOrderDao extends orderDao{
 	*/
 	public List<inOrder> findById(String orderId){
 		String type="入库";
-		String sql="select orderId,goodId,nextWarehouseId,type,state from orders "
+		String sql="select orderId,nextWarehouseId,type,state from orders "
 				+ "where type='"+type+"' and orderId='"+orderId+"'";
 				
 		List<inOrder> inorderlist=jdbcTemplate.query(sql, new BeanPropertyRowMapper<inOrder>(inOrder.class));

@@ -17,7 +17,7 @@ public class orderController {
 	private changeOrderService changeorderservice;
 	
 	@Autowired
-	private inOrderService inorderdervice;
+	private inOrderService inorderservice;
 	
 	@RequestMapping(value="/allchangeorder")
 	public String allorder(Model model) {
@@ -27,12 +27,23 @@ public class orderController {
 	
 	@RequestMapping(value="/inorder/addinorder")
 	public String addinorder(@ModelAttribute("inOrder") inOrder inorder ) {
-		int result=inorderdervice.addinorder(inorder);
+		int result=inorderservice.addinorder(inorder);
 		if(result==1) 
 			System.out.println("插入成功");
 		else
 			System.out.println("插入失败");
 		return "hello";
 	}
+	
+	@RequestMapping(value="/inorder/deleteinorder")
+	public String deleteinorder(String orderId) {
+		int result=inorderservice.deleteinorder(orderId);
+		if(result==1) 
+			System.out.println("删除成功");
+		else
+			System.out.println("删除失败");
+		return "hello";
+	}
+	
      
 }

@@ -22,7 +22,7 @@ public class changeOrderDao extends orderDao{
 	*/
 	 public List<changeOrder> allchangeorder(){
 		    String type="位置变更";
-			String sql="select orderId,goodId,preWarehouseId,nextWarehouseId,type,state from orders where orders.type='"+type+"'";
+			String sql="select orderId,preWarehouseId,nextWarehouseId,type,state from orders where orders.type='"+type+"'";
 					
 			List<changeOrder> changeorderlist=jdbcTemplate.query(sql,new BeanPropertyRowMapper<changeOrder>(changeOrder.class));
 			return changeorderlist;
