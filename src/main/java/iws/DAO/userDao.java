@@ -30,8 +30,8 @@ public class userDao {
 	 }
 	 
 	 public boolean adduser(user user){
-		 String sql="insert into users(username,password,position) values(?,?,?)";
-		 return jdbcTemplate.update(sql,new Object[]{user.getUsername(),user.getPassword(),user.getPosition()})==1;
+		 String sql="insert into users(username,password,position,email) values(?,?,?)";
+		 return jdbcTemplate.update(sql,new Object[]{user.getUsername(),user.getPassword(),user.getPosition(),user.getEmail()})==1;
 	 }
 	 
 	 public boolean deleteuser(String username){
@@ -40,7 +40,17 @@ public class userDao {
 	 }
 	 
 	 public boolean updateuser(user user){
-		 String sql="update users set password=?,postion=? where username=?";
-		 return jdbcTemplate.update(sql,new Object[]{user.getPassword(),user.getPosition(),user.getUsername()})==1;
+		 String sql="update users set password=?,postion=?,email=? where username=?";
+		 return jdbcTemplate.update(sql,new Object[]{user.getPassword(),user.getPosition(),user.getEmail(),user.getUsername()})==1;
+	 }
+	 
+	 public boolean addverification(String username,String verification) {
+		 String sql="update users set verification=? where username=?";
+		 return jdbcTemplate.update(sql,new Object[] {verification,username})==1;
+	 }
+	 
+	 public boolean resetpassword(String username,String password) {
+		 String sql="update users set password=? where username=?";
+		 return jdbcTemplate.update(sql,new Object[] {password,username})==1;
 	 }
 }

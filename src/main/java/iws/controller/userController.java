@@ -22,11 +22,12 @@ public class userController {
 	}
 	
 	@RequestMapping(value="/login/users/adduser")
-	public String addUser(String username,String password,String position) {
+	public String addUser(String username,String password,String position,String email) {
 		user user=new user();
 		user.setUsername(username);
 		user.setPassword(password);
 		user.setPosition(position);
+		user.setEmail(email);
 		if(userservice.adduser(user)==1)
 			System.out.println("添加成功");
 		return "hello";

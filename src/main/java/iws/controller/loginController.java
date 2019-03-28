@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import iws.beans.user;
 import iws.service.loginService;
+
 @Controller
 public class loginController {
 	@RequestMapping("/")
@@ -17,6 +18,9 @@ public class loginController {
 	
 	@Autowired
 	private loginService loginservice;
+	
+	
+	
 	@RequestMapping("/login")
 	public String login(@ModelAttribute("user") user user,Model model){
 			if(loginservice.CanLogin(user.getUsername(), user.getPassword(),user.getPosition())){
@@ -29,5 +33,7 @@ public class loginController {
 				return "error";
 			}
 	}
+	
+	
 	
 }
