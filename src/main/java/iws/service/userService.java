@@ -18,12 +18,32 @@ public class userService {
 	   
 	   return userdao.FindUserByName(username);
    }
-   public boolean adduser(user user) {
-	  
-	   return userdao.adduser(user);
+   public int adduser(user user) {
+	   List<user> userlist=userdao.FindUserByName(user.getUsername());
+	   if(!userlist.isEmpty()) {
+		   System.out.println("用户名已存在");
+		   return -1;	   
+	   }
+	   
+	   if(userdao.adduser(user)) {
+		   System.out.println("用户添加成功");
+		   return 1;
+	   }
+	   System.out.println("用户添加失败");
+	   return 0;	
    }
-   public boolean deleteuser(String username) {
-	   return userdao.deleteuser(username);
+   public int deleteuser(String username) {
+	   List<user> userlist=userdao.FindUserByName(username);
+	   if(userlist.isEmpty()) {
+		   System.out.println("用户不存在");
+		   return -1;	   
+	   }
+	   if(userdao.deleteuser(username)) {
+		   System.out.println("用户删除成功");
+		   return 1;
+	   }
+	   System.out.println("用户删除失败");
+	   return 0;
    }
    public boolean updateuser(user user) {
 	   return userdao.updateuser(user);

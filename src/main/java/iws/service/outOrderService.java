@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import iws.DAO.goodsDao;
 import iws.DAO.outOrderDao;
+import iws.DAO.wareHouseDao;
 import iws.beans.goods;
 import iws.beans.outOrder;
+import iws.beans.wareHouse;
 
 @Service
 public class outOrderService {
@@ -18,6 +20,9 @@ public class outOrderService {
 	
 	@Autowired
 	private goodsDao goodsdao;
+	
+	@Autowired
+	private wareHouseDao warehousedao;
 	
 	public int updateoutorder(String orderId) {
 		List<outOrder> outorderlist=outorderdao.findById(orderId);
@@ -58,6 +63,7 @@ public class outOrderService {
 		String preWareHouseId=outorder.getPreWarehouseId();
 		String orderId=outorder.getOrderId();
 		List<goods> goodslist=goodsdao.findgoods(goodId);
+		List<wareHouse> warehouselist=warehousedao.findbyId(preWareHouseId);
 		if(goodslist.isEmpty()) {
 			System.out.println("货物不存在");
 			 return -1;
@@ -83,6 +89,9 @@ public class outOrderService {
 		if(outorderdao.addoutorder(outorder)) {
 			System.out.println("订单添加成功");
 			goodsdao.updategoods(goodId, "运输中");
+			wareHouse warehouse=warehouselist.get(0);
+			int inventory=warehouse.getInventory()-1;
+			warehousedao.updatewarehouse(preWareHouseId, inventory);
 			return 1;
 		}
 		System.out.println("订单添加失败");

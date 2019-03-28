@@ -45,5 +45,10 @@ public class wareHouseDao {
 		return goodslist;
 	}
 	
+	public boolean updatewarehouse(String wareHouseId,int inventory) {
+		String sql="update warehouse set inventory=? where wareHouseId=?";
+		return jdbcTemplate.update(sql,new Object[]{inventory,wareHouseId})==1;
+	}
+	
 
 }

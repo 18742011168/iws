@@ -27,7 +27,7 @@ public class userController {
 		user.setUsername(username);
 		user.setPassword(password);
 		user.setPosition(position);
-		if(userservice.adduser(user))
+		if(userservice.adduser(user)==1)
 			System.out.println("添加成功");
 		return "hello";
 	}

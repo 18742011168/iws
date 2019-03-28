@@ -98,6 +98,8 @@ public class inOrderService {
 		 if(inorderdao.addinorder(inorder)) {
 			 System.out.println("添加成功");
 			goodsdao.updategoods(goodId, "运输中");
+			int inventory=warehouse.getInventory()+1;
+			warehousedao.updatewarehouse(wareHouseId, inventory);
 			       return 1;
 		 }	 
 		 

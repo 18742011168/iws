@@ -82,14 +82,15 @@ public class changeOrderService {
 			return -3;
 		}
 		
-		List<wareHouse> warehouselist=warehousedao.findbyId(nextWareHouseId);
-		if(warehouselist.isEmpty()) {
+		List<wareHouse> nextwarehouselist=warehousedao.findbyId(nextWareHouseId);
+		List<wareHouse> prewarehouselist=warehousedao.findbyId(preWareHouseId);
+		if(nextwarehouselist.isEmpty()) {
 			System.out.println("新库房库房号错误,请重新选择库房");
 			return -4;
 		}
 		
-		wareHouse warehouse=warehouselist.get(0);
-		if ((warehouse.getVolume()-warehouse.getInventory())<1){
+		wareHouse nextwarehouse=nextwarehouselist.get(0);
+		if ((nextwarehouse.getVolume()-nextwarehouse.getInventory())<1){
 			 System.out.println(nextWareHouseId+"库房已满,请重新选择库房");
 			 return -4;
 		 }
@@ -101,6 +102,11 @@ public class changeOrderService {
 		
 		if(changeorderdao.addchangeorder(changeorder)) {
 			System.out.println("订单添加成功");
+			wareHouse prewarehouse=prewarehouselist.get(0);
+			int inventory2=nextwarehouse.getInventory()+1;
+			int inventroy1=prewarehouse.getInventory()-1;
+			warehousedao.updatewarehouse(preWareHouseId, inventroy1);
+			warehousedao.updatewarehouse(nextWareHouseId, inventory2);
 			goodsdao.updategoods(goodId, "运输中");
 			return 1;
 		}
