@@ -44,7 +44,7 @@ public class userDao {
 		 return jdbcTemplate.update(sql,new Object[]{user.getPassword(),user.getPosition(),user.getEmail(),user.getUsername()})==1;
 	 }
 	 
-	 public boolean addverification(String username,String verification) {
+	 public boolean resetverification(String username,String verification) {
 		 String sql="update users set verification=? where username=?";
 		 return jdbcTemplate.update(sql,new Object[] {verification,username})==1;
 	 }

@@ -9,12 +9,12 @@ public class emailService {
 	@Autowired
     private JavaMailSender mailSender;
 	
-	public void sendEmail(String username) {
+	public void sendEmail(String to,String text) {
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setFrom("18742011168@163.com");
-		message.setTo("dluter_wjh@163.com");
+		message.setTo(to);
 		message.setSubject("修改密码，验证码");
-		message.setText("成功");
+		message.setText(text);
 		mailSender.send(message);
 	}
 }

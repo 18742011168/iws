@@ -6,13 +6,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import iws.DAO.goodsDao;
+import iws.DAO.warnningDao;
 import iws.beans.goods;
+import iws.beans.warnning;
+import iws.mqtt.MqttGateway;
 
 @Service
 public class goodsService {
 	
 	@Autowired
 	private goodsDao goodsdao;
+	
+	@Autowired
+    private MqttGateway mqttGateway;
+	
+	@Autowired
+	private warnningDao warnningdao;
+	
+	
 	public List<goods> allgoods(){
 		return goodsdao.allgoods();
 	}
@@ -71,13 +82,23 @@ public class goodsService {
 	}
 	
 	//货物出库或入库完后使用，填入货物信息，并更改货物状态
-	public int updategoods(String goodId,Double weight,String warehousId,String state) {
+	public int updategoods(String goodId,Double weight,String warehousId,String state,String orderId) {
+		List<goods> ordergoods=goodsdao.findbyorder(orderId);
 		List<goods> goodslist=goodsdao.findgoods(goodId);
 		if(goodslist.isEmpty()) {
 			System.out.println("货物不存在");
 			return -1;
 		}
-		
+		goods good=goodslist.get(0);
+		if(!ordergoods.contains(good)) {
+			warnning warnning=new warnning();
+			warnning.setGoodId(goodId);
+			warnning.setMessage("非法出库/入库");
+			warnningdao.addwarnning(warnning);
+			String message=goodId+"非法出库或入库";
+			String topic="warnning";
+			mqttGateway.sendToMqtt(message, topic);
+		}
 		if(goodsdao.updategoods(goodId, weight, warehousId, state)) {
 			System.out.println("货物信息更新成功");
 			return 1;
@@ -87,11 +108,22 @@ public class goodsService {
 	}
 	
 	//货物位置变更后使用，只改变货物位置、状态
-	public int updategoods(String goodId,String warehousId,String state) {
+	public int updategoods(String goodId,String warehousId,String state,String orderId) {
+		List<goods> ordergoods=goodsdao.findbyorder(orderId);
 		List<goods> goodslist=goodsdao.findgoods(goodId);
 		if(goodslist.isEmpty()) {
 			System.out.println("货物不存在");
 			return -1;
+		}
+		goods good=goodslist.get(0);
+		if(!ordergoods.contains(good)) {
+			warnning warnning=new warnning();
+			warnning.setGoodId(goodId);
+			warnning.setMessage("非法位置变更");
+			warnningdao.addwarnning(warnning);
+			String message=goodId+"非法移动";
+			String topic="warnning";
+			mqttGateway.sendToMqtt(message, topic);
 		}
 		if(goodsdao.updategoods(goodId, warehousId, state)) {
 			System.out.println("货物信息更新成功");
