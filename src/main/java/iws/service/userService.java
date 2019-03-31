@@ -94,6 +94,8 @@ public class userService {
 	   }
 	   if(userdao.resetpassword(username, password)) {
 		   System.out.println("密码修改成功");
+		   String Verification=null;
+		   userdao.resetverification(username, Verification);
 		   return 1;
 	   }
 	   System.out.println("密码修改失败");

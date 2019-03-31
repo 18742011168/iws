@@ -64,8 +64,8 @@ public class goodsDao {
     public List<goods> findbyorder(String orderId){
     	
     	String sql="select goods.goodId,category,weight,warehouseId,state "
-    			+ "from orders join order_goods on orders.orderId=order_goods.orderId "
-    			+ "where orders.orderId='"+orderId+"'";
+    			+ "from goods join order_goods on order_goods.goodId=goods.goodId "
+    			+ "where orderId='"+orderId+"'";
     	List<goods> goodslist=jdbcTemplate.query(sql, new BeanPropertyRowMapper<goods>(goods.class));
     	return goodslist;		
 	}

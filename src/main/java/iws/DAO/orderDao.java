@@ -38,6 +38,15 @@ public class orderDao {
 			return orderlist;
 		}
 	 
+	 public List<changeOrder> findOrder(String orderId){
+			
+			String sql="select orderId,preWarehouseId,nextWarehouseId,type,state from orders "
+					+ "where orderId='"+orderId+"'";
+					
+			List<changeOrder> changeorderlist=jdbcTemplate.query(sql, new BeanPropertyRowMapper<changeOrder>(changeOrder.class));
+			return changeorderlist;
+		}
+	 
 	 //下发订单时查看订单号是否冲突
 	 public boolean hasorder(String orderId) {
 		 String sql="select orderId,type,state from orders where orderId='"+orderId+"'";
