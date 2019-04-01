@@ -1,12 +1,13 @@
 package iws.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+
 
 import iws.mqtt.MqttGateway;
 import iws.service.goodsService;
-@RestController
+@Controller
 
 public class emqttdcontroller {
 
@@ -14,10 +15,13 @@ public class emqttdcontroller {
     private MqttGateway mqttGateway;
 	 @RequestMapping("/emqttd")
 	    public String sendMqtt(){
-	        mqttGateway.sendToMqtt("12367","hello");
-	   	        return "OK";
+	        mqttGateway.sendToMqtt("12367","warnning");
+	   	        return "hello";
 	    }
-	
+	 @RequestMapping("/warnning")
+	 public String recevie() {
+		 return "warnning";
+	 }
 	 @Autowired
 	 private goodsService goodsservice;
 	 @RequestMapping("/updategoods")
