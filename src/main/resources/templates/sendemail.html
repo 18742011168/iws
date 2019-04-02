@@ -2,7 +2,7 @@
 <html lang="zh-CN" 
                    xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-<title>密码重置</title>
+<title>忘记密码</title>
 <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}"/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -23,26 +23,22 @@
 <div class="message warning">
 <div class="inset">
 	<div class="login-head">
-		<h1>密码重置</h1>
+		<h1>忘记密码</h1>
 		<!-- 
 		 <div class="alert-close"> </div> 		
 		  -->	
 	</div>
-		<form action="login/resetpassword" method="post">
+		<form action="/login/forgetpassword" method="post">
 			
 				<input type="text" class="text" name="username" value="用户名" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '用户名';}">
 			
 				<div class="clear"> </div>
 			
-				<input type="text" name="verificationl" value="验证码" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '验证码';}"> 
+				<input type="text" name="email" value="邮箱" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '邮箱';}"> 
 			
 			     <div class="clear"> </div> 
-			     
-			     <input type="password" name="password" value="新密码" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '新密码';}"> 
-			
-			    <div class="clear"> </div>
 			<div class="submit">
-				<input type="submit"  value="更改密码" >
+				<input type="submit"  value="发送邮件" >
 				  <div class="clear"> </div> 
 						 
 			</div>
@@ -54,5 +50,6 @@
 	<div class="clear"> </div>
 
 <div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' type='text/javascript' charset='gb2312'></script></div>
+
 </body>
 </html>

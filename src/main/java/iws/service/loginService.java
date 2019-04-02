@@ -16,13 +16,17 @@ public class loginService {
 		this.userdao=userdao;
 	}
 	
-	public boolean CanLogin(String username,String password,String position){
+	public int CanLogin(String username,String password,String position){
 		List<user> userlist=userdao.FindUserByName(username);
-		for(int i=0;i<userlist.size();i++){
-			if(userlist.get(i).getPassword().equals(password)&&userlist.get(i).getPosition().equals(position)){
-				return true;	
-			}		
-		}
-		return false;
+		
+		if(userlist.isEmpty())
+			return -1;
+		user user=userlist.get(0);
+		if(!user.getPassword().equals(password))
+			return -2;
+		if(!user.getPosition().equals(position))
+			return -3;
+		
+		return 1;
 	}
 }

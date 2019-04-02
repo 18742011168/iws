@@ -76,6 +76,7 @@ public class userService {
 	   String verification=Sb.toString();
 	   System.out.println("验证码为"+verification);
 	   userdao.resetverification(username, verification);
+	   System.out.println("数据库验证码更新");
 	   emailservice.sendEmail(email, verification);
 	   System.out.println("邮件发送成功");
 	   return 1;
