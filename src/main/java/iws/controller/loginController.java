@@ -54,12 +54,14 @@ public class loginController {
 		
 		return "sendemail";
 	}
+	/*
 	@RequestMapping("/login/forgetpassword")
 	public String forget(String username,String email) {
 		userservice.forgetpassword(username,email);
 		return "hello";
 	}
-	/*
+	*/
+	
 	@RequestMapping("/login/forgetpassword")
 	public String forget(String username,String email,Model model) {
 		int result=userservice.forgetpassword(username,email);
@@ -83,7 +85,7 @@ public class loginController {
 		}
 		
 	}
-	*/
+	
 	@RequestMapping("login/resetpassword")
 	public String reset(String username,String verification,String password,Model model) {
 		int result=userservice.resetpassword(username,verification,password);

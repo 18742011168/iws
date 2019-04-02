@@ -11,7 +11,7 @@ public class emailService {
 	
 	public void sendEmail(String to,String text) {
 		SimpleMailMessage message = new SimpleMailMessage();
-		message.setFrom("18742011168@163.com");
+		message.setFrom("1113920978@qq.com");
 		message.setTo(to);
 		message.setSubject("修改密码，验证码");
 		message.setText(text);
