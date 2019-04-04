@@ -89,9 +89,13 @@ public class userService {
 		   return -1;	   
 	   }
 	   user user=userlist.get(0);
+	   if(verification==null) {
+		   System.out.println("验证码为空");
+		   return -2;
+	   }
 	   if(!verification.equals(user.getVerification())) {
 		   System.out.println("验证码错误");
-		   return -2;
+		   return -3;
 	   }
 	   if(userdao.resetpassword(username, password)) {
 		   System.out.println("密码修改成功");

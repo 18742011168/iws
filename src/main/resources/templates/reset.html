@@ -13,7 +13,7 @@
 <script th:inline="javascript"> 
     var message = [[${message}]];
     if(message){
-    	alert(message)
+    	alert(message+"reset")
     }
     
 </script>
@@ -28,13 +28,13 @@
 		 <div class="alert-close"> </div> 		
 		  -->	
 	</div>
-		<form action="login/resetpassword" method="post">
+		<form action="/login/resetpassword" method="post">
 			
 				<input type="text" class="text" name="username" value="用户名" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '用户名';}">
 			
 				<div class="clear"> </div>
 			
-				<input type="text" name="verificationl" value="验证码" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '验证码';}"> 
+				<input type="text" name="verification" value="验证码" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '验证码';}"> 
 			
 			     <div class="clear"> </div> 
 			     

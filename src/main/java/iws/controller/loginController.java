@@ -44,7 +44,7 @@ public class loginController {
 		   default:			   
 			    model.addAttribute("user", user);
 				System.out.println("登录成功");
-				return "success";
+				return "manager";
 		}
 			
 	}
@@ -86,7 +86,7 @@ public class loginController {
 		
 	}
 	
-	@RequestMapping("login/resetpassword")
+	@RequestMapping("/login/resetpassword")
 	public String reset(String username,String verification,String password,Model model) {
 		int result=userservice.resetpassword(username,verification,password);
 		String message="";
@@ -96,6 +96,10 @@ public class loginController {
 			 model.addAttribute("message",message);
 			 return "reset";
 		 case -2:
+			 message="验证码为空";
+			 model.addAttribute("message",message);
+			 return "reset";
+		 case -3:
 			 message="验证码错误";
 			 model.addAttribute("message",message);
 			 return "reset";
