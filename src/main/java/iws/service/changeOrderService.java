@@ -117,5 +117,9 @@ public class changeOrderService {
 	 public List<changeOrder> allchangeorder(){
 		 return changeorderdao.allchangeorder();
 	 }
+	 
+	 public int changeordernumber() {
+		 return changeorderdao.changeordernumber();
+	 }
 
 }

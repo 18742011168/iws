@@ -53,4 +53,11 @@ public class userDao {
 		 String sql="update users set password=? where username=?";
 		 return jdbcTemplate.update(sql,new Object[] {password,username})==1;
 	 }
+	 
+	 public int number() {
+		 String sql="select count(*) from users";
+		 int result=jdbcTemplate.queryForObject(sql,Integer.class);
+		 return result;
+		 
+	 }
 }

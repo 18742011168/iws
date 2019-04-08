@@ -44,9 +44,13 @@ public class loginController {
 		   default:			   
 			    model.addAttribute("user", user);
 				System.out.println("登录成功");
-				return "manager";
+				return "welcome";
 		}
 			
+	}
+	@RequestMapping("/iws")
+	public String total() {
+		return "total";
 	}
 	
 	@RequestMapping("/login/lostpassword")

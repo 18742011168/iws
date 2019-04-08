@@ -10,6 +10,7 @@ public class order {
 	protected String goodId;
 	protected String state;
 	protected String type;
+	//protected int goodsNumber;
 	
 	public void setOrderId(String orderId){
 		this.orderId =orderId;
@@ -46,5 +47,13 @@ public class order {
 	public void setType(String type) {
 		this.type=type;
 	}
+	/*
+	public void setGoodsNumber(int goodsnumber) {
+		this.goodsNumber=goodsnumber;
+	}
+	public int getGoodsNumber() {
+		return this.goodsNumber;
+	}
+	*/
 }
 

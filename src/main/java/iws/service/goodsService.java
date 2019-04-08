@@ -185,5 +185,17 @@ public class goodsService {
 	 public List<goods> findbywarehouse(String warehouseid){
 		 return goodsdao.findbywarehouse(warehouseid);
 	 }
+	 
+	 public int goodsnumber() {
+		 return goodsdao.goodsnumber();
+	 }
+	 
+	 public int warehousegoodsnumber(String warehouseid) {
+		 return goodsdao.warehousegoodsnumber(warehouseid);
+	 }
+	 
+	 public int ordergoodsnumber(String orderId) {
+		 return goodsdao.ordergoodsnumber(orderId);
+	 }
 
 }

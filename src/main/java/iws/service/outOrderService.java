@@ -102,6 +102,10 @@ public class outOrderService {
 		return outorderdao.alloutorder();
 	}
 	
+	public int outordernumber() {
+		return outorderdao.outordernumber();
+	}
+	
 
 	
 	

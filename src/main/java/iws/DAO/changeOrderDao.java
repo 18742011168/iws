@@ -45,4 +45,13 @@ public class changeOrderDao extends orderDao{
 		List<changeOrder> changeorderlist=jdbcTemplate.query(sql, new BeanPropertyRowMapper<changeOrder>(changeOrder.class));
 		return changeorderlist;
 	}
+	
+	public int changeordernumber() {
+		 String type="位置变更";
+		 String sql="select count(*) from orders "
+		 		+ "where type='"+type+"'";				 
+		 int result=jdbcTemplate.queryForObject(sql,Integer.class);
+		 return result;
+		 
+	 }
 }

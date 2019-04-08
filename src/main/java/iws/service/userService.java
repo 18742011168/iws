@@ -107,6 +107,10 @@ public class userService {
 	   return 0;
    }
    
+   public int usernumber() {
+	   return userdao.number();
+   }
+   
    /*
     * 
     */

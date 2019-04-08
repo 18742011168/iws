@@ -110,5 +110,9 @@ public class inOrderService {
 	 public List<inOrder> allinorder(){
 		 return inorderdao.allinorder();
 	 }
+	 
+	 public int inordernumber() {
+		 return inorderdao.inordernumber();
+	 }
 
 }

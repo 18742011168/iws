@@ -19,4 +19,8 @@ public class warnningService {
 	public boolean addwarnning(warnning warn) {
 		return warnningdao.addwarnning(warn);
 	}
+	
+	public int warnningnumber() {
+		return warnningdao.warnningnumber();
+	}
 }

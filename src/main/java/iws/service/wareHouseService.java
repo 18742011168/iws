@@ -56,6 +56,10 @@ public class wareHouseService {
 		   return 0;
 	}
 	
+	public int warehousenumber() {
+		return warehousedao.warehousenumber();
+	}
+	
 	
     
 }

@@ -44,5 +44,14 @@ public class outOrderDao extends orderDao{
 		List<outOrder> outorderlist=jdbcTemplate.query(sql, new BeanPropertyRowMapper<outOrder>(outOrder.class));
 		return outorderlist;
 	}
+	
+	public int outordernumber() {
+		 String type="出库";
+		 String sql="select count(*) from orders "
+		 		+ "where type='"+type+"'";				 
+		 int result=jdbcTemplate.queryForObject(sql,Integer.class);
+		 return result;
+		 
+	 }
 
 }

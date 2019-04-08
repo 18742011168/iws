@@ -23,4 +23,11 @@ public class warnningDao {
 		String sql="insert into warnning(goodId,message) values(?,?)";
 		return jdbcTemplate.update(sql, new Object[] {warn.getGoodId(),warn.getMessage()})==1;
 	}
+	
+	public int warnningnumber() {
+		 String sql="select count(*) from warnning";
+		 int result=jdbcTemplate.queryForObject(sql,Integer.class);
+		 return result;
+		 
+	 }
 }

@@ -59,7 +59,12 @@ public class goodsDao {
 		List<goods> goodslist=jdbcTemplate.query(sql, new BeanPropertyRowMapper<goods>(goods.class));
 		return goodslist;
 	}
-	
+    
+	public int warehousegoodsnumber(String warehouseid) {
+		String sql="select count(*) from goods where wareHouseId='"+warehouseid+"'";
+		int result=jdbcTemplate.queryForObject(sql,Integer.class);
+		return result;
+	}
 	
     public List<goods> findbyorder(String orderId){
     	
@@ -69,5 +74,17 @@ public class goodsDao {
     	List<goods> goodslist=jdbcTemplate.query(sql, new BeanPropertyRowMapper<goods>(goods.class));
     	return goodslist;		
 	}
+    
+    public int ordergoodsnumber(String orderId) {
+    	String sql="select count(*) from goods where where orderId='"+orderId+"'";
+    	int result=jdbcTemplate.queryForObject(sql,Integer.class);
+		return result;
+    }
+    public int goodsnumber() {
+		 String sql="select count(*) from goods";
+		 int result=jdbcTemplate.queryForObject(sql,Integer.class);
+		 return result;
+		 
+	 }
      
 }

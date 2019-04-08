@@ -50,5 +50,11 @@ public class wareHouseDao {
 		return jdbcTemplate.update(sql,new Object[]{inventory,wareHouseId})==1;
 	}
 	
+	public int warehousenumber() {
+		 String sql="select count(*) from warehouse";
+		 int result=jdbcTemplate.queryForObject(sql,Integer.class);
+		 return result;
+		 
+	 }
 
 }

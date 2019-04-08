@@ -57,6 +57,15 @@ public class inOrderDao extends orderDao{
 		List<inOrder> inorderlist=jdbcTemplate.query(sql, new BeanPropertyRowMapper<inOrder>(inOrder.class));
 		return inorderlist;
 	}
+	
+	public int inordernumber() {
+		 String type="入库";
+		 String sql="select count(*) from orders "
+		 		+ "where type='"+type+"'";				 
+		 int result=jdbcTemplate.queryForObject(sql,Integer.class);
+		 return result;
+		 
+	 }
 
 }
  
