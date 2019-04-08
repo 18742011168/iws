@@ -48,10 +48,7 @@ public class loginController {
 		}
 			
 	}
-	@RequestMapping("/iws")
-	public String total() {
-		return "total";
-	}
+	
 	
 	@RequestMapping("/login/lostpassword")
 	public String lost() {
