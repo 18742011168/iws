@@ -9,7 +9,7 @@
 	
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>manager_user_update</title>
+	<title>manager_user_add</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -120,50 +120,7 @@
 		<nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
-<!--  
-                    <button type="button" class="navbar-toggle">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar bar1"></span>
-                        <span class="icon-bar bar2"></span>
-                        <span class="icon-bar bar3"></span>
-                    </button>
-                    -->
-                    <a class="navbar-brand" >用户</a>
-                </div>
-                <!-- 
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="ti-panel"></i>
-								<p>Stats</p>
-                            </a>
-                        </li>
-                        <li class="dropdown">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="ti-bell"></i>
-                                    <p class="notification">5</p>
-									<p>Notifications</p>
-									<b class="caret"></b>
-                              </a>
-                              <ul class="dropdown-menu">
-                                <li><a href="#">Notification 1</a></li>
-                                <li><a href="#">Notification 2</a></li>
-                                <li><a href="#">Notification 3</a></li>
-                                <li><a href="#">Notification 4</a></li>
-                                <li><a href="#">Another notification</a></li>
-                              </ul>
-                        </li>
-						<li>
-                            <a href="#">
-								<i class="ti-settings"></i>
-								<p>Settings</p>
-                            </a>
-                        </li>
-                    </ul>
 
-                </div>
--->
             </div>
         </nav>
 
@@ -177,7 +134,7 @@
                        <div class="card">        
                          
                             <div class="header">
-                                <h5 class="title">编辑账户</h5>
+                                <h5 class="title">添加账户</h5>
                                 <!-- 
                                 <p class="category">Here is a subtitle for this table</p>
                                  -->
@@ -187,14 +144,14 @@
                             <div class="content table-responsive table-full-width">    
                                
                                 
-                                <form action="/iws/manager/user/update" method="post" >
-                                  <p>账号：<input type="text" name = "username" th:text="${user.username}"></p>
+                                <form action="/iws/manager/user/add" method="post" >
+                                  <p>账号：<input type="text" name = "username" ></p>
                                                                                                      
                                   <p>密码：<input type="password" name = "password" ></p>
                                   
-                                  <p>职务：<input type="text" name = "position" th:text="${user.position}"></p>
+                                  <p>职务：<input type="text" name = "position" ></p>
                                   
-                                  <p>邮箱：<input type="text" name = "email" th:text="${user.email}"></p>
+                                  <p>邮箱：<input type="text" name = "email" ></p>
                                                                                                     
                                <input type="submit" value="完成"> 
                                </form>

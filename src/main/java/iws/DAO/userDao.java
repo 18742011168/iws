@@ -30,7 +30,7 @@ public class userDao {
 	 }
 	 
 	 public boolean adduser(user user){
-		 String sql="insert into users(username,password,position,email) values(?,?,?)";
+		 String sql="insert into users(username,password,position,email) values(?,?,?,?)";
 		 return jdbcTemplate.update(sql,new Object[]{user.getUsername(),user.getPassword(),user.getPosition(),user.getEmail()})==1;
 	 }
 	 

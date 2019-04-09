@@ -174,6 +174,9 @@
                         <div class="card">
                             <div class="header">
                                 <h5 class="title">所有账户</h5>
+                                <a href="/iws/manager/user/add_html">
+                                  <button>添加用户</button>
+                                </a>
                                 <!-- 
                                 <p class="category">Here is a subtitle for this table</p>
                                  -->
@@ -198,7 +201,7 @@
                                             <td><a href="/order/goods?orderId='+${outorder.orderId}+'" >货物</a></td>
                                             -->
                                             
-                                            <td><a th:href="@{'/iws/manager/user/update/'+${user.username}}" >编辑</a>|<a th:href="@{'/iws/manager/user/delete/'+${user.username}}">删除</a></td>
+                                            <td><a th:href="@{'/iws/manager/user/update/'+${user.username}}" ><button>编辑</button></a>|<a th:href="@{'/iws/manager/user/delete/'+${user.username}}"><button>删除</button></a></td>
                                             
                                         </tr>
                                         
