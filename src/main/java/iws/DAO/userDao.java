@@ -40,7 +40,7 @@ public class userDao {
 	 }
 	 
 	 public boolean updateuser(user user){
-		 String sql="update users set password=?,postion=?,email=? where username=?";
+		 String sql="update users set password=?,position=?,email=? where username=?";
 		 return jdbcTemplate.update(sql,new Object[]{user.getPassword(),user.getPosition(),user.getEmail(),user.getUsername()})==1;
 	 }
 	 
@@ -54,10 +54,29 @@ public class userDao {
 		 return jdbcTemplate.update(sql,new Object[] {password,username})==1;
 	 }
 	 
-	 public int number() {
+	 public int usernumber() {
 		 String sql="select count(*) from users";
 		 int result=jdbcTemplate.queryForObject(sql,Integer.class);
 		 return result;
 		 
 	 }
+	 
+	 public int managernumber() {
+		 String sql="select count(*) from users where position='manager'";
+		 int result=jdbcTemplate.queryForObject(sql,Integer.class);
+		 return result;
+	 }
+	 
+	 public int financenumber() {
+		 String sql="select count(*) from users where position='finance'";
+		 int result=jdbcTemplate.queryForObject(sql,Integer.class);
+		 return result;
+	 }
+	 
+	 public int godownnernumber() {
+		 String sql="select count(*) from users where position='godownner'";
+		 int result=jdbcTemplate.queryForObject(sql,Integer.class);
+		 return result;
+	 }
+	 
 }

@@ -108,9 +108,20 @@ public class userService {
    }
    
    public int usernumber() {
-	   return userdao.number();
+	   return userdao.usernumber();
    }
    
+   public int managernumber() {
+	   return userdao.managernumber();
+   }
+   
+   public int financenumber() {
+	   return userdao.financenumber();
+   }
+   
+   public int godownnernumber() {
+	   return userdao.godownnernumber();
+   }
    /*
     * 
     */

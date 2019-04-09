@@ -3,7 +3,9 @@ package iws.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import iws.beans.user;
@@ -14,7 +16,7 @@ import iws.service.userService;
 public class loginController {
 	@RequestMapping("/")
 	public String home() {
-		return "index1";
+		return "home";
 	}
 	
 	@Autowired
@@ -22,6 +24,8 @@ public class loginController {
 	
 	@Autowired
 	private userService userservice;
+	
+	
 	
 	@RequestMapping("/login")
 	public String login(@ModelAttribute("user") user user,Model model){
@@ -31,16 +35,16 @@ public class loginController {
 		   case -1:
 			    message="用户名错误";
 				model.addAttribute("message",message);
-				return "index1";
+				return "home";
 				
 		   case -2:
 			    message="密码错误";
 				model.addAttribute("message",message);
-				return "index1";
+				return "home";
 		   case -3:
 			    message="职务错误";
 				model.addAttribute("message",message);				
-				return "index1";
+				return "home";
 		   default:			   
 			    model.addAttribute("user", user);
 				System.out.println("登录成功");
@@ -48,7 +52,6 @@ public class loginController {
 		}
 			
 	}
-	
 	
 	@RequestMapping("/login/lostpassword")
 	public String lost() {
@@ -105,9 +108,9 @@ public class loginController {
 			 model.addAttribute("message",message);
 			 return "reset";
 		 case 1:
-	    	// message="密码修改成功";
-	    	// model.addAttribute("message",message);
-	    	 return "hello";
+	    	 message="密码修改成功";
+	    	 model.addAttribute("message",message);
+	    	 return "home";
 		 default:
 			 message="密码修改失败";
 	    	 model.addAttribute("message",message);

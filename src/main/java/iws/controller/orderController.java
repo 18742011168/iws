@@ -64,7 +64,7 @@ public class orderController {
 		return "hello";
 	}
 	
-	@RequestMapping(value="/order/allorders")
+	@RequestMapping(value= {"/iws/manager/order"})
 	public String allorder(Model model) {
 		List<outOrder> outorderlist=outorderservice.alloutorder();
 		List<inOrder> inorderlist=inorderservice.allinorder();
@@ -73,12 +73,15 @@ public class orderController {
 		model.addAttribute("outorders",outorderlist);
 		model.addAttribute("inorders",inorderlist);
 		model.addAttribute("changeorders",changeorderlist);
-		return "manager";
+		return "manager_order";
 	}
-	@GetMapping(value="/order/goods/{orderId}")
+	@GetMapping(value="/iws/manager/order/goods/{orderId}")
 	public String order_goods(@PathVariable("orderId") String orderId,Model model) {
 		System.out.println(orderId);
 		List<goods> goodslist=goodsservice.findbyorder(orderId);
+		model.addAttribute("goodslist",goodslist);
+		return "manager_order_goods";
+		/*
 		if(!goodslist.isEmpty()) {
 			String meg="hello";
 			model.addAttribute("meg",meg);
@@ -90,7 +93,7 @@ public class orderController {
 			model.addAttribute("meg",meg);
 			return "error";
 		}
-			
+		*/	
 	}
 	
 	
