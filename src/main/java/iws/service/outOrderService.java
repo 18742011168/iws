@@ -81,8 +81,19 @@ public class outOrderService {
 		}
 		
 		if(outorderdao.hasorder(orderId)) {
-			 System.out.println("订单重复");
-			 return -4;
+			if(outorderdao.hasorder_goods(orderId, goodId)) {
+				System.out.println("订单重复");
+				 return -4;
+			}
+			if(outorderdao.addorder_goods(outorder)) {
+				System.out.println("订单添加成功");
+				goodsdao.updategoods(goodId, "运输中");
+				wareHouse warehouse=warehouselist.get(0);
+				int inventory=warehouse.getInventory()-1;
+				warehousedao.updatewarehouse(preWareHouseId, inventory);
+				return 1;
+			}
+			 
 		 }
 		
 		

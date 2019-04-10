@@ -36,6 +36,10 @@ public class outOrderDao extends orderDao{
 	    return number1==number2;
 	}
 	
+	public boolean addorder_goods(outOrder outorder) {
+		String sql="insert into order_goods(orderId,goodId) values(?,?)";
+		return jdbcTemplate.update(sql,new Object[]{outorder.getOrderId(),outorder.getGoodId()})==1;
+	}
 	public List<outOrder> findById(String orderId){
 		String type="出库";
 		String sql="select orderId,preWarehouseId,type,state from orders "

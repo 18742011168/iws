@@ -54,6 +54,12 @@ public class goodsDao {
 		return jdbcTemplate.update(sql,new Object[]{warehousId,state,goodId})==1;
 	}
 	
+	//manager更新货物使用
+	public boolean updategoods(String goodId,String category,Double weight,String warehousId,String state) {
+		String sql="update goods set category=?,weight=?,warehouseId=?,state=? where goodId=?";
+		return jdbcTemplate.update(sql,new Object[]{category,weight,warehousId,state,goodId})==1;
+	}
+	
 	public List<goods> findbywarehouse(String warehouseid) {
 		String sql="select * from goods where wareHouseId='"+warehouseid+"'";
 		List<goods> goodslist=jdbcTemplate.query(sql, new BeanPropertyRowMapper<goods>(goods.class));

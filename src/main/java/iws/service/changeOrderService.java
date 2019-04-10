@@ -96,8 +96,22 @@ public class changeOrderService {
 		 }
 		
 		if(changeorderdao.hasorder(orderId)) {
-			System.out.println("订单号重复");
-			 return -5;
+			if(changeorderdao.hasorder_goods(orderId, goodId)) {
+				System.out.println("订单重复");
+				return -5;
+			}
+			if(changeorderdao.addorder_goods(changeorder)) {
+				wareHouse prewarehouse=prewarehouselist.get(0);
+				int inventory2=nextwarehouse.getInventory()+1;
+				int inventroy1=prewarehouse.getInventory()-1;
+				warehousedao.updatewarehouse(preWareHouseId, inventroy1);
+				warehousedao.updatewarehouse(nextWareHouseId, inventory2);
+				goodsdao.updategoods(goodId, "运输中");
+				System.out.println("订单添加成功");
+				return 1;
+			}
+			
+			
 		}
 		
 		if(changeorderdao.addchangeorder(changeorder)) {
@@ -108,6 +122,7 @@ public class changeOrderService {
 			warehousedao.updatewarehouse(preWareHouseId, inventroy1);
 			warehousedao.updatewarehouse(nextWareHouseId, inventory2);
 			goodsdao.updategoods(goodId, "运输中");
+			System.out.println("订单添加成功");
 			return 1;
 		}
 		System.out.println("订单添加失败");

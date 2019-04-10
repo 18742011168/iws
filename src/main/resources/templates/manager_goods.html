@@ -8,7 +8,7 @@
 	<link rel="icon" type="image/png" sizes="96x96" th:href="@{/images/favicon.png}">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>manager_order</title>
+	<title>manager_goods</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -35,6 +35,14 @@
     <link th:href="@{/css/themify-icons.css}" rel="stylesheet">
     
     <script src="js/jquery.min.js"></script>
+
+<script th:inline="javascript"> 
+    var message = [[${message}]];
+    if(message){
+    	alert(message)
+    }
+    
+</script>
 </head>
 <body>
 
@@ -61,13 +69,13 @@
                     </a>
                 </li>
                 
-                <li>
+                <li >
                     <a href="/iws/manager/user">
                         <i class="ti-user"></i>
                         <p>账户</p>
                     </a>
                 </li>
-                <li>
+                <li class="active">
                     <a href="/iws/manager/goods">
                         <i class="ti-panel"></i>
                         <p>货物</p>
@@ -79,10 +87,9 @@
                         <p>仓库</p>
                     </a>
                 </li>
-                <li class="active">
-<!--  
-                    <a href="table.html">
--->
+                <li >
+  
+                    
                     <a href="/iws/manager/order">
                         <i class="ti-view-list-alt"></i>
                         <p>订单</p>
@@ -119,7 +126,7 @@
                         <span class="icon-bar bar3"></span>
                     </button>
                     -->
-                    <a class="navbar-brand" href="#">所有订单</a>
+                    <a class="navbar-brand" >货物</a>
                 </div>
                 <!-- 
                 <div class="collapse navbar-collapse">
@@ -165,7 +172,10 @@
                  <div class="col-md-12">
                         <div class="card">
                             <div class="header">
-                                <h5 class="title">所有出库单</h5>
+                                <h5 class="title">所有货物</h5>
+                                <a href="/iws/manager/goods/add_html">
+                                  <button>添加货物</button>
+                                </a>
                                 <!-- 
                                 <p class="category">Here is a subtitle for this table</p>
                                  -->
@@ -174,22 +184,22 @@
                                 <table class="table table-striped" style="font-size:12px;">
                                     <thead>
                                     <tr>
-                                        <th>订单号</th>
-                                    	<th>出货仓库号</th>
-                                    	<th>订单状态</th>
-                                    	<th>包含货物</th>
+                                        <th>货物编号</th>
+                                    	<th>种类</th>
+                                    	<th>重量</th>
+                                    	<th>存放仓库</th>
+                                    	<th>状态</th>
                                     </tr>	
                                     </thead>
                                     <tbody>
-                                        <tr th:each="outorder : ${outorders}">
-                                        	<td  th:text="${outorder.orderId} "></td>
-                                            <td  th:text=" ${outorder.preWarehouseId} "></td>
-                                            <td  th:text="${outorder.state} "></td>
-                                             <!-- 
-                                            <td><a href="/order/goods?orderId='+${outorder.orderId}+'" >货物</a></td>
-                                            -->
+                                        <tr th:each="goods : ${goodslist}">
+                                        	<td  th:text="${goods.goodId} "></td>
+                                            <td  th:text=" ${goods.category} "></td>
+                                            <td  th:text="${goods.weight} "></td>
+                                            <td  th:text="${goods.warehouseId} "></td>
+                                            <td  th:text="${goods.state} "></td>
                                             
-                                            <td><a th:href="@{'/iws/manager/order/goods/'+${outorder.orderId}}" >货物</a></td>
+                                            <td><a th:href="@{'/iws/manager/goods/update/'+${goods.goodId}}" ><button>编辑</button></a>|<a th:href="@{'/iws/manager/goods/delete/'+${goods.goodId}}"><button>删除</button></a></td>
                                             
                                         </tr>
                                         
@@ -200,86 +210,6 @@
                         </div>
                     </div>
                     
-                     <div class="col-md-12">
-                        <div class="card">
-                            <div class="header">
-                                <h5 class="title">所有入库单</h5>
-                                <!-- 
-                                <p class="category">Here is a subtitle for this table</p>
-                                 -->
-                            </div>
-                            <div class="content table-responsive table-full-width">
-                                <table class="table table-striped" style="font-size:12px;">
-                                    <thead>
-                                    <tr>
-                                        <th>订单号</th>
-                                    	<th>进货仓库号</th>
-                                    	<th>订单状态</th>
-                                    	<th>包含货物</th>
-                                    </tr>	
-                                    </thead>
-                                    <tbody>
-                                        <tr th:each="inorder : ${inorders}">
-                                        	<td  th:text="${inorder.orderId} "></td>
-                                            <td  th:text=" ${inorder.nextWarehouseId} "></td>
-                                            <td  th:text="${inorder.state} "></td>
-                                             <!-- 
-                                            <td><a href="/order/goods?orderId='+${outorder.orderId}+'" >货物</a></td>
-                                            -->
-                                            
-                                            <td><a th:href="@{'/iws/manager/order/goods/'+${inorder.orderId}}" >货物</a></td>
-                                            
-                                        </tr>
-                                        
-                                    </tbody>
-                                </table>
-
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="header">
-                                <h5 class="title">所有位置变更单</h5>
-                                <!-- 
-                                <p class="category">Here is a subtitle for this table</p>
-                                 -->
-                            </div>
-                            <div class="content table-responsive table-full-width">
-                                <table class="table table-striped" style="font-size:12px;">
-                                    <thead>
-                                    <tr>
-                                        <th>订单号</th>
-                                    	<th>出货仓库号</th>
-                                    	<th>入库仓库号</th>
-                                    	<th>订单状态</th>
-                                    	<th>包含货物</th>
-                                    </tr>	
-                                    </thead>
-                                    <tbody>
-                                        <tr th:each="changeorder : ${changeorders}">
-                                        	<td  th:text="${changeorder.orderId} "></td>
-                                            <td  th:text=" ${changeorder.preWarehouseId} "></td>
-                                            <td  th:text=" ${changeorder.nextWarehouseId} "></td>
-                                            <td  th:text="${changeorder.state} "></td>
-                                             <!-- 
-                                            <td><a href="/order/goods?orderId='+${outorder.orderId}+'" >货物</a></td>
-                                            -->
-                                            <td><a th:href="@{'/iws/manager/order/goods/'+${changeorder.orderId}}" >货物</a></td>
-                                            
-                                        </tr>
-                                        
-                                    </tbody>
-                                </table>
-
-                            </div>
-                        </div>
-                    </div>
-
-  
-                       
-
 
                 </div>
             </div>

@@ -39,6 +39,10 @@ public class inOrderDao extends orderDao{
 		return number1==number2;		
 	}
 	
+	public boolean addorder_goods(inOrder inorder) {
+		String sql="insert into order_goods(orderId,goodId) values(?,?)";
+		return jdbcTemplate.update(sql,new Object[]{inorder.getOrderId(),inorder.getGoodId()})==1;
+	}
     /*
 	public List<inOrder> findById(String orderId){
 		String type="入库";

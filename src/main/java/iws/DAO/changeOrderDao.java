@@ -37,6 +37,11 @@ public class changeOrderDao extends orderDao{
 		return number1==number2;
 	}
 	
+	public boolean addorder_goods(changeOrder changeorder ) {
+		String sql="insert into order_goods(orderId,goodId) values(?,?)";
+		return jdbcTemplate.update(sql,new Object[]{changeorder.getOrderId(),changeorder.getGoodId()})==1;
+	}
+	
 	public List<changeOrder> findById(String orderId){
 		String type="位置变更";
 		String sql="select orderId,preWarehouseId,nextWarehouseId,type,state from orders "

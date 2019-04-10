@@ -151,6 +151,10 @@ public class goodsService {
 		System.out.println("货物信息更新失败");
 		return 0;
 	}
+	
+	public boolean updategoods(String goodId,String category,Double weight,String warehousId,String state) {
+		return goodsdao.updategoods(goodId, category, weight, warehousId, state);
+	}
 	/*
 	//货物位置变更后使用，只改变货物位置、状态
 	public int updategoods(String goodId,String warehousId,String state,String orderId) {

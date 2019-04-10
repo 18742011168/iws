@@ -88,10 +88,20 @@ public class inOrderService {
 			 return -3;
 		 }
 		
-		
+		 
 		 if(inorderdao.hasorder(orderId)) {
-			 System.out.println("订单重复");
-			 return -4;
+			if(inorderdao.hasorder_goods(orderId, goodId)) {
+				System.out.println("订单重复");
+				return -4;
+			}
+			if(inorderdao.addorder_goods(inorder)) {
+				System.out.println("添加成功");
+				goodsdao.updategoods(goodId, "运输中");
+				int inventory=warehouse.getInventory()+1;
+				warehousedao.updatewarehouse(wareHouseId, inventory);
+				       return 1;
+			}
+			 
 		 }
 		 
 		 

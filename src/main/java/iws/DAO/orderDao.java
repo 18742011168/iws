@@ -54,5 +54,11 @@ public class orderDao {
 		 List<order> orderlist=jdbcTemplate.query(sql, new BeanPropertyRowMapper<order>(order.class));
 		 return !orderlist.isEmpty();
 	 }
+	 
+	 public boolean hasorder_goods(String orderId,String goodId) {
+		 String sql="select * from order_goods where orderId='"+orderId+"' and goodId='"+goodId+"'";
+		 List<order> orderlist=jdbcTemplate.query(sql, new BeanPropertyRowMapper<order>(order.class));
+		 return !orderlist.isEmpty();
+	 }
 
 }
