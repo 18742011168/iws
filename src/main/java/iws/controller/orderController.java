@@ -79,21 +79,11 @@ public class orderController {
 	public String order_goods(@PathVariable("orderId") String orderId,Model model) {
 		System.out.println(orderId);
 		List<goods> goodslist=goodsservice.findbyorder(orderId);
+		String message="订单 "+orderId+"包含的货物";
+		model.addAttribute("message",message);
 		model.addAttribute("goodslist",goodslist);
-		return "manager_order_goods";
-		/*
-		if(!goodslist.isEmpty()) {
-			String meg="hello";
-			model.addAttribute("meg",meg);
-			return "hello";
-		}
-		else
-		{
-			String meg="error";
-			model.addAttribute("meg",meg);
-			return "error";
-		}
-		*/	
+		return "order_warehouse_goods";
+		
 	}
 	
 	

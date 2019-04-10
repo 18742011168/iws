@@ -152,8 +152,8 @@ public class goodsService {
 		return 0;
 	}
 	
-	public boolean updategoods(String goodId,String category,Double weight,String warehousId,String state) {
-		return goodsdao.updategoods(goodId, category, weight, warehousId, state);
+	public boolean updategoods(String goodId,String category,Double weight,String state) {
+		return goodsdao.updategoods(goodId, category, weight, state);
 	}
 	/*
 	//货物位置变更后使用，只改变货物位置、状态

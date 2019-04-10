@@ -24,13 +24,13 @@ public class inOrderService {
 	private goodsDao goodsdao;
 	
 	//更改订单状态时不用更改货物状态，货物状态在更新货物重量等时更改
-	 public int updateinorder(String orderId) {
+	 public int updateinorder(String orderId,String state) {
 		 List<inOrder> inorderlist=inorderdao.findById(orderId);
 		 if(inorderlist.isEmpty()) {
 			 System.out.println("订单不存在");
 			 return -1;
 		 }
-		 if(inorderdao.updateorder(orderId)) {
+		 if(inorderdao.updateorder(orderId,state)) {
 			 System.out.println("订单更新成功");
 			 return 1;
 		 }
@@ -45,8 +45,8 @@ public class inOrderService {
 			 return -1;
 		 }
 		 inOrder inorder=inorderlist.get(0);
-		 if(inorder.getState().equals("未完成")) {
-			 System.out.println("订单进行中，不可删除");
+		 if(inorder.getState().equals("执行中")||"已完成".equals(inorder.getState())) {
+			 System.out.println("订单已执行不可删除");
 			 return -2;
 		 }
 		 if(inorderdao.deleteorder(orderId)) {

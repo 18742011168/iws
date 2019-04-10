@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import iws.DAO.wareHouseDao;
-import iws.beans.goods;
+
 import iws.beans.wareHouse;
 
 @Service
@@ -42,9 +42,9 @@ public class wareHouseService {
 			System.out.println("仓库不存在");
 			   return -1;	
 		}
-		
-		List<goods> goodslist=warehousedao.findgoods(wareHouseId);
-		if(!goodslist.isEmpty()) {
+		wareHouse warehouse=warehouselist.get(0);
+		//List<goods> goodslist=warehousedao.findgoods(wareHouseId);
+		if(warehouse.getInventory()!=0) {
 			System.out.println("仓库中有货物，不可删除");
 			   return -2;	
 		}
@@ -54,6 +54,10 @@ public class wareHouseService {
 		}
 		System.out.println("仓库删除失败");
 		   return 0;
+	}
+	
+	public boolean updatewarehouse(String wareHouseId,int inventory) {
+		return warehousedao.updatewarehouse(wareHouseId, inventory);
 	}
 	
 	public int warehousenumber() {

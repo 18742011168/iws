@@ -55,9 +55,9 @@ public class goodsDao {
 	}
 	
 	//manager更新货物使用
-	public boolean updategoods(String goodId,String category,Double weight,String warehousId,String state) {
-		String sql="update goods set category=?,weight=?,warehouseId=?,state=? where goodId=?";
-		return jdbcTemplate.update(sql,new Object[]{category,weight,warehousId,state,goodId})==1;
+	public boolean updategoods(String goodId,String category,Double weight,String state) {
+		String sql="update goods set category=?,weight=?,state=? where goodId=?";
+		return jdbcTemplate.update(sql,new Object[]{category,weight,state,goodId})==1;
 	}
 	
 	public List<goods> findbywarehouse(String warehouseid) {

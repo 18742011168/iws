@@ -72,7 +72,7 @@ public class goodsController {
 	@RequestMapping(value= {"/iws/manager/goods/update"})
 	public String updategoods(@ModelAttribute("goods") goods goods,Model model) {
 		String message="";
-		if(goodsservice.updategoods(goods.getGoodId(),goods.getCategory(),goods.getWeight(),goods.getWarehouseId(),goods.getState()))
+		if(goodsservice.updategoods(goods.getGoodId(),goods.getCategory(),goods.getWeight(),goods.getState()))
 			message="货物 "+goods.getGoodId()+"更新成功";
 		else
 			message="货物 "+goods.getGoodId()+"更新失败";
@@ -80,6 +80,34 @@ public class goodsController {
 		model.addAttribute("goodslist",goodslist);
 		model.addAttribute("message",message);
 		return "manager_goods";
+	}
+	
+	@RequestMapping(value= {"/iws/manager/goods/add_html"})
+	public String add_html() {	
+		return "manager_goods_add";
+	}
+	
+	@RequestMapping(value= {"/iws/manager/goods/add"})
+	public String addgoods(@ModelAttribute("goods") goods goods,Model model) {
+		String message="";
+		int result=goodsservice.addgoods(goods);
+		switch(result) {
+		case -1:
+			message="货物编号 "+goods.getGoodId()+"重复";
+			model.addAttribute("message",message);
+			return "manager_goods_add";
+		case 0:
+			message="货物"+goods.getGoodId()+"添加失败";
+			model.addAttribute("message",message);
+			return "manager_goods_add";
+		default :
+			message="货物"+goods.getGoodId()+"添加成功";
+			List<goods> goodslist=goodsservice.allgoods();
+			model.addAttribute("message",message);
+			model.addAttribute("goodslist",goodslist);
+			return "manager_goods";
+				
+		}
 	}
 	
 

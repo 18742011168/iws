@@ -24,14 +24,14 @@ public class changeOrderService {
 	@Autowired
 	private wareHouseDao warehousedao;
 	
-	public int updatechangeorder(String orderId) {
+	public int updatechangeorder(String orderId,String state) {
 		List<changeOrder> orderlist=changeorderdao.findById(orderId);
 		if(orderlist.isEmpty()) {
 			 System.out.println("订单不存在");
 			 return -1;
 		}
 		
-		if(changeorderdao.updateorder(orderId)){
+		if(changeorderdao.updateorder(orderId,state)){
 			 System.out.println("订单更新成功");
 			 return 1;
 		}
@@ -47,8 +47,8 @@ public class changeOrderService {
 		}
 		
 		changeOrder changeorder=orderlist.get(0);
-		if(changeorder.getState().equals("未完成")) {
-			System.out.println("订单进行中，不可删除");
+		if(changeorder.getState().equals("执行中")||"已完成".equals(changeorder.getState())) {
+			System.out.println("订单已执行，不可删除");
 			 return -2;
 		}
 		if(changeorderdao.deleteorder(orderId)) {

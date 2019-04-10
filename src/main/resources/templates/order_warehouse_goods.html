@@ -8,7 +8,7 @@
 	<link rel="icon" type="image/png" sizes="96x96" th:href="@{/images/favicon.png}">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>manager_order_goods</title>
+	<title>order_warehouse_goods</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -79,7 +79,7 @@
                         <p>仓库</p>
                     </a>
                 </li>
-                <li class="active">
+                <li>
 <!--  
                     <a href="table.html">
 -->
@@ -119,7 +119,7 @@
                         <span class="icon-bar bar3"></span>
                     </button>
                     -->
-                    <a class="navbar-brand" >订单</a>
+                    <a class="navbar-brand" >货物</a>
                 </div>
                 <!-- 
                 <div class="collapse navbar-collapse">
@@ -165,7 +165,7 @@
                  <div class="col-md-12">
                         <div class="card">
                             <div class="header">
-                                <h5 class="title" th:text="'订单 '+${orderId}+' 包含货物'"></h5>
+                                <h5 class="title" th:text="${message}"></h5>
                                 <!-- 
                                 <p class="category">Here is a subtitle for this table</p>
                                  -->
