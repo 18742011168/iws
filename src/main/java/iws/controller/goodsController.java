@@ -110,5 +110,38 @@ public class goodsController {
 		}
 	}
 	
+	@GetMapping(value="/iws/godownner/goods/update/{goodId}/{orderId}")
+	public String godownner_update_html(@PathVariable("goodId") String goodId,@PathVariable("orderId") String orderId,Model model) {
+		List<goods> goodslist=goodsservice.findgoods(goodId);
+		
+		
+		goods goods=goodslist.get(0);
+		model.addAttribute("goods",goods);
+		model.addAttribute("orderId",orderId);
+		return "godownner_order_goods_update";
+	}
+	
+	@RequestMapping(value="/iws/godownner/goods/update")
+	public String godownner_updategoods(@ModelAttribute("goods") goods goods,String orderId,Model model) {
+		String updatemessage="";
+		
+		if(goodsservice.updategoods(goods.getGoodId(),goods.getWeight(),goods.getWarehouseId(),goods.getState(),orderId)==1) {
+			updatemessage="货物 "+goods.getGoodId()+"更新成功";
+		}
+		else {
+			updatemessage="货物 "+goods.getGoodId()+"更新失败";
+			
+		}
+		List<goods> goodslist=goodsservice.findbyorder(orderId);
+		
+		model.addAttribute("updatemessage",updatemessage);
+		String message="订单 "+orderId+"包含的货物";
+		model.addAttribute("message",message);
+		model.addAttribute("goodslist",goodslist);
+		model.addAttribute("orderId",orderId);
+		return "godownner_order_goods";	
+		
+	}
+	
 
 }

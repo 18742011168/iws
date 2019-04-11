@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+var hostname = "127.0.0.1";      //主机IP  106.14.181.32
+var hostPort = 8083;             //port
+var sub_count = 0;
+var client;
+function MQTTconnect() {
+    client = new Paho.MQTT.Client(hostname, hostPort, "test");
+    client.onMessageArrived = onMessageArrived;
+    client.connect({onSuccess:onConnect});
+    console.log("Host="+ hostname + ", port=" + hostPort);
+};
+// called when the client connects
+function onConnect() {
+  console.log("onConnect succeeds");
+//  client.subscribe('topic');
+  client.subscribe('#');    //订阅所有主题
+}
+// called when a message arrives
+function onMessageArrived(message) {
+    var topic = message.destinationName;
+    var payload = message.payloadString;
+    console.log("onMessageArrived:" + payload);
+    sub_count++;
+   $('#sub_count').val('收到订阅' + sub_count + '条');
+   $('#sub_message').prepend('<li>' + topic + ' = ' + payload + '</li>');
+}
+function button_onclick(){
+    var topic = $('#topicsend').val();
+    var text = $('#textsend').val();
+    if(topic=='' || text=='')
+    {
+        alert("noTopic or noText");
+        return;
+    }
+    var message = new Paho.MQTT.Message(text);
+    message.destinationName = topic;
+    message.qos=0;
+    client.send(message);
+};
+$(document).ready(function() {
+    MQTTconnect();
+});
+</script>
+</head>
+<body>
+<h1>mosquitto pub</h1>
+topic:<input type='text' id='topicsend' size="60"/> 
+text :<input type='text' id='textsend' size="60"/>
+<input type='button' value="send" id='btn' onclick="button_onclick()"/>
+
+<h1>mosquitto sub</h1>
+<input type='text' id='sub_count' disabled />
+<ul id='sub_message' ></ul>
+<a href="/emqttd">emqttd</a>
+</body>
+</html>

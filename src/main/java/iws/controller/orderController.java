@@ -105,6 +105,7 @@ public class orderController {
 		String message="订单 "+orderId+"包含的货物";
 		model.addAttribute("message",message);
 		model.addAttribute("goodslist",goodslist);
+		model.addAttribute("orderId",orderId);
 		return "godownner_order_goods";
 		
 	}

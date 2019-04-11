@@ -100,50 +100,64 @@ public class goodsService {
 		}
 		goods good=goodslist.get(0);
 		List<String> ordergoodId=new ArrayList<String>();
-		for(int i=0;i<ordergoods.size();i++) {
-			ordergoodId.add(ordergoods.get(i).getGoodId());
-		}
-		if(ordergoodId.contains(good.getGoodId())) {
-			changeOrder order=orderlist.get(0);
-			if(!order.getType().equals("出库")) {
-				if(!order.getNextWarehouseId().equals(warehouseId)) {
-					warnning warnning=new warnning();
-					warnning.setGoodId(goodId);
-					SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					String time=df.format(new Date());
-					warnning.setMessage(time+":非法移动");
-					warnningdao.addwarnning(warnning);
-					String message=time+": "+goodId+" 非法移动";
-					String topic="warnning";
-					mqttGateway.sendToMqtt(message, topic);
-				}
-			}
-			else {
-				if(!(warehouseId==null)) {
-					warnning warnning=new warnning();
-					warnning.setGoodId(goodId);
-					SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					String time=df.format(new Date());
-					warnning.setMessage(time+":非法移动");
-					warnningdao.addwarnning(warnning);
-					String message=time+": "+goodId+" 非法移动";
-					String topic="warnning";
-					mqttGateway.sendToMqtt(message, topic);
-				}
-			}
-			
-		}
-		else {
+		if(ordergoods.isEmpty()) {
 			warnning warnning=new warnning();
 			warnning.setGoodId(goodId);
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String time=df.format(new Date());
-			warnning.setMessage(time+":非法出库/入库");
+			warnning.setMessage(time+":非法移动");
 			warnningdao.addwarnning(warnning);
-			String message=time+": "+goodId+" 非法出库或入库";
+			String message=time+": "+goodId+" 非法移动";
 			String topic="warnning";
 			mqttGateway.sendToMqtt(message, topic);
 		}
+		else {
+			for(int i=0;i<ordergoods.size();i++) {
+				ordergoodId.add(ordergoods.get(i).getGoodId());
+			}
+			if(ordergoodId.contains(good.getGoodId())) {
+				changeOrder order=orderlist.get(0);
+				if(!order.getType().equals("出库")) {
+					if(!order.getNextWarehouseId().equals(warehouseId)) {
+						warnning warnning=new warnning();
+						warnning.setGoodId(goodId);
+						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+						String time=df.format(new Date());
+						warnning.setMessage(time+":非法移动");
+						warnningdao.addwarnning(warnning);
+						String message=time+": "+goodId+" 非法移动";
+						String topic="warnning";
+						mqttGateway.sendToMqtt(message, topic);
+					}
+				}
+				else {
+					if(!(warehouseId==null)) {
+						warnning warnning=new warnning();
+						warnning.setGoodId(goodId);
+						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+						String time=df.format(new Date());
+						warnning.setMessage(time+":非法移动");
+						warnningdao.addwarnning(warnning);
+						String message=time+": "+goodId+" 非法移动";
+						String topic="warnning";
+						mqttGateway.sendToMqtt(message, topic);
+					}
+				}
+				
+			}
+			else {
+				warnning warnning=new warnning();
+				warnning.setGoodId(goodId);
+				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				String time=df.format(new Date());
+				warnning.setMessage(time+":非法出库/入库");
+				warnningdao.addwarnning(warnning);
+				String message=time+": "+goodId+" 非法出库或入库";
+				String topic="warnning";
+				mqttGateway.sendToMqtt(message, topic);
+			}
+		}
+		
 		if(goodsdao.updategoods(goodId, weight, warehouseId, state)) {
 			System.out.println("货物信息更新成功");
 			return 1;
