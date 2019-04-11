@@ -75,7 +75,7 @@ public class orderController {
 		model.addAttribute("changeorders",changeorderlist);
 		return "manager_order";
 	}
-	@GetMapping(value="/iws/manager/order/goods/{orderId}")
+	@GetMapping(value= {"/iws/manager/order/goods/{orderId}"})
 	public String order_goods(@PathVariable("orderId") String orderId,Model model) {
 		System.out.println(orderId);
 		List<goods> goodslist=goodsservice.findbyorder(orderId);
@@ -86,7 +86,58 @@ public class orderController {
 		
 	}
 	
+	@RequestMapping(value= {"/iws/godownner/order"})
+	public String allorder2(Model model) {
+		List<outOrder> outorderlist=outorderservice.alloutorder();
+		List<inOrder> inorderlist=inorderservice.allinorder();
+		List<changeOrder> changeorderlist=changeorderservice.allchangeorder();
+		
+		model.addAttribute("outorders",outorderlist);
+		model.addAttribute("inorders",inorderlist);
+		model.addAttribute("changeorders",changeorderlist);
+		return "godownner_order";
+	}
 	
+	@GetMapping(value= {"/iws/godownner/order/goods/{orderId}"})
+	public String order_goods2(@PathVariable("orderId") String orderId,Model model) {
+		System.out.println(orderId);
+		List<goods> goodslist=goodsservice.findbyorder(orderId);
+		String message="订单 "+orderId+"包含的货物";
+		model.addAttribute("message",message);
+		model.addAttribute("goodslist",goodslist);
+		return "godownner_order_goods";
+		
+	}
+	
+	@GetMapping(value= {"/iws/godownner/order/begin/{orderId}"})
+	public String beginorder(@PathVariable("orderId") String orderId,Model model) {
+		
+		// service 层update()是相同的，所以用三个orderservice中的任意一个即可
+		changeorderservice.updatechangeorder(orderId,"执行中");
+		String message="订单 "+ orderId+" 开始执行";
+		List<outOrder> outorderlist=outorderservice.alloutorder();
+		List<inOrder> inorderlist=inorderservice.allinorder();
+		List<changeOrder> changeorderlist=changeorderservice.allchangeorder();
+		model.addAttribute("outorders",outorderlist);
+		model.addAttribute("inorders",inorderlist);
+		model.addAttribute("changeorders",changeorderlist);
+		model.addAttribute("message",message);
+		return "godownner_order";
+	}
+	
+	@GetMapping(value= {"/iws/godownner/order/complete/{orderId}"})
+	public String completeorder(@PathVariable("orderId") String orderId,Model model) {
+		changeorderservice.updatechangeorder(orderId,"已完成");
+		String message="订单 "+ orderId+" 完成";
+		List<outOrder> outorderlist=outorderservice.alloutorder();
+		List<inOrder> inorderlist=inorderservice.allinorder();
+		List<changeOrder> changeorderlist=changeorderservice.allchangeorder();
+		model.addAttribute("outorders",outorderlist);
+		model.addAttribute("inorders",inorderlist);
+		model.addAttribute("changeorders",changeorderlist);
+		model.addAttribute("message",message);
+		return "godownner_order";
+	}
 	
      
 }

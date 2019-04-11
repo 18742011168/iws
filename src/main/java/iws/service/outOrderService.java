@@ -25,8 +25,8 @@ public class outOrderService {
 	private wareHouseDao warehousedao;
 	
 	public int updateoutorder(String orderId,String state) {
-		List<outOrder> outorderlist=outorderdao.findById(orderId);
-		if(outorderlist.isEmpty()) {
+		//List<outOrder> outorderlist=outorderdao.findById(orderId);
+		if(!outorderdao.hasorder(orderId)) {
 			System.out.println("订单不存在");
 			return -1;
 		}

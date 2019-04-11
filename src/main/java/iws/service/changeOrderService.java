@@ -25,8 +25,8 @@ public class changeOrderService {
 	private wareHouseDao warehousedao;
 	
 	public int updatechangeorder(String orderId,String state) {
-		List<changeOrder> orderlist=changeorderdao.findById(orderId);
-		if(orderlist.isEmpty()) {
+		//List<changeOrder> orderlist=changeorderdao.findById(orderId);
+		if(!changeorderdao.hasorder(orderId)) {
 			 System.out.println("订单不存在");
 			 return -1;
 		}

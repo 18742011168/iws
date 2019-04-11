@@ -3,8 +3,8 @@ package iws.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+//import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import iws.service.changeOrderService;
@@ -38,7 +38,7 @@ public class totalController {
 	
 	@Autowired
 	private warnningService warnningservice;
-	
+	/*
 	@GetMapping(value="/iws/{position}")
 	public String position_html(@PathVariable("position") String position,Model model) {
 		if("manager".equals(position)) {
@@ -75,7 +75,7 @@ public class totalController {
 		}
 		
 	}
-	
+	*/
 	@RequestMapping({"/iws/manager","/iws/manager/total"})
 	public String manager_total(Model model) {
 		int usernumber=userservice.usernumber();

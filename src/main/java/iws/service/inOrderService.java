@@ -25,8 +25,8 @@ public class inOrderService {
 	
 	//更改订单状态时不用更改货物状态，货物状态在更新货物重量等时更改
 	 public int updateinorder(String orderId,String state) {
-		 List<inOrder> inorderlist=inorderdao.findById(orderId);
-		 if(inorderlist.isEmpty()) {
+		 //List<inOrder> inorderlist=inorderdao.findById(orderId);
+		 if(!inorderdao.hasorder(orderId)) {
 			 System.out.println("订单不存在");
 			 return -1;
 		 }
