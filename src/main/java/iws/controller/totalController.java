@@ -76,7 +76,7 @@ public class totalController {
 		
 	}
 	*/
-	@RequestMapping({"/iws/manager","/iws/manager/total"})
+	@RequestMapping({"/iws/manager/total"})
 	public String manager_total(Model model) {
 		int usernumber=userservice.usernumber();
 		int managernumber=userservice.managernumber();
@@ -102,5 +102,22 @@ public class totalController {
 		model.addAttribute("ordernumber",ordernumber);
 		
 		return "manager_total";
+	}
+	
+	@RequestMapping({"/iws/finance/total"})
+	public String finance_total(Model model) {
+		int goodsnumber=goodsservice.goodsnumber();
+		int warehousenumber=warehouseservice.warehousenumber();
+		int outordernumber=outorderservice.outordernumber();
+		int inordernumber=inorderservice.inordernumber();
+		int changeordernumber=changeorderservice.changeordernumber();
+		int ordernumber=outordernumber+inordernumber+changeordernumber;
+		model.addAttribute("goodsnumber",goodsnumber);
+		model.addAttribute("warehousenumber",warehousenumber);
+		model.addAttribute("outordernumber",outordernumber);
+		model.addAttribute("inordernumber",inordernumber);
+		model.addAttribute("changeordernumber",changeordernumber);
+		model.addAttribute("ordernumber",ordernumber);
+		return "finance_total";
 	}
 }

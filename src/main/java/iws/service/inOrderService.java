@@ -40,7 +40,7 @@ public class inOrderService {
 	 
 	 public int deleteinorder(String orderId) {
 		 List<inOrder> inorderlist=inorderdao.findById(orderId);
-		 if(inorderlist.isEmpty()) {
+		 if(!inorderdao.hasorder(orderId)) {
 			 System.out.println("订单不存在");
 			 return -1;
 		 }
@@ -56,7 +56,7 @@ public class inOrderService {
 		 System.out.println("订单删除失败");
 		 return 0;
 	 }
-	 
+	
 	 public int addinorder(inOrder inorder) {
 		 
 		 String wareHouseId=inorder.getNextWarehouseId();

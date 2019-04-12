@@ -25,18 +25,18 @@ public class wareHouseController {
 	private goodsService goodsservice;
 	
 	@RequestMapping(value="/iws/manager/warehouse")
-	public String allwarehouse(Model model) {
+	public String manager_allwarehouse(Model model) {
 		model.addAttribute("warehouselist",warehouseservice.allwarehouse());
 		return "manager_warehouse";		
 	}
 	
-	@GetMapping(value="/iws/manager/warehouse/goods/{wareHouseId}")
-	public String warehouse_goods(@PathVariable("wareHouseId")String warehouseId,Model model) {
+	@GetMapping(value= {"/iws/manager/warehouse/goods/{wareHouseId}"})
+	public String manager_warehouse_goods(@PathVariable("wareHouseId")String warehouseId,Model model) {
 		List<goods> goodslist=goodsservice.findbywarehouse(warehouseId);
 		model.addAttribute("goodslist",goodslist);
 		String message="仓库 "+warehouseId+"中的货物";
 		model.addAttribute("message",message);
-		return "order_warehouse_goods";
+		return "manager_order_warehouse_goods";
 	}
 	
 	@GetMapping(value="/iws/manager/warehouse/delete/{wareHouseId}")
@@ -99,5 +99,22 @@ public class wareHouseController {
 			
 		}
 	}
+	
+	@RequestMapping(value="/iws/finance/warehouse")
+	public String finance_allwarehouse(Model model) {
+		model.addAttribute("warehouselist",warehouseservice.allwarehouse());
+		return "finance_warehouse";		
+	}
+	
+	@GetMapping(value= {"/iws/finance/warehouse/goods/{wareHouseId}"})
+	public String finance_warehouse_goods(@PathVariable("wareHouseId")String warehouseId,Model model) {
+		List<goods> goodslist=goodsservice.findbywarehouse(warehouseId);
+		model.addAttribute("goodslist",goodslist);
+		String message="仓库 "+warehouseId+"中的货物";
+		model.addAttribute("message",message);
+		return "finance_order_warehouse_goods";
+	}
+	
+	
 
 }

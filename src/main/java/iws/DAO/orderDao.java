@@ -21,8 +21,8 @@ public class orderDao {
 	protected JdbcTemplate jdbcTemplate;
 	
 	 public boolean deleteorder(String orderId){
-		 String sql1="delete from orders where orderId=?";
-		return (jdbcTemplate.update(sql1,orderId)==1);
+		 String sql="delete from orders where orderId=?";
+		return (jdbcTemplate.update(sql,orderId)==1);
 	 }
 	 
 	 public boolean updateorder(String orderId,String state) {
@@ -59,6 +59,11 @@ public class orderDao {
 		 String sql="select * from order_goods where orderId='"+orderId+"' and goodId='"+goodId+"'";
 		 List<order> orderlist=jdbcTemplate.query(sql, new BeanPropertyRowMapper<order>(order.class));
 		 return !orderlist.isEmpty();
+	 }
+	 
+	 public boolean deleteordergoods(String orderId,String goodId) {
+		 String sql="delete from order_goods where orderId=? and goodId=?";
+		 return (jdbcTemplate.update(sql,orderId,goodId)==1);
 	 }
 
 }

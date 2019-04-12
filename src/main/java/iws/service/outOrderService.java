@@ -41,7 +41,7 @@ public class outOrderService {
 	
 	public int deleteoutorder(String orderId) {
 		List<outOrder> outorderlist=outorderdao.findById(orderId);
-		if(outorderlist.isEmpty()) {
+		if(!outorderdao.hasorder(orderId)) {
 			System.out.println("订单不存在");
 			return -1;
 		}

@@ -143,5 +143,13 @@ public class goodsController {
 		
 	}
 	
+	@RequestMapping("/iws/finance/goods")
+	public String finance_allgoods(Model model) {
+		List<goods> goodslist=goodsservice.allgoods();
+		model.addAttribute("goodslist",goodslist);
+		return "finance_goods";
+		
+	}
+	
 
 }

@@ -40,8 +40,9 @@ public class changeOrderService {
 	}
 	
 	public int deletechangeorder(String orderId) {
-		List<changeOrder> orderlist=changeorderdao.findById(orderId);
-		if(orderlist.isEmpty()) {
+		//orderDao中定义的方法，按orderID查找订单（不区分订单类型）
+		List<changeOrder> orderlist=changeorderdao.findOrder(orderId);
+		if(!changeorderdao.hasorder(orderId)) {
 			 System.out.println("订单不存在");
 			 return -1;
 		}
@@ -135,6 +136,28 @@ public class changeOrderService {
 	 
 	 public int changeordernumber() {
 		 return changeorderdao.changeordernumber();
+	 }
+	 
+	 public List<changeOrder> findorder(String orderId){
+		 return changeorderdao.findOrder(orderId);
+	 }
+	 
+	 public int deleteordergoods(String orderId,String goodId) {
+		 if(!changeorderdao.hasorder(orderId)) {
+			 System.out.println("订单不存在");
+			 return -1;
+		}
+		if(!changeorderdao.hasorder_goods(orderId, goodId)) {
+			System.out.println("订单 "+orderId+"中 没有货物 "+goodId);
+			return -2;
+		}
+		if(changeorderdao.deleteordergoods(orderId, goodId)) {
+			System.out.println("删除订单 "+orderId+"中 的货物 "+goodId);
+			return 1;
+		}
+		System.out.println("删除订单 "+orderId+"中 的货物 "+goodId+"失败");
+		return 0;
+		
 	 }
 
 }
