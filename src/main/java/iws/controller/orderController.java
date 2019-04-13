@@ -37,32 +37,8 @@ public class orderController {
 	private inOrderService inorderservice;
 	
 	
-	/*
-	@RequestMapping(value="/allchangeorder")
-	public String allorder(Model model) {
-		model.addAttribute("orders",changeorderservice.allchangeorder());
-		return "allorder";
-	}
-	*/
-	@RequestMapping(value="/outorder/addoutorder")
-	public String addinorder(@ModelAttribute("outOrder") outOrder outorder ) {
-		int result=outorderservice.addoutorder(outorder);
-		if(result==1) 
-			System.out.println("插入成功");
-		else
-			System.out.println("插入失败");
-		return "hello";
-	}
 	
-	@RequestMapping(value="/outorder/deleteoutorder")
-	public String deleteoutorder(String orderId) {
-		int result=outorderservice.deleteoutorder(orderId);
-		if(result==1) 
-			System.out.println("删除成功");
-		else
-			System.out.println("删除失败");
-		return "hello";
-	}
+	
 	
 	@RequestMapping(value= {"/iws/manager/order"})
 	public String manager_allorder(Model model) {
@@ -114,8 +90,23 @@ public class orderController {
 	public String beginorder(@PathVariable("orderId") String orderId,Model model) {
 		
 		// service 层update()是相同的，所以用三个orderservice中的任意一个即可
-		changeorderservice.updatechangeorder(orderId,"执行中");
-		String message="订单 "+ orderId+" 开始执行";
+		int result=changeorderservice.updatechangeorder(orderId,"执行中");
+		String message="";
+		switch(result) {
+		case -1:
+			message="订单 "+ orderId+" 不存在";
+			break;
+		case -2:
+			message="订单 "+ orderId+" 已完成，不可开始";
+			break;
+		case 0:
+			message="订单 "+ orderId+" 开始失败";
+			break;
+		default:
+			message="订单 "+ orderId+" 执行中";
+			break;
+		}
+		
 		List<outOrder> outorderlist=outorderservice.alloutorder();
 		List<inOrder> inorderlist=inorderservice.allinorder();
 		List<changeOrder> changeorderlist=changeorderservice.allchangeorder();
@@ -129,8 +120,24 @@ public class orderController {
 	@GetMapping(value= {"/iws/godownner/order/complete/{orderId}"})
 	public String completeorder(@PathVariable("orderId") String orderId,Model model) {
 		// service 层update()是相同的，所以用三个orderservice中的任意一个即可
-		changeorderservice.updatechangeorder(orderId,"已完成");
-		String message="订单 "+ orderId+" 完成";
+		int result=changeorderservice.updatechangeorder(orderId,"已完成");
+		String message="";
+		switch(result) {
+		case -1:
+			message="订单 "+ orderId+" 不存在";
+			break;
+		case -3:
+			message="订单 "+ orderId+" 中有货物在运输中，不可结束";
+			break;
+		case 0:
+			message="订单 "+ orderId+" 结束失败";
+			break;
+		default:
+			message="订单 "+ orderId+" 已完成";
+			break;
+
+		}
+		
 		List<outOrder> outorderlist=outorderservice.alloutorder();
 		List<inOrder> inorderlist=inorderservice.allinorder();
 		List<changeOrder> changeorderlist=changeorderservice.allchangeorder();

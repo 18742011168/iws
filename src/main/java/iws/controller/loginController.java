@@ -25,7 +25,7 @@ import iws.service.warnningService;
 
 @Controller
 public class loginController {
-	@RequestMapping("/")
+	@RequestMapping({"/","/iws/signout"})
 	public String home() {
 		return "home";
 	}

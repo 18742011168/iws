@@ -30,6 +30,25 @@ public class changeOrderService {
 			 System.out.println("订单不存在");
 			 return -1;
 		}
+		List<changeOrder> orderlist=changeorderdao.findOrder(orderId);
+		changeOrder changeorder=orderlist.get(0);
+		if("执行中".equals(state)) {
+			if(changeorder.getState().equals("已完成")) {
+				System.out.println("订单已执行完成");
+				return -2;
+			}
+		}
+		if("已完成".equals(state)) {
+			List<goods> goodslist=goodsdao.findbyorder(orderId);
+			if(!goodslist.isEmpty()) {
+				for(int i=0;i<goodslist.size();i++) {
+					if("运输中".equals(goodslist.get(i).getState())) {
+						System.out.println("有货物在运输中，订单为完成");
+						return -3;
+					}
+				}
+			}
+		}
 		
 		if(changeorderdao.updateorder(orderId,state)){
 			 System.out.println("订单更新成功");
