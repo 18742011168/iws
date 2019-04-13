@@ -1,5 +1,7 @@
 package iws.beans;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 
 @Entity
@@ -9,6 +11,7 @@ public class user {
 	   private String position;
 	   private String email;
 	   private String verification;
+	   private List<role> roles;
 	   public String getUsername(){
 		   return username;
 	   }
@@ -38,6 +41,14 @@ public class user {
 	   }
 	   public String getVerification() {
 		  return this.verification;
+	   }
+	   
+	   public List<role> getRoles(){
+		   return roles;
+	   }
+	   
+	   public void setRoles(List<role> roles) {
+		   this.roles=roles;
 	   }
 	  
 }
