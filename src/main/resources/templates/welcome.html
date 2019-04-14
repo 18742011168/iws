@@ -24,12 +24,15 @@
 <div class="message warning">
 <div class="inset">
 	<div class="login-head">
+	  
 	    <p th:text="${user.position}+' '+${user.username} "></p>
+	   
 	    <h5> </h5>
 		<p>欢迎登录智能仓库管理系统</p>
 		
-	</div>
+	</div>  
 		<a th:href="@{'/iws/'+${user.position}}">进入智能仓库管理系统(iws)</a>
+		
 		</div>					
 	</div>
 	

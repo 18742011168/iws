@@ -1,14 +1,26 @@
 package iws.controller;
 
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+
+import org.apache.shiro.authc.UnknownAccountException;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.PathVariable;
+
+
 import org.springframework.web.bind.annotation.RequestMapping;
+
 
 import iws.beans.changeOrder;
 import iws.beans.inOrder;
@@ -17,7 +29,7 @@ import iws.beans.user;
 import iws.service.changeOrderService;
 import iws.service.goodsService;
 import iws.service.inOrderService;
-import iws.service.loginService;
+
 import iws.service.outOrderService;
 import iws.service.userService;
 import iws.service.wareHouseService;
@@ -25,13 +37,9 @@ import iws.service.warnningService;
 
 @Controller
 public class loginController {
-	@RequestMapping({"/","/iws/signout"})
-	public String home() {
-		return "home";
-	}
 	
-	@Autowired
-	private loginService loginservice;
+	
+	
 	
 	@Autowired
 	private userService userservice;
@@ -54,7 +62,7 @@ public class loginController {
 	@Autowired
 	private warnningService warnningservice;
 	
-	
+	/*
 	@RequestMapping("/login")
 	public String login(@ModelAttribute("user") user user,Model model){
 		int result=loginservice.CanLogin(user.getUsername(), user.getPassword(),user.getPosition());
@@ -80,10 +88,92 @@ public class loginController {
 		}
 			
 	}
+	*/
 	
 	
 	
-	@RequestMapping("/login/lostpassword")
+	@RequestMapping(value="/403")
+	public String error() {
+		return "403";
+	}
+	
+	@RequestMapping(value= {"/welcome","/"})
+	public String welcome(Model model) {
+		String username=(String)SecurityUtils.getSubject().getPrincipal();
+		System.out.println(username);
+		List<user> userlist=userservice.FindUserByName(username);
+		user user=userlist.get(0);
+		model.addAttribute("user",user);
+		return "welcome";
+	}
+	/*
+	@RequestMapping(value="/login")
+	public String login_shiro(String username,String password){
+		System.out.println("login执行");
+		UsernamePasswordToken token = new UsernamePasswordToken(username,password);
+		Subject subject = SecurityUtils.getSubject();
+		String message="";
+		
+		//Model model=(Model) new ModelAndView();
+		if (subject.isAuthenticated()==false) {
+			try {
+	            //将存有用户名和密码的token存进subject中
+	            subject.login(token);
+	        }catch (UnknownAccountException uae){
+	        	message="用户名错误";
+				//model.addAttribute("message",message);
+				System.out.println("没有用户名为"+token.getPrincipal()+"的用户");
+				
+	        } catch (IncorrectCredentialsException ice){
+	            System.out.println("用户名为："+token.getPrincipal()+"的用户密码不正确");
+	            message="密码错误";
+				//model.addAttribute("message",message);
+				
+	        } catch (LockedAccountException lae){
+	            System.out.println("用户名为："+token.getPrincipal()+"的用户已被冻结");
+	            message="用户已被冻结";
+				//model.addAttribute("message",message);
+				
+	        } catch (AuthenticationException e){
+	            System.out.println("未知错误！");
+	            message="未知错误！";
+				//model.addAttribute("message",message);
+				
+	        }
+		}
+		
+		//model.addAttribute("user", user);
+		
+		return "login";
+	}
+	*/
+	
+	@RequestMapping(value="/login")
+	public String Login(HttpServletRequest request, Map<String,Object> map){
+		
+        String exception=(String)request.getAttribute("shiroLoginFailure");
+        //System.out.println()
+        String msg="";
+        if(exception!=null){
+            if(UnknownAccountException.class.getName().equals(exception)){
+                System.out.println("UnknownAccountException -- > 账号不存在：");
+                
+                msg = "账号不存在";
+            }else if(IncorrectCredentialsException.class.getName().equals(exception)){
+                System.out.println("IncorrectCredentialsException -- > 密码不正确：");
+                msg = " 密码不正确：";
+            }
+            else {
+                msg = "其他错误"+exception;
+                System.out.println("else -- >" + exception.toString());
+            }
+        }
+        request.setAttribute("message",msg);
+        return "login";
+	}
+	
+	
+	@RequestMapping("/lostpassword")
 	public String lost() {
 		
 		return "sendemail";
@@ -96,7 +186,7 @@ public class loginController {
 	}
 	*/
 	
-	@RequestMapping("/login/forgetpassword")
+	@RequestMapping("/forgetpassword")
 	public String forget(String username,String email,Model model) {
 		int result=userservice.forgetpassword(username,email);
 		String message="";
@@ -120,7 +210,7 @@ public class loginController {
 		
 	}
 	
-	@RequestMapping("/login/resetpassword")
+	@RequestMapping("/resetpassword")
 	public String reset(String username,String verification,String password,Model model) {
 		int result=userservice.resetpassword(username,verification,password);
 		String message="";
@@ -205,7 +295,10 @@ public class loginController {
 		}
 		
 	}
-	
-	
-	
+	/*
+	@RequestMapping("/iws/signout")
+	public String signout() {
+		return "login";
+	}
+	*/
 }

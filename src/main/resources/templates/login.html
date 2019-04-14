@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="zh-CN" 
+                   xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>登录界面</title>
 <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css" media="all" />
@@ -31,12 +32,12 @@
 <div class="inset">
 	<div class="login-head">
 		<h1>登录</h1>
-		<!-- 
-		 <div class="alert-close"> </div> 		
-		  -->	
+		
 	</div>
-		<form action="/login" method="post">
-			    
+	 
+		
+		
+			    <form action="/login" method="post">
 				<input type="text" class="text" name="username" value="用户名" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '用户名';}"><a  class=" icon user"></a>
 			
 				<div class="clear"> </div>
@@ -45,15 +46,17 @@
 			
 			    <div class="clear"> </div>
 			    
-			    <input type="text" name="position" value="职务" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '职务';}"> <a  class="icon user"></a>
-			<div class="clear"> </div> 
+			    
+			
 			<div class="submit">
 				<input type="submit"  value="登录" >
-				<h4><a href="/login/lostpassword">忘记密码 ?</a></h4>
+				<h4><a href="/lostpassword">忘记密码 ?</a></h4>
 						  <div class="clear">  </div>	
 			</div>
 				
 		</form>
+		
+		
 		</div>					
 	</div>
 	
