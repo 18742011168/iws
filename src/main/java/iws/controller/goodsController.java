@@ -3,6 +3,7 @@ package iws.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,15 +20,17 @@ public class goodsController {
 	@Autowired
 	private goodsService goodsservice;
 	
-	@RequestMapping("/iws/manager/goods")
+	@RequestMapping("/iws/goods")
+	@RequiresPermissions("querygoods")
 	public String allgoods(Model model) {
 		List<goods> goodslist=goodsservice.allgoods();
 		model.addAttribute("goodslist",goodslist);
-		return "manager_goods";
+		return "goods";
 		
 	}
 	
-	@GetMapping(value="/iws/manager/goods/delete/{goodId}")
+	@GetMapping(value="/iws/goods/delete/{goodId}")
+	@RequiresPermissions("deletegoods")
 	public String deletegoods(@PathVariable("goodId") String goodId,Model model) {
 		int result=goodsservice.deletegoods(goodId);
 		List<goods> goodslist=new ArrayList<goods>();
@@ -38,38 +41,40 @@ public class goodsController {
 			goodslist=goodsservice.allgoods();
 			model.addAttribute("goodslist",goodslist);
 			model.addAttribute("message",message);
-			return "manager_goods";
+			return "goods";
 		case -2:
 			message="货物 "+goodId+"运输中，不可删除";
 			goodslist=goodsservice.allgoods();
 			model.addAttribute("goodslist",goodslist);
 			model.addAttribute("message",message);
-			return "manager_goods";
+			return "goods";
 		case 0:
 			message="货物 "+goodId+"删除失败";
 			goodslist=goodsservice.allgoods();
 			model.addAttribute("goodslist",goodslist);
 			model.addAttribute("message",message);
-			return "manager_goods";
+			return "goods";
 		default :
 			message="货物 "+goodId+"删除成功";
 			goodslist=goodsservice.allgoods();
 			model.addAttribute("goodslist",goodslist);
 			model.addAttribute("message",message);
-			return "manager_goods";
+			return "goods";
 		}
 		
 	}
 	
-	@GetMapping(value="/iws/manager/goods/update/{goodId}")
+	@GetMapping(value="/iws/goods/update/{goodId}")
+	@RequiresPermissions("updategoods")
 	public String update_html(@PathVariable("goodId") String goodId,Model model) {
 		List<goods> goodslist=goodsservice.findgoods(goodId);
 		goods goods=goodslist.get(0);
 		model.addAttribute("goods",goods);
-		return "manager_goods_update";
+		return "goods_update";
 	}
 	
-	@RequestMapping(value= {"/iws/manager/goods/update"})
+	@RequestMapping(value= {"/iws/goods/update"})
+	@RequiresPermissions("updategoods")
 	public String updategoods(@ModelAttribute("goods") goods goods,Model model) {
 		String message="";
 		if(goodsservice.updategoods(goods.getGoodId(),goods.getCategory(),goods.getWeight(),goods.getState()))
@@ -79,15 +84,17 @@ public class goodsController {
 		List<goods> goodslist=goodsservice.allgoods();
 		model.addAttribute("goodslist",goodslist);
 		model.addAttribute("message",message);
-		return "manager_goods";
+		return "goods";
 	}
 	
-	@RequestMapping(value= {"/iws/manager/goods/add_html"})
+	@RequestMapping(value= {"/iws/goods/add_html"})
+	@RequiresPermissions("updategoods")
 	public String add_html() {	
-		return "manager_goods_add";
+		return "goods_add";
 	}
 	
-	@RequestMapping(value= {"/iws/manager/goods/add"})
+	@RequestMapping(value= {"/iws/goods/add"})
+	@RequiresPermissions("addgoods")
 	public String addgoods(@ModelAttribute("goods") goods goods,Model model) {
 		String message="";
 		int result=goodsservice.addgoods(goods);
@@ -95,22 +102,23 @@ public class goodsController {
 		case -1:
 			message="货物编号 "+goods.getGoodId()+"重复";
 			model.addAttribute("message",message);
-			return "manager_goods_add";
+			return "goods_add";
 		case 0:
 			message="货物"+goods.getGoodId()+"添加失败";
 			model.addAttribute("message",message);
-			return "manager_goods_add";
+			return "goods_add";
 		default :
 			message="货物"+goods.getGoodId()+"添加成功";
 			List<goods> goodslist=goodsservice.allgoods();
 			model.addAttribute("message",message);
 			model.addAttribute("goodslist",goodslist);
-			return "manager_goods";
+			return "goods";
 				
 		}
 	}
 	
-	@GetMapping(value="/iws/godownner/goods/update/{goodId}/{orderId}")
+	@GetMapping(value="/iws/order/goods/update/{goodId}/{orderId}")
+	@RequiresPermissions("updateordergoods")
 	public String godownner_update_html(@PathVariable("goodId") String goodId,@PathVariable("orderId") String orderId,Model model) {
 		List<goods> goodslist=goodsservice.findgoods(goodId);
 		
@@ -118,10 +126,11 @@ public class goodsController {
 		goods goods=goodslist.get(0);
 		model.addAttribute("goods",goods);
 		model.addAttribute("orderId",orderId);
-		return "godownner_order_goods_update";
+		return "order_goods_update";
 	}
 	
-	@RequestMapping(value="/iws/godownner/goods/update")
+	@RequestMapping(value="/iws/order/goods/update")
+	@RequiresPermissions("updateordergoods")
 	public String godownner_updategoods(@ModelAttribute("goods") goods goods,String orderId,Model model) {
 		String updatemessage="";
 		
@@ -139,17 +148,11 @@ public class goodsController {
 		model.addAttribute("message",message);
 		model.addAttribute("goodslist",goodslist);
 		model.addAttribute("orderId",orderId);
-		return "godownner_order_goods";	
+		return "order_goods";	
 		
 	}
 	
-	@RequestMapping("/iws/finance/goods")
-	public String finance_allgoods(Model model) {
-		List<goods> goodslist=goodsservice.allgoods();
-		model.addAttribute("goodslist",goodslist);
-		return "finance_goods";
-		
-	}
+	
 	
 
 }

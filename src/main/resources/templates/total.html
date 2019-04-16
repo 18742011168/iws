@@ -6,7 +6,7 @@
 	<link rel="icon" type="image/png" sizes="96x96" th:href="@{/images/favicon.png}">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>finance_total</title>
+	<title>total</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -51,35 +51,45 @@
 
             <ul class="nav">
                 <li class="active">
-                    <a href="/iws/finance/total">
+                    <a href="/iws/total">
                         <i class="ti-panel"></i>
                         <p>总计</p>
                     </a>
                 </li>
-                
                 <li>
-                    <a href="/iws/finance/goods">
+                    <a href="/iws/user">
+                        <i class="ti-user"></i>
+                        <p>账户</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/iws/goods">
                         <i class="ti-panel"></i>
                         <p>货物</p>
                     </a>
                 </li>
                 <li>
-                    <a href="/iws/finance/warehouse">
+                    <a href="/iws/warehouse">
                         <i class="ti-map"></i>
                         <p>仓库</p>
                     </a>
                 </li>
                 <li>
-                    <a href="/iws/finance/order">
+                    <a href="/iws/order">
                         <i class="ti-view-list-alt"></i>
                         <p>订单</p>
                     </a>
                 </li>
                 
                 
-                
+                <li>
+                    <a href="/iws/warnning">
+                        <i class="ti-bell"></i>
+                        <p>告警</p>
+                    </a>
+                </li>
 				<li class="active-pro">
-                    <a href="/iws/signout">
+                    <a href="/logout">
                         <i class="ti-export"></i>
                         <p>退出</p>
                     </a>
@@ -102,7 +112,34 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-
+                  <div class="col-lg-3 col-sm-6">
+                        <div class="card">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-xs-5">
+                                        <div class="icon-big icon-info text-center">
+                                            <i class="ti-twitter-alt"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-7">
+                                        <div class="numbers">
+                                            <p><a href="/iws/user">账户总数</a></p>
+                                            <p th:text="${usernumber}"></p>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="footer">
+                                    <hr />
+                                    <div class="stats">
+                                        <h6 th:text="'经理数 : '+${managernumber}"></h6>
+                                        <h6 th:text="'制单员数 : '+${financenumber}"></h6>
+                                        <h6 th:text="'仓库管理员数 : '+${godownnernumber}"></h6>    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-lg-3 col-sm-6">
                         <div class="card">
                             <div class="content">
@@ -114,7 +151,7 @@
                                     </div>
                                     <div class="col-xs-7">
                                         <div class="numbers">
-                                            <p><a href="/iws/finance/goods">货物总数</a></p>
+                                            <p><a href="/iws/goods">货物总数</a></p>
                                             <p th:text="${goodsnumber}"></p>
                                         </div>
                                     </div>
@@ -139,7 +176,7 @@
                                     </div>
                                     <div class="col-xs-7">
                                         <div class="numbers">
-                                            <p><a href="/iws/finance/warehouse">仓库总数</a></p>
+                                            <p><a href="/iws/warehouse">仓库总数</a></p>
                                             <p th:text="${warehousenumber}"></p>
                                         </div>
                                     </div>
@@ -165,7 +202,7 @@
                                     </div>
                                     <div class="col-xs-7">
                                         <div class="numbers">
-                                            <p><a href="/iws/finance/order">订单总数</a></p>
+                                            <p><a href="/iws/order">订单总数</a></p>
                                             <p th:text="${ordernumber}"></p>
                                         </div>
                                     </div>
@@ -182,7 +219,31 @@
                             </div>
                         </div>
                     </div>
-               
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-xs-5">
+                                        <div class="icon-big icon-danger text-center">
+                                            <i class="ti-pulse"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-7">
+                                        <div class="numbers">
+                                            <p><a href="/iws/warnning">告警总数</a></p>
+                                            <p th:text="${warnningnumber}"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="footer">
+                                    <hr />
+                                    <div class="stats">
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             
                 </div>
            

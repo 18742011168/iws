@@ -3,6 +3,7 @@ package iws.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,22 +25,25 @@ public class wareHouseController {
 	@Autowired
 	private goodsService goodsservice;
 	
-	@RequestMapping(value="/iws/manager/warehouse")
+	@RequestMapping(value="/iws/warehouse")
+	@RequiresPermissions("querywarehouse")
 	public String manager_allwarehouse(Model model) {
 		model.addAttribute("warehouselist",warehouseservice.allwarehouse());
-		return "manager_warehouse";		
+		return "warehouse";		
 	}
 	
-	@GetMapping(value= {"/iws/manager/warehouse/goods/{wareHouseId}"})
+	@GetMapping(value= {"/iws/warehouse/goods/{wareHouseId}"})
+	@RequiresPermissions("querywarehousegoods")
 	public String manager_warehouse_goods(@PathVariable("wareHouseId")String warehouseId,Model model) {
 		List<goods> goodslist=goodsservice.findbywarehouse(warehouseId);
 		model.addAttribute("goodslist",goodslist);
 		String message="仓库 "+warehouseId+"中的货物";
 		model.addAttribute("message",message);
-		return "manager_order_warehouse_goods";
+		return "warehouse_goods";
 	}
 	
-	@GetMapping(value="/iws/manager/warehouse/delete/{wareHouseId}")
+	@GetMapping(value="/iws/warehouse/delete/{wareHouseId}")
+	@RequiresPermissions("deletewarehouse")
 	public String deletewarehouse(@PathVariable("wareHouseId")String warehouseId,Model model) {
 		int result=warehouseservice.deletewarehouse(warehouseId);
 		String message="";
@@ -50,34 +54,36 @@ public class wareHouseController {
 			model.addAttribute("message",message);
 			warehouselist=warehouseservice.allwarehouse();
 			model.addAttribute("warehouselist",warehouselist);
-			return "manager_warehouse";
+			return "warehouse";
 		case -2:
 			message="仓库 "+warehouseId+" 有货物，不允许删除";
 			model.addAttribute("message",message);
 			warehouselist=warehouseservice.allwarehouse();
 			model.addAttribute("warehouselist",warehouselist);
-			return "manager_warehouse";
+			return "warehouse";
 		case 0:
 			message="仓库 "+warehouseId+"删除失败";
 			model.addAttribute("message",message);
 			warehouselist=warehouseservice.allwarehouse();
 			model.addAttribute("warehouselist",warehouselist);
-			return "manager_warehouse";
+			return "warehouse";
 		default:
 			message="仓库 "+warehouseId+"删除成功";
 			model.addAttribute("message",message);
 			warehouselist=warehouseservice.allwarehouse();
 			model.addAttribute("warehouselist",warehouselist);
-			return "manager_warehouse";
+			return "warehouse";
 		}
 	}
 	
-	@RequestMapping(value="/iws/manager/warehouse/add_html")
+	@RequestMapping(value="/iws/warehouse/add_html")
+	@RequiresPermissions("addwarehouse")
 	public String add_html() {
-		return "manager_warehouse_add";
+		return "warehouse_add";
 	}
 	
-	@RequestMapping(value="/iws/manager/warehouse/add")
+	@RequestMapping(value="/iws/warehouse/add")
+	@RequiresPermissions("addwarehouse")
 	public String addwarehouse(@ModelAttribute("wareHouse") wareHouse warehouse,Model model) {
 		String message="";
 		int result=warehouseservice.addwarehouse(warehouse);
@@ -85,17 +91,17 @@ public class wareHouseController {
 		case -1:
 			message="仓库 "+warehouse.getWareHouseId()+"已存在";
 			model.addAttribute("message",message);
-			return "manager_warehouse_add";
+			return "warehouse_add";
 		case 0:
 			message="仓库 "+warehouse.getWareHouseId()+"添加失败";
 			model.addAttribute("message",message);
-			return "manager_warehouse_add";
+			return "warehouse_add";
 		default:
 			message="仓库 "+warehouse.getWareHouseId()+"添加成功";
 			List<wareHouse> warehouselist=warehouseservice.allwarehouse();
 			model.addAttribute("message",message);
 			model.addAttribute("warehouselist",warehouselist);
-			return "manager_warehouse";
+			return "warehouse";
 			
 		}
 	}

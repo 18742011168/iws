@@ -2,6 +2,7 @@ package iws.controller;
 
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,16 +16,18 @@ public class warnningController {
 	
 	@Autowired
 	private warnningService warnningservice;
-	@RequestMapping(value="/iws/manager/warnning")
+	@RequestMapping(value="/iws/warnning")
+	@RequiresPermissions("querywarnning")
 	public String newwarnning() {
-		return "manager_warnning";
+		return "warnning";
 	}
 	
-	@RequestMapping(value="/iws/manager/warnning/all")
+	@RequestMapping(value="/iws/warnning/all")
+	@RequiresPermissions("querywarnning")
 	public String allwarnning(Model model) {
 		List<warnning> warnninglist=warnningservice.allwaring();
 		model.addAttribute("warnninglist",warnninglist);
-		return "manager_warnning";
+		return "warnning";
 	}
 
 }

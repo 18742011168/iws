@@ -7,6 +7,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import iws.beans.permission;
+import iws.beans.role;
 import iws.beans.user;
 @Component
 public class userDao {
@@ -26,6 +28,19 @@ public class userDao {
 	 public List<user> FindUserByName(String username){
 		 String sql="select * from users where username='"+username+"'";
 		 List <user> userlist=jdbcTemplate.query(sql, new BeanPropertyRowMapper<user>(user.class));
+		 
+		 if(!userlist.isEmpty()) {
+			 for(int i=0;i<userlist.size();i++) {
+				 role role=new role();
+				 String roleName=userlist.get(i).getPosition();
+				 String sql2="select permissionName from role_permission where roleName='"+roleName+"'";
+				 List<permission> permissions=jdbcTemplate.query(sql2, new BeanPropertyRowMapper<permission>(permission.class));
+				 role.setRoleName(roleName);
+				 role.setPermissions(permissions);
+				 userlist.get(i).setRole(role);
+			 }
+		 }
+		 
 	     return userlist;
 	 }
 	 

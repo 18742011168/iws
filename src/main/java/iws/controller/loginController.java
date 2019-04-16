@@ -14,26 +14,16 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-
-import org.springframework.web.bind.annotation.PathVariable;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
-import iws.beans.changeOrder;
-import iws.beans.inOrder;
-import iws.beans.outOrder;
-import iws.beans.user;
-import iws.service.changeOrderService;
-import iws.service.goodsService;
-import iws.service.inOrderService;
 
-import iws.service.outOrderService;
+import iws.beans.user;
+
 import iws.service.userService;
-import iws.service.wareHouseService;
-import iws.service.warnningService;
+
 
 @Controller
 public class loginController {
@@ -43,7 +33,7 @@ public class loginController {
 	
 	@Autowired
 	private userService userservice;
-	
+	/*
 	@Autowired
 	private goodsService goodsservice;
 	
@@ -61,7 +51,7 @@ public class loginController {
 	
 	@Autowired
 	private warnningService warnningservice;
-	
+	*/
 	/*
 	@RequestMapping("/login")
 	public String login(@ModelAttribute("user") user user,Model model){
@@ -94,6 +84,7 @@ public class loginController {
 	
 	@RequestMapping(value="/403")
 	public String error() {
+		System.out.println("------没有权限-------");
 		return "403";
 	}
 	
@@ -106,47 +97,7 @@ public class loginController {
 		model.addAttribute("user",user);
 		return "welcome";
 	}
-	/*
-	@RequestMapping(value="/login")
-	public String login_shiro(String username,String password){
-		System.out.println("login执行");
-		UsernamePasswordToken token = new UsernamePasswordToken(username,password);
-		Subject subject = SecurityUtils.getSubject();
-		String message="";
-		
-		//Model model=(Model) new ModelAndView();
-		if (subject.isAuthenticated()==false) {
-			try {
-	            //将存有用户名和密码的token存进subject中
-	            subject.login(token);
-	        }catch (UnknownAccountException uae){
-	        	message="用户名错误";
-				//model.addAttribute("message",message);
-				System.out.println("没有用户名为"+token.getPrincipal()+"的用户");
-				
-	        } catch (IncorrectCredentialsException ice){
-	            System.out.println("用户名为："+token.getPrincipal()+"的用户密码不正确");
-	            message="密码错误";
-				//model.addAttribute("message",message);
-				
-	        } catch (LockedAccountException lae){
-	            System.out.println("用户名为："+token.getPrincipal()+"的用户已被冻结");
-	            message="用户已被冻结";
-				//model.addAttribute("message",message);
-				
-	        } catch (AuthenticationException e){
-	            System.out.println("未知错误！");
-	            message="未知错误！";
-				//model.addAttribute("message",message);
-				
-	        }
-		}
-		
-		//model.addAttribute("user", user);
-		
-		return "login";
-	}
-	*/
+	
 	
 	@RequestMapping(value="/login")
 	public String Login(HttpServletRequest request, Map<String,Object> map){
@@ -178,13 +129,7 @@ public class loginController {
 		
 		return "sendemail";
 	}
-	/*
-	@RequestMapping("/login/forgetpassword")
-	public String forget(String username,String email) {
-		userservice.forgetpassword(username,email);
-		return "hello";
-	}
-	*/
+	
 	
 	@RequestMapping("/forgetpassword")
 	public String forget(String username,String email,Model model) {
@@ -238,7 +183,7 @@ public class loginController {
 			
 		}
 	}
-	
+	/*
 	@GetMapping(value="/iws/{position}")
 	public String position_html(@PathVariable("position") String position,Model model) {
 		if("manager".equals(position)) {
@@ -295,10 +240,6 @@ public class loginController {
 		}
 		
 	}
-	/*
-	@RequestMapping("/iws/signout")
-	public String signout() {
-		return "login";
-	}
 	*/
+	
 }

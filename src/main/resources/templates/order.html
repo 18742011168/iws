@@ -8,7 +8,7 @@
 	<link rel="icon" type="image/png" sizes="96x96" th:href="@{/images/favicon.png}">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>manager_order</title>
+	<title>order</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -35,6 +35,13 @@
     <link th:href="@{/css/themify-icons.css}" rel="stylesheet">
     
     <script src="js/jquery.min.js"></script>
+    <script th:inline="javascript"> 
+    var message = [[${message}]];
+    if(message){
+    	alert(message)
+    }
+    
+</script>
 </head>
 <body>
 
@@ -54,51 +61,46 @@
             </div>
 
             <ul class="nav">
-                <li>
-                    <a href="/iws/manager/total">
-                        <i class="ti-text"></i>
+                <li >
+                    <a href="/iws/total">
+                        <i class="ti-panel"></i>
                         <p>总计</p>
                     </a>
                 </li>
-                
                 <li>
-                    <a href="/iws/manager/user">
+                    <a href="/iws/user">
                         <i class="ti-user"></i>
                         <p>账户</p>
                     </a>
                 </li>
-                <li>
-                    <a href="/iws/manager/goods">
+                <li >
+                    <a href="/iws/goods">
                         <i class="ti-panel"></i>
                         <p>货物</p>
                     </a>
                 </li>
-                <li>
-                    <a href="/iws/manager/warehouse">
+                <li >
+                    <a href="/iws/warehouse">
                         <i class="ti-map"></i>
                         <p>仓库</p>
                     </a>
                 </li>
                 <li class="active">
-<!--  
-                    <a href="table.html">
--->
-                    <a href="/iws/manager/order">
+                    <a href="/iws/order">
                         <i class="ti-view-list-alt"></i>
                         <p>订单</p>
                     </a>
                 </li>
                 
                 
-                
                 <li>
-                    <a href="/iws/manager/warnning">
+                    <a href="/iws/warnning">
                         <i class="ti-bell"></i>
                         <p>告警</p>
                     </a>
                 </li>
 				<li class="active-pro">
-                    <a href="/iws/signout">
+                    <a href="/logout">
                         <i class="ti-export"></i>
                         <p>退出</p>
                     </a>
@@ -145,12 +147,10 @@
                                         	<td  th:text="${outorder.orderId} "></td>
                                             <td  th:text=" ${outorder.preWarehouseId} "></td>
                                             <td  th:text="${outorder.state} "></td>
-                                             <!-- 
-                                            <td><a href="/order/goods?orderId='+${outorder.orderId}+'" >货物</a></td>
-                                            -->
                                             
-                                            <td><a th:href="@{'/iws/manager/order/goods/'+${outorder.orderId}}" >货物</a></td>
                                             
+                                            <td><a th:href="@{'/iws/order/goods/query/'+${outorder.orderId}}" >货物</a></td>
+                                            <td><a th:href="@{'/iws/order/begin/'+${outorder.orderId}}"><button>订单开始</button></a>|<a th:href="@{'/iws/order/complete/'+${outorder.orderId}}"><button>订单完成</button></a></td>
                                         </tr>
                                         
                                     </tbody>
@@ -183,12 +183,10 @@
                                         	<td  th:text="${inorder.orderId} "></td>
                                             <td  th:text=" ${inorder.nextWarehouseId} "></td>
                                             <td  th:text="${inorder.state} "></td>
-                                             <!-- 
-                                            <td><a href="/order/goods?orderId='+${outorder.orderId}+'" >货物</a></td>
-                                            -->
+                                             
                                             
-                                            <td><a th:href="@{'/iws/manager/order/goods/'+${inorder.orderId}}" >货物</a></td>
-                                            
+                                            <td><a th:href="@{'/iws/order/goods/query/'+${inorder.orderId}}" >货物</a></td>
+                                            <td><a th:href="@{'/iws/order/begin/'+${inorder.orderId}}"><button>订单开始</button></a>|<a th:href="@{'/iws/order/complete/'+${inorder.orderId}}"><button>订单完成</button></a></td>
                                         </tr>
                                         
                                     </tbody>
@@ -223,11 +221,9 @@
                                             <td  th:text=" ${changeorder.preWarehouseId} "></td>
                                             <td  th:text=" ${changeorder.nextWarehouseId} "></td>
                                             <td  th:text="${changeorder.state} "></td>
-                                             <!-- 
-                                            <td><a href="/order/goods?orderId='+${outorder.orderId}+'" >货物</a></td>
-                                            -->
-                                            <td><a th:href="@{'/iws/manager/order/goods/'+${changeorder.orderId}}" >货物</a></td>
                                             
+                                            <td><a th:href="@{'/iws/order/goods/query/'+${changeorder.orderId}}" >货物</a></td>
+                                            <td><a th:href="@{'/iws/order/begin/'+${changeorder.orderId}}"><button>订单开始</button></a>|<a th:href="@{'/iws/order/complete/'+${changeorder.orderId}}"><button>订单完成</button></a></td>
                                         </tr>
                                         
                                     </tbody>
@@ -248,26 +244,7 @@
         <footer class="footer">
             <div class="container-fluid">
                 <nav class="pull-left">
-<!--  
-                    <ul>
 
-                        <li>
-                            <a href="#">
-                                Creative Tim
-                            </a>
-                        </li>
-                        <li>
-                            <a href="http://blog.creative-tim.com">
-                               Blog
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#/license">
-                                Licenses
-                            </a>
-                        </li>
-                    </ul>
--->
                 </nav>
 				<div class="copyright pull-right">
 				智能仓库管理系统  iws  大连理工大学 王佳华

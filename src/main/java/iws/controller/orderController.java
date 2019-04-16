@@ -2,6 +2,7 @@ package iws.controller;
 
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,7 +41,8 @@ public class orderController {
 	
 	
 	
-	@RequestMapping(value= {"/iws/manager/order"})
+	@RequestMapping(value= {"/iws/order"})
+	@RequiresPermissions("queryorder")
 	public String manager_allorder(Model model) {
 		List<outOrder> outorderlist=outorderservice.alloutorder();
 		List<inOrder> inorderlist=inorderservice.allinorder();
@@ -49,19 +51,20 @@ public class orderController {
 		model.addAttribute("outorders",outorderlist);
 		model.addAttribute("inorders",inorderlist);
 		model.addAttribute("changeorders",changeorderlist);
-		return "manager_order";
+		return "order";
 	}
-	@GetMapping(value= {"/iws/manager/order/goods/{orderId}"})
+	@GetMapping(value= {"/iws/order/goods/query/{orderId}"})
+	@RequiresPermissions("queryordergoods")
 	public String manager_order_goods(@PathVariable("orderId") String orderId,Model model) {
 		System.out.println(orderId);
 		List<goods> goodslist=goodsservice.findbyorder(orderId);
 		String message="订单 "+orderId+"包含的货物";
 		model.addAttribute("message",message);
 		model.addAttribute("goodslist",goodslist);
-		return "manager_order_warehouse_goods";
+		return "order_goods";
 		
 	}
-	
+	/*
 	@RequestMapping(value= {"/iws/godownner/order"})
 	public String godownner_allorder(Model model) {
 		List<outOrder> outorderlist=outorderservice.alloutorder();
@@ -85,8 +88,9 @@ public class orderController {
 		return "godownner_order_goods";
 		
 	}
-	
-	@GetMapping(value= {"/iws/godownner/order/begin/{orderId}"})
+	*/
+	@GetMapping(value= {"/iws/order/begin/{orderId}"})
+	@RequiresPermissions("updateorderstate")
 	public String beginorder(@PathVariable("orderId") String orderId,Model model) {
 		
 		// service 层update()是相同的，所以用三个orderservice中的任意一个即可
@@ -114,10 +118,11 @@ public class orderController {
 		model.addAttribute("inorders",inorderlist);
 		model.addAttribute("changeorders",changeorderlist);
 		model.addAttribute("message",message);
-		return "godownner_order";
+		return "order";
 	}
 	
-	@GetMapping(value= {"/iws/godownner/order/complete/{orderId}"})
+	@GetMapping(value= {"/iws/order/complete/{orderId}"})
+	@RequiresPermissions("updateorderstate")
 	public String completeorder(@PathVariable("orderId") String orderId,Model model) {
 		// service 层update()是相同的，所以用三个orderservice中的任意一个即可
 		int result=changeorderservice.updatechangeorder(orderId,"已完成");
@@ -145,7 +150,7 @@ public class orderController {
 		model.addAttribute("inorders",inorderlist);
 		model.addAttribute("changeorders",changeorderlist);
 		model.addAttribute("message",message);
-		return "godownner_order";
+		return "order";
 	}
 	
 	@RequestMapping(value= {"/iws/finance/order"})

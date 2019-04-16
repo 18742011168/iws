@@ -8,7 +8,7 @@
 	<link rel="icon" type="image/png" sizes="96x96" th:href="@{/images/favicon.png}">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>manager_warehouse</title>
+	<title>user</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -62,50 +62,46 @@
             </div>
 
             <ul class="nav">
-                <li>
-                    <a href="/iws/manager/total">
-                        <i class="ti-text"></i>
+                <li >
+                    <a href="/iws/total">
+                        <i class="ti-panel"></i>
                         <p>总计</p>
                     </a>
                 </li>
-                
-                <li >
-                    <a href="/iws/manager/user">
+                <li class="active">
+                    <a href="/iws/user">
                         <i class="ti-user"></i>
                         <p>账户</p>
                     </a>
                 </li>
-                <li >
-                    <a href="/iws/manager/goods">
+                <li>
+                    <a href="/iws/goods">
                         <i class="ti-panel"></i>
                         <p>货物</p>
                     </a>
                 </li>
-                <li class="active">
-                    <a href="/iws/manager/warehouse">
+                <li>
+                    <a href="/iws/warehouse">
                         <i class="ti-map"></i>
                         <p>仓库</p>
                     </a>
                 </li>
-                <li >
-  
-                    
-                    <a href="/iws/manager/order">
+                <li>
+                    <a href="/iws/order">
                         <i class="ti-view-list-alt"></i>
                         <p>订单</p>
                     </a>
                 </li>
                 
                 
-                
                 <li>
-                    <a href="/iws/manager/warnning">
+                    <a href="/iws/warnning">
                         <i class="ti-bell"></i>
                         <p>告警</p>
                     </a>
                 </li>
 				<li class="active-pro">
-                    <a href="/iws/signout">
+                    <a href="/logout">
                         <i class="ti-export"></i>
                         <p>退出</p>
                     </a>
@@ -119,7 +115,7 @@
             <div class="container-fluid">
                 <div class="navbar-header">
 
-                    <a class="navbar-brand" >仓库</a>
+                    <a class="navbar-brand" >用户</a>
                 </div>
                 
             </div>
@@ -132,9 +128,9 @@
                  <div class="col-md-12">
                         <div class="card">
                             <div class="header">
-                                <h5 class="title">所有仓库</h5>
-                                <a href="/iws/manager/warehouse/add_html">
-                                  <button>添加仓库</button>
+                                <h5 class="title">所有账户</h5>
+                                <a href="/iws/user/add_html">
+                                  <button>添加用户</button>
                                 </a>
                                 <!-- 
                                 <p class="category">Here is a subtitle for this table</p>
@@ -144,21 +140,23 @@
                                 <table class="table table-striped" style="font-size:12px;">
                                     <thead>
                                     <tr>
-                                        <th>仓库编号</th>
-                                    	<th>容量</th>
-                                    	<th>库存</th>
-                                    	<th>存放的货物</th>
-                                    	
+                                        <th>账号</th>
+                                    	<th>密码</th>
+                                    	<th>职务</th>
+                                    	<th>邮箱</th>
                                     </tr>	
                                     </thead>
                                     <tbody>
-                                        <tr th:each="wareHouse : ${warehouselist}">
-                                        	<td  th:text="${wareHouse.wareHouseId} "></td>
-                                            <td  th:text=" ${wareHouse.volume} "></td>
-                                            <td  th:text="${wareHouse.inventory} "></td>
-                                           
-                                            <td><a th:href="@{'/iws/manager/warehouse/goods/'+${wareHouse.wareHouseId}}" >货物</a></td>
-                                            <td><a th:href="@{'/iws/manager/warehouse/delete/'+${wareHouse.wareHouseId}}"><button>删除</button></a></td>
+                                        <tr th:each="user : ${users}">
+                                        	<td  th:text="${user.username} "></td>
+                                            <td  th:text=" ${user.password} "></td>
+                                            <td  th:text="${user.position} "></td>
+                                            <td  th:text="${user.email} "></td>
+                                             <!-- 
+                                            <td><a href="/order/goods?orderId='+${outorder.orderId}+'" >货物</a></td>
+                                            -->
+                                            
+                                            <td><a th:href="@{'/iws/user/update/'+${user.username}}" ><button>编辑</button></a>|<a th:href="@{'/iws/user/delete/'+${user.username}}"><button>删除</button></a></td>
                                             
                                         </tr>
                                         
@@ -181,7 +179,9 @@
                 </nav>
 				<div class="copyright pull-right">
 				智能仓库管理系统  iws  大连理工大学 王佳华
-
+<!--  				
+                    Copyright &copy; 2017.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
+-->
                 </div>
             </div>
         </footer>

@@ -131,7 +131,7 @@ public class goodsService {
 					}
 				}
 				else {
-					if(!(warehouseId==null)) {
+					if(!((warehouseId==null)||warehouseId=="")) {
 						warnning warnning=new warnning();
 						warnning.setGoodId(goodId);
 						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

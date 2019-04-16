@@ -8,7 +8,7 @@
 	<link rel="icon" type="image/png" sizes="96x96" th:href="@{/images/favicon.png}">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>godownner_order_goods</title>
+	<title>order_goods</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -36,12 +36,13 @@
     
     <script src="js/jquery.min.js"></script>
     <script th:inline="javascript"> 
-    var updatemessage = [[${updatemessage}]];
-    if(updatemessage){
-    	alert(updatemessage)
+    var message = [[${updatemessage}]];
+    if(message){
+    	alert(message)
     }
     
 </script>
+    
 </head>
 <body>
 
@@ -61,20 +62,46 @@
             </div>
 
             <ul class="nav">
-                
+                <li >
+                    <a href="/iws/total">
+                        <i class="ti-panel"></i>
+                        <p>总计</p>
+                    </a>
+                </li>
                 <li>
-
-                    <a href="/iws/godownner/order">
+                    <a href="/iws/user">
+                        <i class="ti-user"></i>
+                        <p>账户</p>
+                    </a>
+                </li>
+                <li >
+                    <a href="/iws/goods">
+                        <i class="ti-panel"></i>
+                        <p>货物</p>
+                    </a>
+                </li>
+                <li >
+                    <a href="/iws/warehouse">
+                        <i class="ti-map"></i>
+                        <p>仓库</p>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="/iws/order">
                         <i class="ti-view-list-alt"></i>
                         <p>订单</p>
                     </a>
                 </li>
                 
                 
-                
-              
+                <li>
+                    <a href="/iws/warnning">
+                        <i class="ti-bell"></i>
+                        <p>告警</p>
+                    </a>
+                </li>
 				<li class="active-pro">
-                    <a href="/iws/signout">
+                    <a href="/logout">
                         <i class="ti-export"></i>
                         <p>退出</p>
                     </a>
@@ -88,7 +115,7 @@
             <div class="container-fluid">
                 <div class="navbar-header">
 
-                    <a class="navbar-brand" >货物</a>
+                    <a class="navbar-brand" >订单</a>
                 </div>
                 
             </div>
@@ -102,9 +129,7 @@
                         <div class="card">
                             <div class="header">
                                 <h5 class="title" th:text="${message}"></h5>
-                                <!-- 
-                                <p class="category">Here is a subtitle for this table</p>
-                                 -->
+                                
                             </div>
                             <div class="content table-responsive table-full-width">
                                 <table class="table table-striped" style="font-size:12px;">
@@ -124,7 +149,7 @@
                                             <td  th:text="${goods.weight} "></td>
                                             <td  th:text="${goods.warehouseId} "></td>
                                             <td  th:text="${goods.state} "></td>
-                                            <td><a th:href="@{'/iws/godownner/goods/update/'+${goods.goodId}+'/'+${orderId}}"><button>完成</button></a></td>
+                                            <td><a th:href="@{'/iws/order/goods/update/'+${goods.goodId}+'/'+${orderId}}"><button>完成</button></a></td>
                                             
                                             
                                         </tr>

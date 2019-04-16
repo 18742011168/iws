@@ -9,7 +9,7 @@
 	
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>manager_user_add</title>
+	<title>order_goods_update</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -63,51 +63,46 @@
             </div>
 
             <ul class="nav">
-                <li>
-                    <a href="/iws/manager/total">
-                        <i class="ti-text"></i>
+                <li >
+                    <a href="/iws/total">
+                        <i class="ti-panel"></i>
                         <p>总计</p>
                     </a>
                 </li>
-                
-                <li class="active">
-                    <a href="/iws/manager/user">
+                <li>
+                    <a href="/iws/user">
                         <i class="ti-user"></i>
                         <p>账户</p>
                     </a>
                 </li>
-                <li>
-                    <a href="/iws/manager/goods">
+                <li >
+                    <a href="/iws/goods">
                         <i class="ti-panel"></i>
                         <p>货物</p>
                     </a>
                 </li>
-                <li>
-                    <a href="/iws/manager/warehouse">
+                <li >
+                    <a href="/iws/warehouse">
                         <i class="ti-map"></i>
                         <p>仓库</p>
                     </a>
                 </li>
-                <li >
-<!--  
-                    <a href="table.html">
--->
-                    <a href="/iws/manager/order">
+                <li class="active">
+                    <a href="/iws/order">
                         <i class="ti-view-list-alt"></i>
                         <p>订单</p>
                     </a>
                 </li>
                 
                 
-                
                 <li>
-                    <a href="/iws/manager/warnning">
+                    <a href="/iws/warnning">
                         <i class="ti-bell"></i>
                         <p>告警</p>
                     </a>
                 </li>
 				<li class="active-pro">
-                    <a href="/iws/signout">
+                    <a href="/logout">
                         <i class="ti-export"></i>
                         <p>退出</p>
                     </a>
@@ -121,7 +116,7 @@
             <div class="container-fluid">
                 <div class="navbar-header">
 
-                    <a class="navbar-brand" >用户</a>
+                    <a class="navbar-brand" >订单</a>
                 </div>
                 
             </div>
@@ -137,26 +132,26 @@
                        <div class="card">        
                          
                             <div class="header">
-                                <h5 class="title">添加账户</h5>
-                                <!-- 
-                                <p class="category">Here is a subtitle for this table</p>
-                                 -->
+                                <h5 class="title">更新货物信息</h5>
+                                
                             </div>
                            
                           
                             <div class="content table-responsive table-full-width">    
                                
                                 
-                                <form action="/iws/manager/user/add" method="post" >
-                                  <p>账号：<input type="text" name = "username" ></p>
-                                                                                                     
-                                  <p>密码：<input type="password" name = "password" ></p>
+                                <form action="/iws/order/goods/update" method="post">
+                                  <p>订单编号：<input type="text" name = "orderId" th:text="${orderId}"></p>
                                   
-                                  <p>职务：<input type="text" name = "position" ></p>
+                                  <p>货物编号：<input type="text" name = "goodId" th:text="${goods.goodId}"></p>
+
+                                  <p>货物重量：<input type="text" name = "weight" th:text="${goods.weight}"></p>
                                   
-                                  <p>邮箱：<input type="text" name = "email" ></p>
+                                  <p>存放仓库：<input type="text" name = "warehouseId" th:text="${goods.warehouseId}"></p>
+                                  
+                                  <p>货物状态：<input type="text" name = "state" th:text="${goods.state}"></p>
                                                                                                     
-                               <input type="submit" value="完成"> 
+                               <input type="submit" value="完成" > 
                                </form>
 
                             </div>          
