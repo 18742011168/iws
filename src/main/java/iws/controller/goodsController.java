@@ -88,7 +88,7 @@ public class goodsController {
 	}
 	
 	@RequestMapping(value= {"/iws/goods/add_html"})
-	@RequiresPermissions("updategoods")
+	@RequiresPermissions("addgoods")
 	public String add_html() {	
 		return "goods_add";
 	}

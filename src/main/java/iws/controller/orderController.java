@@ -152,7 +152,7 @@ public class orderController {
 		model.addAttribute("message",message);
 		return "order";
 	}
-	
+	/*
 	@RequestMapping(value= {"/iws/finance/order"})
 	public String finance_allorder(Model model) {
 		List<outOrder> outorderlist=outorderservice.alloutorder();
@@ -175,8 +175,9 @@ public class orderController {
 		return "finance_order_warehouse_goods";
 		
 	}
-	
-	@GetMapping(value= {"/iws/finance/order/delete/{orderId}"})
+	*/
+	@GetMapping(value= {"/iws/order/delete/{orderId}"})
+	@RequiresPermissions("deleteorder")
 	public String finance_deleteorder(@PathVariable("orderId") String orderId,Model model) {
 		String message="";
 		int result=changeorderservice.deletechangeorder(orderId);
@@ -201,15 +202,17 @@ public class orderController {
 		model.addAttribute("outorders",outorderlist);
 		model.addAttribute("inorders",inorderlist);
 		model.addAttribute("changeorders",changeorderlist);
-		return "finance_order";
+		return "order";
 	}
 	
-	@RequestMapping(value= {"/iws/finance/order/add_html"})
+	@RequestMapping(value= {"/iws/order/add_html"})
+	@RequiresPermissions("addorder")
 	public String finance_addorder_html() {
-		return "finance_order_add";
+		return "order_add";
 	}
 	
-	@RequestMapping(value= {"/iws/finance/order/add"})
+	@RequestMapping(value= {"/iws/order/add"})
+	@RequiresPermissions("addorder")
 	public String finance_addorder(@ModelAttribute("changeOrder" )changeOrder changeorder,Model model) {
 		
 		if("出库".equals(changeorder.getType())) {
@@ -226,27 +229,27 @@ public class orderController {
 			case -1:
 				message="货物 "+changeorder.getGoodId()+" 不存在";
 				model.addAttribute("message",message);
-				return "finance_order_add";
+				return "order_add";
 			case -2:
 				message="货物 "+changeorder.getGoodId()+" 已出库，或在运输中";
 				model.addAttribute("message",message);
-				return "finance_order_add";
+				return "order_add";
 			case -3:
 				message="货物 "+changeorder.getGoodId()+" 不在仓库 "+changeorder.getPreWarehouseId()+" 中";
 				model.addAttribute("message",message);
-				return "finance_order_add";
+				return "order_add";
 			case -4:
 				message="订单 "+changeorder.getOrderId()+" 重复";
 				model.addAttribute("message",message);
-				return "finance_order_add";
+				return "order_add";
 			case 0:
 				message="出库订单 "+changeorder.getOrderId()+" 添加失败";
 				model.addAttribute("message",message);
-				return "finance_order_add";
+				return "order_add";
 			default:
 				message="出库订单 "+changeorder.getOrderId()+" 添加成功";
 				model.addAttribute("message",message);
-				return "finance_order_add";
+				return "order_add";
 			}
 			
 		}
@@ -263,27 +266,27 @@ public class orderController {
 			case -2:
 				message="货物 "+changeorder.getGoodId()+" 不存在";
 				model.addAttribute("message",message);
-				return "finance_order_add";
+				return "order_add";
 			case -3:
 				message="货物 "+changeorder.getGoodId()+" 已入库，或在运输中";
 				model.addAttribute("message",message);
-				return "finance_order_add";
+				return "order_add";
 			case -1:
 				message="仓库  "+changeorder.getNextWarehouseId()+" 已满或库房好错误，请重新选择";
 				model.addAttribute("message",message);
-				return "finance_order_add";
+				return "order_add";
 			case -4:
 				message="订单 "+changeorder.getOrderId()+" 重复";
 				model.addAttribute("message",message);
-				return "finance_order_add";
+				return "order_add";
 			case 0:
 				message="入库订单 "+changeorder.getOrderId()+" 添加失败";
 				model.addAttribute("message",message);
-				return "finance_order_add";
+				return "order_add";
 			default:
 				message="入库订单 "+changeorder.getOrderId()+" 添加成功";
 				model.addAttribute("message",message);
-				return "finance_order_add";
+				return "order_add";
 			}
 		}
 		else if("位置变更".equals(changeorder.getType())) {
@@ -293,41 +296,42 @@ public class orderController {
 			case -1:
 				message="货物 "+changeorder.getGoodId()+" 不存在";
 				model.addAttribute("message",message);
-				return "finance_order_add";
+				return "order_add";
 			case -2:
 				message="货物 "+changeorder.getGoodId()+" 在运输中";
 				model.addAttribute("message",message);
-				return "finance_order_add";
+				return "order_add";
 			case -3:
 				message="货物 "+changeorder.getGoodId()+" 不在仓库 "+changeorder.getPreWarehouseId()+" 中";
 				model.addAttribute("message",message);
-				return "finance_order_add";
+				return "order_add";
 			case -4:
 				message="仓库  "+changeorder.getNextWarehouseId()+" 错误或库房已满，请重新下选择库房";
 				model.addAttribute("message",message);
-				return "finance_order_add";
+				return "order_add";
 			case -5:
 				message="订单 "+changeorder.getOrderId()+" 重复";
 				model.addAttribute("message",message);
-				return "finance_order_add";
+				return "order_add";
 			case 0:
 				message="位置变更订单 "+changeorder.getOrderId()+" 添加失败";
 				model.addAttribute("message",message);
-				return "finance_order_add";
+				return "order_add";
 			default:
 				message="位置变更订单 "+changeorder.getOrderId()+" 添加成功";
 				model.addAttribute("message",message);
-				return "finance_order_add";
+				return "order_add";
 			}
 		}
 		else {
 			String message="订单类型错误 ，请重新输入";
 			model.addAttribute("message",message);
-			return "finance_order_add";
+			return "order_add";
 		}
 	}
 	
-	@GetMapping(value= {"/iws/finance/order/update/{orderId}"})
+	@GetMapping(value= {"/iws/order/update/{orderId}"})
+	@RequiresPermissions("updateorder")
 	public String finance_updateorder_html(@PathVariable("orderId") String orderId,Model model) {
 			System.out.println(orderId);
 			//orderDao中定义的方法，按orderID查找订单（不区分订单类型）
@@ -344,7 +348,7 @@ public class orderController {
 				model.addAttribute("outorders",outorderlist);
 				model.addAttribute("inorders",inorderlist);
 				model.addAttribute("changeorders",changeorderlist);
-				return "finance_order";
+				return "order";
 				
 			}
 			List<goods> goodslist=goodsservice.findbyorder(orderId);
@@ -352,11 +356,12 @@ public class orderController {
 			model.addAttribute("changeorder",changeorder);
 			model.addAttribute("goodslist",goodslist);
 
-			return "finance_order_update";
+			return "order_update";
 
 	}
 	
-	@GetMapping(value= {"/iws/finance/order/deletegoods/{orderId}/{goodId}"})
+	@GetMapping(value= {"/iws/order/deletegoods/{orderId}/{goodId}"})
+	@RequiresPermissions("updateorder")
 	public String finance_deleteordergoods(@PathVariable("orderId") String orderId,@PathVariable("goodId") String goodId,Model model) {
 		int result=changeorderservice.deleteordergoods(orderId,goodId);
 		String message="";
@@ -381,7 +386,7 @@ public class orderController {
 		model.addAttribute("message",message);
 		model.addAttribute("changeorder",changeorder);
 		model.addAttribute("goodslist",goodslist);
-		return "finance_order_update";
+		return "order_update";
 	}
 	
      

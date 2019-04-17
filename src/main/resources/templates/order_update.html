@@ -9,7 +9,7 @@
 	
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>finance_order_update</title>
+	<title>order_update</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -64,35 +64,45 @@
 
             <ul class="nav">
                 <li >
-                    <a href="/iws/finance/total">
+                    <a href="/iws/total">
                         <i class="ti-panel"></i>
                         <p>总计</p>
                     </a>
                 </li>
-                
+                <li>
+                    <a href="/iws/user">
+                        <i class="ti-user"></i>
+                        <p>账户</p>
+                    </a>
+                </li>
                 <li >
-                    <a href="/iws/finance/goods">
+                    <a href="/iws/goods">
                         <i class="ti-panel"></i>
                         <p>货物</p>
                     </a>
                 </li>
                 <li >
-                    <a href="/iws/finance/warehouse">
+                    <a href="/iws/warehouse">
                         <i class="ti-map"></i>
                         <p>仓库</p>
                     </a>
                 </li>
                 <li class="active">
-                    <a href="/iws/finance/order">
+                    <a href="/iws/order">
                         <i class="ti-view-list-alt"></i>
                         <p>订单</p>
                     </a>
                 </li>
                 
                 
-                
+                <li>
+                    <a href="/iws/warnning">
+                        <i class="ti-bell"></i>
+                        <p>告警</p>
+                    </a>
+                </li>
 				<li class="active-pro">
-                    <a href="/iws/signout">
+                    <a href="/logout">
                         <i class="ti-export"></i>
                         <p>退出</p>
                     </a>
@@ -161,7 +171,7 @@
                                     <tbody>
                                         <tr th:each="goods : ${goodslist}">
                                         	<td  th:text="${goods.goodId} "></td>
-                                        	<td><a th:href="@{'/iws/finance/order/deletegoods/'+${changeorder.orderId}+'/'+${goods.goodId}}"><button>删除</button></a>
+                                        	<td><a th:href="@{'/iws/order/deletegoods/'+${changeorder.orderId}+'/'+${goods.goodId}}"><button>删除</button></a>
                                          
                                         </tr>
                                         

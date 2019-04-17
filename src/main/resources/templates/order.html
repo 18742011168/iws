@@ -114,7 +114,8 @@
             <div class="container-fluid">
                 <div class="navbar-header">
 
-                    <a class="navbar-brand" href="#">订单</a>
+                   <p> <a class="navbar-brand" href="#">订单</a></p>
+                   <p><a href="/iws/order/add_html"> <button>添加订单</button></a></p>
                 </div>
                 
             </div>
@@ -140,6 +141,7 @@
                                     	<th>出货仓库号</th>
                                     	<th>订单状态</th>
                                     	<th>包含货物</th>
+                                    	<th>订单编辑</th>
                                     </tr>	
                                     </thead>
                                     <tbody>
@@ -150,6 +152,7 @@
                                             
                                             
                                             <td><a th:href="@{'/iws/order/goods/query/'+${outorder.orderId}}" >货物</a></td>
+                                            <td><a th:href="@{'/iws/order/update/'+${outorder.orderId}}" >编辑</a></td>
                                             <td><a th:href="@{'/iws/order/begin/'+${outorder.orderId}}"><button>订单开始</button></a>|<a th:href="@{'/iws/order/complete/'+${outorder.orderId}}"><button>订单完成</button></a></td>
                                         </tr>
                                         
@@ -176,6 +179,7 @@
                                     	<th>进货仓库号</th>
                                     	<th>订单状态</th>
                                     	<th>包含货物</th>
+                                    	<th>订单编辑</th>
                                     </tr>	
                                     </thead>
                                     <tbody>
@@ -186,6 +190,7 @@
                                              
                                             
                                             <td><a th:href="@{'/iws/order/goods/query/'+${inorder.orderId}}" >货物</a></td>
+                                            <td><a th:href="@{'/iws/order/update/'+${inorder.orderId}}" >编辑</a></td>
                                             <td><a th:href="@{'/iws/order/begin/'+${inorder.orderId}}"><button>订单开始</button></a>|<a th:href="@{'/iws/order/complete/'+${inorder.orderId}}"><button>订单完成</button></a></td>
                                         </tr>
                                         
@@ -213,6 +218,7 @@
                                     	<th>入库仓库号</th>
                                     	<th>订单状态</th>
                                     	<th>包含货物</th>
+                                    	<th>订单编辑</th>
                                     </tr>	
                                     </thead>
                                     <tbody>
@@ -223,6 +229,7 @@
                                             <td  th:text="${changeorder.state} "></td>
                                             
                                             <td><a th:href="@{'/iws/order/goods/query/'+${changeorder.orderId}}" >货物</a></td>
+                                            <td><a th:href="@{'/iws/order/update/'+${changeorder.orderId}}" >编辑</a></td>
                                             <td><a th:href="@{'/iws/order/begin/'+${changeorder.orderId}}"><button>订单开始</button></a>|<a th:href="@{'/iws/order/complete/'+${changeorder.orderId}}"><button>订单完成</button></a></td>
                                         </tr>
                                         

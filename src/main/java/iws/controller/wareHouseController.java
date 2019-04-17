@@ -105,7 +105,7 @@ public class wareHouseController {
 			
 		}
 	}
-	
+	/*
 	@RequestMapping(value="/iws/finance/warehouse")
 	public String finance_allwarehouse(Model model) {
 		model.addAttribute("warehouselist",warehouseservice.allwarehouse());
@@ -120,7 +120,7 @@ public class wareHouseController {
 		model.addAttribute("message",message);
 		return "finance_order_warehouse_goods";
 	}
-	
+	*/
 	
 
 }
