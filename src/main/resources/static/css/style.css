@@ -105,14 +105,14 @@ input[type="text"]:hover, input[type="password"]:hover{
 .submit h4 a{
 	float:left;
 	font-size: 16px;
-	color: #999;
+	color: #00ff40;
 	font-weight: 400;
 	font-family: 'Droid Sans', sans-serif;
 	margin-top: 15px;
 	margin-left: 21px;
 }
 .submit h4 a:hover{
-	color:#8D4294;
+	color:#80ff80;
 }
 /*************************/
 .submit{
@@ -120,7 +120,7 @@ input[type="text"]:hover, input[type="password"]:hover{
 }
 input[type="submit"] {
 	float: left;
-	color: #fff;
+	color: #ffffff;
 	cursor: pointer;
 	font-weight: 900;
 	outline: none;
@@ -128,8 +128,8 @@ input[type="submit"] {
 	padding: 12px 0px;
 	width: 35%;
 	font-size: 18px;
-	background:#6C496F;
-	border:2px solid #6C496F;
+	background:#80ff80;
+	border:2px solid #00ff40;
 	border-radius: 0.5em;
 	-webkit-border-radius:0.5em;
 	-moz-border-radius:0.5em;
@@ -137,8 +137,8 @@ input[type="submit"] {
 }
 input[type="submit"]:hover {
 	background: #fff;
-	color:#6C496F;
-	border:2px solid #6C496F;
+	color:#80ff00;
+	border:2px solid #00ff40;
 }
 /*----*/
 /* footer */
