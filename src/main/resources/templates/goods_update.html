@@ -46,25 +46,25 @@
     }
     
 </script>
-<!-- 
+<!--  
 <script th:inline="javascript"> 
-                               
+$(function(){ 
                                    var goodId = [[${goods.goodId}]];
                                    var category = [[${goods.category}]];
                                    var weight = [[${goods.weight}]];
                                    var state = [[${goods.state}]];
-                                   alert(goodId );
-                                   $("#goodId").attr("value",goodId);
-                                   //document.getElementById("goodId").value=goodId;
+                                   //alert(goodId );
+                                   //$("#goodId").attr("value",goodId);
+                                   document.getElementById("goodId").html("goodId3");
                                    document.getElementById('category').value=category;
                                    document.getElementById('weight').value=weight;
                                    document.getElementById('state').value=state;
                              
-                               
+})
                                
                                </script>
- -->
-                               
+
+-->                               
 </head>
 <body>
 
