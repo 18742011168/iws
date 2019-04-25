@@ -141,16 +141,32 @@
                                
                                 
                                 <form action="/iws/order/goods/update" method="post">
-                                  <p>订单编号：<input type="text" name = "orderId" th:text="${orderId}"></p>
+                                  <p>订单编号：<input type="text" id="orderId" name = "orderId" value=""></p>
                                   
-                                  <p>货物编号：<input type="text" name = "goodId" th:text="${goods.goodId}"></p>
+                                  <p>货物编号：<input type="text" id="goodId" name = "goodId" value=""></p>
 
-                                  <p>货物重量：<input type="text" name = "weight" th:text="${goods.weight}"></p>
+                                  <p>货物重量：<input type="text" id="weight" name = "weight" value=""></p>
                                   
-                                  <p>存放仓库：<input type="text" name = "warehouseId" th:text="${goods.warehouseId}"></p>
+                                  <p>存放仓库：<input type="text" id="warehouseId" name = "warehouseId" value=""></p>
                                   
-                                  <p>货物状态：<input type="text" name = "state" th:text="${goods.state}"></p>
-                                                                                                    
+                                  <p>货物状态：<input type="text" id="state" name = "state" value=""></p>
+                                   <script th:inline="javascript"> 
+                                  var orderId=[[${orderId}]];
+                                  var goodId = [[${goods.goodId}]];
+                                  
+                                  var weight = [[${goods.weight}]];
+                                  var warehouseId=[[${goods.warehouseId}]];
+                                  var state = [[${goods.state}]];
+                                  document.getElementById('orderId').value=orderId;
+                                   document.getElementById('goodId').value=goodId;
+                                  
+                                   document.getElementById('weight').value=weight;
+                                   document.getElementById('warehouseId').value=warehouseId;
+                                   document.getElementById('state').value=state;
+                             
+
+                               
+                              </script>                                                                                      
                                <input type="submit" value="完成" > 
                                </form>
 

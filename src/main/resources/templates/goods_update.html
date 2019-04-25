@@ -46,25 +46,9 @@
     }
     
 </script>
-<!--  
-<script th:inline="javascript"> 
-$(function(){ 
-                                   var goodId = [[${goods.goodId}]];
-                                   var category = [[${goods.category}]];
-                                   var weight = [[${goods.weight}]];
-                                   var state = [[${goods.state}]];
-                                   //alert(goodId );
-                                   //$("#goodId").attr("value",goodId);
-                                   document.getElementById("goodId").html("goodId3");
-                                   document.getElementById('category').value=category;
-                                   document.getElementById('weight').value=weight;
-                                   document.getElementById('state').value=state;
-                             
-})
-                               
-                               </script>
+ 
 
--->                               
+                             
 </head>
 <body>
 
@@ -164,14 +148,29 @@ $(function(){
                                
                                 
                                 <form action="/iws/goods/update" method="post" >
-                                  <p>货物编号：<input id="goodId" type="text" name = "goodId" th:text="${goods.goodId}"></p>
+                                  <p>货物编号：<input id="goodId" type="text" name = "goodId" value="" ></p>
+                                   
                                                                                                      
-                                  <p>货物类型：<input id="category" type="text" name = "category" th:text="${goods.category}"></p>
+                                  <p>货物类型：<input id="category" type="text" name = "category" value=""></p>
                                   
-                                  <p>货物重量：<input id="weight" type="text" name = "weight" th:text="${goods.weight}"></p>
+                                  <p>货物重量：<input id="weight" type="text" name = "weight" value=""></p>
                                   
-                                  <p>货物状态：<input id="state" type="text" name = "state" th:text="${goods.state}"></p>
-                                                                                                    
+                                  <p>货物状态：<input id="state" type="text" name = "state" value=""></p>
+                                <script th:inline="javascript"> 
+
+                                  var goodId = [[${goods.goodId}]];
+                                  var category = [[${goods.category}]];
+                                  var weight = [[${goods.weight}]];
+                                  var state = [[${goods.state}]];
+                                  
+                                   document.getElementById('goodId').value=goodId;
+                                   document.getElementById('category').value=category;
+                                   document.getElementById('weight').value=weight;
+                                   document.getElementById('state').value=state;
+                             
+
+                               
+                              </script>                                                                 
                                <input type="submit" value="完成"> 
                                </form>
 
