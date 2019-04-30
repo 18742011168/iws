@@ -9,6 +9,8 @@ public class goods {
     private double weight;
     private String warehouseId;
     private String state;
+    private String inPlaceTime;
+    
     public void setGoodId(String goodId){
    	 this.goodId =goodId;
     }
@@ -38,5 +40,12 @@ public class goods {
     }
     public String getState(){
    	 return state;
+    }
+    
+    public void setInPlaceTime(String time) {
+    	this.inPlaceTime=time;
+    }
+    public String getInPlaceTime() {
+    	return this.inPlaceTime;
     }
 }

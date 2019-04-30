@@ -247,8 +247,15 @@ public class orderController {
 				model.addAttribute("message",message);
 				return "order_add";
 			default:
+				
 				message="出库订单 "+changeorder.getOrderId()+" 添加成功";
 				model.addAttribute("message",message);
+				List<goods> similargoodslist=goodsservice.findsimilargoods(changeorder.getGoodId(),"出库");
+				if(!similargoodslist.isEmpty())
+					model.addAttribute("similargoodslist",similargoodslist);
+				model.addAttribute("orderId",changeorder.getOrderId());
+				model.addAttribute("preWarehouseId",changeorder.getPreWarehouseId());
+				
 				return "order_add";
 			}
 			
@@ -286,6 +293,11 @@ public class orderController {
 			default:
 				message="入库订单 "+changeorder.getOrderId()+" 添加成功";
 				model.addAttribute("message",message);
+				List<goods> similargoodslist=goodsservice.findsimilargoods(changeorder.getGoodId(),"入库");
+				if(!similargoodslist.isEmpty())
+					model.addAttribute("similargoodslist",similargoodslist);
+				model.addAttribute("orderId",changeorder.getOrderId());
+				model.addAttribute("nextWarehouseId",changeorder.getNextWarehouseId());
 				return "order_add";
 			}
 		}
@@ -320,6 +332,12 @@ public class orderController {
 			default:
 				message="位置变更订单 "+changeorder.getOrderId()+" 添加成功";
 				model.addAttribute("message",message);
+				List<goods> similargoodslist=goodsservice.findsimilargoods(changeorder.getGoodId(),"位置变更");
+				if(!similargoodslist.isEmpty())
+					model.addAttribute("similargoodslist",similargoodslist);
+				model.addAttribute("orderId",changeorder.getOrderId());
+				model.addAttribute("preWarehouseId",changeorder.getPreWarehouseId());
+				model.addAttribute("nextWarehouseId",changeorder.getNextWarehouseId());
 				return "order_add";
 			}
 		}
@@ -329,6 +347,8 @@ public class orderController {
 			return "order_add";
 		}
 	}
+	
+	
 	
 	@GetMapping(value= {"/iws/order/update/{orderId}"})
 	@RequiresPermissions("updateorder")

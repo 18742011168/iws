@@ -81,6 +81,10 @@ public class outOrderService {
 		}
 		
 		if(outorderdao.hasorder(orderId)) {
+			if(!outorderdao.findOrder(orderId).get(0).getType().equals("出库")) {
+				System.out.println("订单重复");
+				 return -4;
+			}
 			if(outorderdao.hasorder_goods(orderId, goodId)) {
 				System.out.println("订单重复");
 				 return -4;

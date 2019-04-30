@@ -116,6 +116,10 @@ public class changeOrderService {
 		 }
 		
 		if(changeorderdao.hasorder(orderId)) {
+			if(!changeorderdao.findOrder(orderId).get(0).getType().equals("位置变更")) {
+				System.out.println("订单重复");
+				 return -4;
+			}
 			if(changeorderdao.hasorder_goods(orderId, goodId)) {
 				System.out.println("订单重复");
 				return -5;
@@ -172,6 +176,7 @@ public class changeOrderService {
 		}
 		if(changeorderdao.deleteordergoods(orderId, goodId)) {
 			System.out.println("删除订单 "+orderId+"中 的货物 "+goodId);
+			goodsdao.updategoods(goodId, "可移动");
 			return 1;
 		}
 		System.out.println("删除订单 "+orderId+"中 的货物 "+goodId+"失败");

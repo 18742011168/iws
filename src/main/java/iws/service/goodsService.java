@@ -40,7 +40,30 @@ public class goodsService {
 		return goodsdao.findgoods(goodId);
 	}
 	
+	public List<goods> findsimilargoods(String goodId,String ordertype){
+		List<goods> goodslist=goodsdao.findgoods(goodId);
+		
+		if(goodslist.isEmpty())
+			return null;
+		goods goods=goodslist.get(0);
+		if(ordertype.equals("入库")) {
+			List<goods> similargoodslist=goodsdao.findsimilargoods1(goods.getCategory(), "可移动",  goods.getInPlaceTime());
+			return similargoodslist;
+		}
+		else {
+			List<goods> similargoodslist=goodsdao.findsimilargoods2(goods.getCategory(), "可移动", goods.getWarehouseId(), goods.getInPlaceTime());
+			return similargoodslist;
+		}
+			
+			
+		
+		
+	}
 	public int addgoods(goods goods) {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String time=df.format(new Date());
+		goods.setInPlaceTime(time);
+		System.out.println(time);
 		List<goods> goodslist=goodsdao.findgoods(goods.getGoodId());
 		if(!goodslist.isEmpty()) {
 			System.out.println("货物编号重复");
@@ -157,8 +180,9 @@ public class goodsService {
 				mqttGateway.sendToMqtt(message, topic);
 			}
 		}
-		
-		if(goodsdao.updategoods(goodId, weight, warehouseId, state)) {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String time=df.format(new Date());
+		if(goodsdao.updategoods(goodId, weight, warehouseId, state,time)) {
 			System.out.println("货物信息更新成功");
 			return 1;
 		}

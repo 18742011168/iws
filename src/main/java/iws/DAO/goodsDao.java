@@ -26,9 +26,27 @@ public class goodsDao {
 		return goodslist;
 	}
 	
+	//用于入库
+	public List<goods> findsimilargoods1(String category,String state,String inPlaceTime){
+		String sql="select * from goods "
+				+ "where category='"+category+"' and warehouseId is NULL and inPlaceTime<='"+inPlaceTime+"' and state='"+state+"'"
+						+ " ORDER BY inPlaceTime ASC";
+		List<goods> goodslist=jdbcTemplate.query(sql,new BeanPropertyRowMapper<goods>(goods.class));
+		return goodslist;
+	}
+	
+	//用于出库或者位置变更
+	public List<goods> findsimilargoods2(String category,String state,String warehouseId,String inPlaceTime){
+		String sql="select * from goods "
+				+ "where category='"+category+"' and warehouseId='"+warehouseId+"' and inPlaceTime<='"+inPlaceTime+"' and state='"+state+"'"
+						+ "ORDER BY inPlaceTime ASC";
+						
+		List<goods> goodslist=jdbcTemplate.query(sql,new BeanPropertyRowMapper<goods>(goods.class));
+		return goodslist;
+	}
 	public boolean addgoods(goods goods) {
-		String sql="insert into goods(goodId,category,weight,warehouseId,state) values(?,?,?,?,?)";
-		return jdbcTemplate.update(sql, new Object[] {goods.getGoodId(),goods.getCategory(),goods.getWeight(),goods.getWarehouseId(),goods.getState()})==1;
+		String sql="insert into goods(goodId,category,weight,warehouseId,state,inPlaceTime) values(?,?,?,?,?,?)";
+		return jdbcTemplate.update(sql, new Object[] {goods.getGoodId(),goods.getCategory(),goods.getWeight(),goods.getWarehouseId(),goods.getState(),goods.getInPlaceTime()})==1;
 	}
 	
 	public boolean deletegoods(String goodId) {
@@ -43,9 +61,9 @@ public class goodsDao {
 	}
 	
 	//货物出库或入库完后使用，填入货物信息，并更改货物状态
-	public boolean updategoods(String goodId,Double weight,String warehousId,String state) {
-		String sql="update goods set weight=?,warehouseId=?,state=? where goodId=?";
-		return jdbcTemplate.update(sql,new Object[]{weight,warehousId,state,goodId})==1;
+	public boolean updategoods(String goodId,Double weight,String warehousId,String state,String inPlaceTime) {
+		String sql="update goods set weight=?,warehouseId=?,state=?,inPlaceTime=? where goodId=?";
+		return jdbcTemplate.update(sql,new Object[]{weight,warehousId,state,inPlaceTime,goodId})==1;
 	}
 	
 	//货物位置变更后使用，只改变货物位置、状态

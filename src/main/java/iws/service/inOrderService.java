@@ -90,6 +90,10 @@ public class inOrderService {
 		
 		 
 		 if(inorderdao.hasorder(orderId)) {
+			 if(!inorderdao.findOrder(orderId).get(0).getType().equals("入库")) {
+					System.out.println("订单重复");
+					 return -4;
+				}
 			if(inorderdao.hasorder_goods(orderId, goodId)) {
 				System.out.println("订单重复");
 				return -4;
