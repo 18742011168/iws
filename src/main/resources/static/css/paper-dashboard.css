@@ -1183,7 +1183,7 @@ textarea.form-control {
   margin-top: -5px; }
 
 .navbar-default {
-  background-color: #00ff80;
+  background-color: #3498db;
   border-bottom: 1px solid #DDDDDD; }
   .navbar-default .brand {
     color: #66615b !important; }
@@ -1459,9 +1459,10 @@ textarea.form-control {
   overflow: visible; }
 
 .card {
+  opacity:0.8;
   border-radius: 6px;
   box-shadow: 0 2px 2px rgba(204, 197, 185, 0.5);
-  background-color: #00ff80;
+  background-color: #98F898;
   color: #252422;
   margin-bottom: 20px;
   position: relative;
