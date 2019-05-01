@@ -130,6 +130,7 @@ strong {
 }
 /*     General overwrite     */
 body {
+  background: url(../images/bg.jpg);
   color: #66615b;
   font-size: 14px;
   font-family: 'Muli', Arial, sans-serif; }
@@ -314,7 +315,7 @@ hr {
     top: 0;
     left: 0;
     z-index: 2;
-    background: #FFFFFF; }
+    background:#FFFFFF; }
   .sidebar:after, .sidebar:before, .sidebar[data-background-color="white"]:after, .sidebar[data-background-color="white"]:before,
   .off-canvas-sidebar:after,
   .off-canvas-sidebar:before,
@@ -382,7 +383,8 @@ hr {
     opacity: 1; }
 
 .main-panel {
-  background-color: #f4f3ef;
+  background: url(../images/bg.jpg);
+  
   position: relative;
   z-index: 2;
   float: right;
@@ -1011,9 +1013,9 @@ textarea.form-control {
   position: relative; }
 
 .table-striped tbody > tr:nth-of-type(2n+1) {
-  background-color: #fff; }
+  background-color: #00ff80; }
 .table-striped tbody > tr:nth-of-type(2n) {
-  background-color: #FFFCF5; }
+  background-color: #80ff80; }
 .table-striped > thead > tr > th,
 .table-striped > tbody > tr > th,
 .table-striped > tfoot > tr > th,
@@ -1181,7 +1183,7 @@ textarea.form-control {
   margin-top: -5px; }
 
 .navbar-default {
-  background-color: #f4f3ef;
+  background-color: #00ff80;
   border-bottom: 1px solid #DDDDDD; }
   .navbar-default .brand {
     color: #66615b !important; }
@@ -1459,7 +1461,7 @@ textarea.form-control {
 .card {
   border-radius: 6px;
   box-shadow: 0 2px 2px rgba(204, 197, 185, 0.5);
-  background-color: #FFFFFF;
+  background-color: #00ff80;
   color: #252422;
   margin-bottom: 20px;
   position: relative;

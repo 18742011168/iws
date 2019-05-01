@@ -42,16 +42,16 @@ public class goodsService {
 	
 	public List<goods> findsimilargoods(String goodId,String ordertype){
 		List<goods> goodslist=goodsdao.findgoods(goodId);
-		
+		List<goods> similargoodslist=new ArrayList<goods>();
 		if(goodslist.isEmpty())
-			return null;
+			return similargoodslist;
 		goods goods=goodslist.get(0);
 		if(ordertype.equals("入库")) {
-			List<goods> similargoodslist=goodsdao.findsimilargoods1(goods.getCategory(), "可移动",  goods.getInPlaceTime());
+			similargoodslist=goodsdao.findsimilargoods1(goods.getCategory(), "可移动",  goods.getInPlaceTime());
 			return similargoodslist;
 		}
 		else {
-			List<goods> similargoodslist=goodsdao.findsimilargoods2(goods.getCategory(), "可移动", goods.getWarehouseId(), goods.getInPlaceTime());
+			similargoodslist=goodsdao.findsimilargoods2(goods.getCategory(), "可移动", goods.getWarehouseId(), goods.getInPlaceTime());
 			return similargoodslist;
 		}
 			

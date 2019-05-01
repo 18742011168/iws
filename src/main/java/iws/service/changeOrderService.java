@@ -43,7 +43,7 @@ public class changeOrderService {
 			if(!goodslist.isEmpty()) {
 				for(int i=0;i<goodslist.size();i++) {
 					if("运输中".equals(goodslist.get(i).getState())) {
-						System.out.println("有货物在运输中，订单为完成");
+						System.out.println("有货物在运输中，订单未完成");
 						return -3;
 					}
 				}
@@ -61,6 +61,7 @@ public class changeOrderService {
 	public int deletechangeorder(String orderId) {
 		//orderDao中定义的方法，按orderID查找订单（不区分订单类型）
 		List<changeOrder> orderlist=changeorderdao.findOrder(orderId);
+		List<goods> goodslist=goodsdao.findbyorder(orderId);
 		if(!changeorderdao.hasorder(orderId)) {
 			 System.out.println("订单不存在");
 			 return -1;
@@ -73,6 +74,13 @@ public class changeOrderService {
 		}
 		if(changeorderdao.deleteorder(orderId)) {
 			System.out.println("订单删除成功");
+			
+			if(!goodslist.isEmpty()) {
+				for(int i=0;i<goodslist.size();i++) {
+					goods goods=goodslist.get(i);
+					goodsdao.updategoods(goods.getGoodId(), "可移动");
+				}
+			}
 			 return 1;
 		}
 		System.out.println("订单删除失败");
