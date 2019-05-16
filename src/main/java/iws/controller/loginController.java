@@ -175,7 +175,7 @@ public class loginController {
 		 case 1:
 	    	 message="密码修改成功";
 	    	 model.addAttribute("message",message);
-	    	 return "home";
+	    	 return "login";
 		 default:
 			 message="密码修改失败";
 	    	 model.addAttribute("message",message);

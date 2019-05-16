@@ -126,7 +126,7 @@ public class changeOrderService {
 		if(changeorderdao.hasorder(orderId)) {
 			if(!changeorderdao.findOrder(orderId).get(0).getType().equals("位置变更")) {
 				System.out.println("订单重复");
-				 return -4;
+				 return -5;
 			}
 			if(changeorderdao.hasorder_goods(orderId, goodId)) {
 				System.out.println("订单重复");
