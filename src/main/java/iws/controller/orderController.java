@@ -353,11 +353,24 @@ public class orderController {
 	@GetMapping(value= {"/iws/order/update/{orderId}"})
 	@RequiresPermissions("updateorder")
 	public String finance_updateorder_html(@PathVariable("orderId") String orderId,Model model) {
-			System.out.println(orderId);
+			//System.out.println(orderId);
+			String message="";
 			//orderDao中定义的方法，按orderID查找订单（不区分订单类型）
 			List<changeOrder> changeOrderlist=changeorderservice.findorder(orderId);
+			if(changeOrderlist.isEmpty()) {
+				message="订单 "+orderId+" 不存在";
+				model.addAttribute("message",message);
+				List<outOrder> outorderlist=outorderservice.alloutorder();
+				List<inOrder> inorderlist=inorderservice.allinorder();
+				List<changeOrder> changeorderlist=changeorderservice.allchangeorder();
+				
+				model.addAttribute("outorders",outorderlist);
+				model.addAttribute("inorders",inorderlist);
+				model.addAttribute("changeorders",changeorderlist);
+				return "order";
+			}
 			changeOrder changeorder=changeOrderlist.get(0);
-			String message="";
+			
 			if(!"未执行".equals(changeorder.getState())) {
 				message="订单 "+orderId+" 已执行，不允许编辑";
 				model.addAttribute("message",message);

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import iws.DAO.goodsDao;
 import iws.DAO.outOrderDao;
 import iws.DAO.wareHouseDao;
+import iws.beans.changeOrder;
 import iws.beans.goods;
 import iws.beans.outOrder;
 import iws.beans.wareHouse;
@@ -79,13 +80,13 @@ public class outOrderService {
 			System.out.println("货物与仓库不匹配");
 			return -3;
 		}
-		
+		changeOrder order=outorderdao.findOrder(orderId).get(0);
 		if(outorderdao.hasorder(orderId)) {
-			if(!outorderdao.findOrder(orderId).get(0).getType().equals("出库")) {
+			if(!(order.getType().equals("出库")&&preWareHouseId.equals(order.getPreWarehouseId()))) {
 				System.out.println("订单重复");
 				 return -4;
 			}
-			if(outorderdao.hasorder_goods(orderId, goodId)) {
+			if(outorderdao.hasorder_goods(orderId, goodId)||!order.getState().equals("未执行")) {
 				System.out.println("订单重复");
 				 return -4;
 			}

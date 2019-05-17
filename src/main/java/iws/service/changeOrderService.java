@@ -74,7 +74,23 @@ public class changeOrderService {
 		}
 		if(changeorderdao.deleteorder(orderId)) {
 			System.out.println("订单删除成功");
-			
+			String type=changeorder.getType();
+			int size=goodslist.size();
+			if(!"入库".equals(type)) {
+				String prewarehouseId=changeorder.getPreWarehouseId();
+				List<wareHouse> prewarehouselist=warehousedao.findbyId(prewarehouseId);
+				wareHouse prewarehouse=prewarehouselist.get(0);
+				int inventory=prewarehouse.getInventory()+size;
+				warehousedao.updatewarehouse(prewarehouseId, inventory);
+				
+			}
+			if(!"出库".equals(type)) {
+				String nextwarehouseId=changeorder.getNextWarehouseId();
+				List<wareHouse> nextwarehouselist=warehousedao.findbyId(nextwarehouseId);
+				wareHouse nextwarehouse=nextwarehouselist.get(0);
+				int inventory=nextwarehouse.getInventory()-size;
+				warehousedao.updatewarehouse(nextwarehouseId, inventory);
+			}
 			if(!goodslist.isEmpty()) {
 				for(int i=0;i<goodslist.size();i++) {
 					goods goods=goodslist.get(i);
@@ -122,13 +138,13 @@ public class changeOrderService {
 			 System.out.println(nextWareHouseId+"库房已满,请重新选择库房");
 			 return -4;
 		 }
-		
+		changeOrder order=changeorderdao.findOrder(orderId).get(0);
 		if(changeorderdao.hasorder(orderId)) {
-			if(!changeorderdao.findOrder(orderId).get(0).getType().equals("位置变更")) {
+			if(!(order.getType().equals("位置变更")&&nextWareHouseId.equals(order.getNextWarehouseId())&&preWareHouseId.equals(order.getPreWarehouseId()))) {
 				System.out.println("订单重复");
 				 return -5;
 			}
-			if(changeorderdao.hasorder_goods(orderId, goodId)) {
+			if(changeorderdao.hasorder_goods(orderId, goodId)||!order.getState().equals("未执行")) {
 				System.out.println("订单重复");
 				return -5;
 			}
@@ -174,6 +190,7 @@ public class changeOrderService {
 	 }
 	 
 	 public int deleteordergoods(String orderId,String goodId) {
+		 List<changeOrder> orderlist=changeorderdao.findOrder(orderId);
 		 if(!changeorderdao.hasorder(orderId)) {
 			 System.out.println("订单不存在");
 			 return -1;
@@ -183,8 +200,26 @@ public class changeOrderService {
 			return -2;
 		}
 		if(changeorderdao.deleteordergoods(orderId, goodId)) {
+			changeOrder changeorder=orderlist.get(0);
+			String type=changeorder.getType();
+			if(!"入库".equals(type)) {
+				String prewarehouseId=changeorder.getPreWarehouseId();
+				List<wareHouse> prewarehouselist=warehousedao.findbyId(prewarehouseId);
+				wareHouse prewarehouse=prewarehouselist.get(0);
+				int inventory=prewarehouse.getInventory()+1;
+				warehousedao.updatewarehouse(prewarehouseId, inventory);
+				
+			}
+			if(!"出库".equals(type)) {
+				String nextwarehouseId=changeorder.getNextWarehouseId();
+				List<wareHouse> nextwarehouselist=warehousedao.findbyId(nextwarehouseId);
+				wareHouse nextwarehouse=nextwarehouselist.get(0);
+				int inventory=nextwarehouse.getInventory()-1;
+				warehousedao.updatewarehouse(nextwarehouseId, inventory);
+			}
 			System.out.println("删除订单 "+orderId+"中 的货物 "+goodId);
 			goodsdao.updategoods(goodId, "可移动");
+			
 			return 1;
 		}
 		System.out.println("删除订单 "+orderId+"中 的货物 "+goodId+"失败");
