@@ -143,13 +143,28 @@
                                
                                 
                                 <form action="/iws/user/update" method="post" >
-                                  <p>账号：<input type="text" name = "username" th:text="${user.username}"></p>
+                                  <p>账号：<input type="text" id="username" name = "username" value=""></p>
                                                                                                      
-                                  <p>密码：<input type="password" name = "password" ></p>
+                                  <p>密码：<input type="password"  name = "password" ></p>
                                   
-                                  <p>职务：<input type="text" name = "position" th:text="${user.position}"></p>
+                                  <p>职务：<input type="text" id="position" name = "position" value=""></p>
                                   
-                                  <p>邮箱：<input type="text" name = "email" th:text="${user.email}"></p>
+                                  <p>邮箱：<input type="text" id="email" name = "email" value=""></p>
+                                  <script th:inline="javascript"> 
+
+                                  var username = [[${user.username}]];
+                                  var position = [[${user.position}]];
+                                  var email = [[${user.email}]];
+                                
+                                  
+                                   document.getElementById('username').value=username;
+                                   document.getElementById('position').value=position;
+                                   document.getElementById('email').value=email;
+                        
+                             
+
+                               
+                              </script>         
                                                                                                     
                                <input type="submit" value="完成"> 
                                </form>

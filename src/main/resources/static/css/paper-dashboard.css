@@ -139,10 +139,33 @@ body {
     position: relative; }
 
 a {
-  color: #68B3C8; }
+  color: #580ef1; }
   a:hover, a:focus {
-    color: #3091B2;
+    color: #ff0000;
     text-decoration: none; }
+button {
+	background-color: #00ffff;
+	border-radius: 4px;
+}
+
+input[type=text], input[type=password] {
+	border: 1px solid #ccc;
+    border-radius: 4px;
+
+}
+input[type=submit] {
+	background-color: #580ef1;
+	color: white;
+	
+    font-size: 14px;
+ 
+  padding: 8px 9px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+	
+}
 
 a:focus, a:active,
 button::-moz-focus-inner,
@@ -1519,8 +1542,8 @@ textarea.form-control {
       margin-top: 5px;
       margin-bottom: 5px; }
   .card .stats {
-    color: #a9a9a9;
-    font-weight: 300; }
+    color: #580ef1;
+     }
     .card .stats i {
       margin-right: 2px;
       min-width: 15px;
