@@ -65,6 +65,7 @@ public class outOrderService {
 		String orderId=outorder.getOrderId();
 		List<goods> goodslist=goodsdao.findgoods(goodId);
 		List<wareHouse> warehouselist=warehousedao.findbyId(preWareHouseId);
+		
 		if(goodslist.isEmpty()) {
 			System.out.println("货物不存在");
 			 return -1;
@@ -80,8 +81,11 @@ public class outOrderService {
 			System.out.println("货物与仓库不匹配");
 			return -3;
 		}
-		changeOrder order=outorderdao.findOrder(orderId).get(0);
+		
+		
+		
 		if(outorderdao.hasorder(orderId)) {
+			changeOrder order=outorderdao.findOrder(orderId).get(0);
 			if(!(order.getType().equals("出库")&&preWareHouseId.equals(order.getPreWarehouseId()))) {
 				System.out.println("订单重复");
 				 return -4;
@@ -90,6 +94,7 @@ public class outOrderService {
 				System.out.println("订单重复");
 				 return -4;
 			}
+		
 			if(outorderdao.addorder_goods(outorder)) {
 				System.out.println("订单添加成功");
 				goodsdao.updategoods(goodId, "运输中");

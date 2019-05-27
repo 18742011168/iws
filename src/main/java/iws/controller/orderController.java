@@ -216,14 +216,16 @@ public class orderController {
 	public String finance_addorder(@ModelAttribute("changeOrder" )changeOrder changeorder,Model model) {
 		
 		if("出库".equals(changeorder.getType())) {
-		
+		    
 			outOrder outorder=new outOrder();
 			outorder.setOrderId(changeorder.getOrderId());
 			outorder.setGoodId(changeorder.getGoodId());
 			outorder.setPreWarehouseId(changeorder.getPreWarehouseId());
 			outorder.setState(changeorder.getState());
 			outorder.setType(changeorder.getType());
+			
 			int result=outorderservice.addoutorder(outorder);
+			
 			String message="";
 			switch(result) {
 			case -1:
@@ -249,6 +251,7 @@ public class orderController {
 			default:
 				
 				message="出库订单 "+changeorder.getOrderId()+" 添加成功";
+				
 				model.addAttribute("message",message);
 				List<goods> similargoodslist=goodsservice.findsimilargoods(changeorder.getGoodId(),"出库");
 				if(!similargoodslist.isEmpty())

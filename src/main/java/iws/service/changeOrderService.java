@@ -138,8 +138,9 @@ public class changeOrderService {
 			 System.out.println(nextWareHouseId+"库房已满,请重新选择库房");
 			 return -4;
 		 }
-		changeOrder order=changeorderdao.findOrder(orderId).get(0);
+		
 		if(changeorderdao.hasorder(orderId)) {
+			changeOrder order=changeorderdao.findOrder(orderId).get(0);
 			if(!(order.getType().equals("位置变更")&&nextWareHouseId.equals(order.getNextWarehouseId())&&preWareHouseId.equals(order.getPreWarehouseId()))) {
 				System.out.println("订单重复");
 				 return -5;

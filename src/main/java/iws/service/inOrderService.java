@@ -89,8 +89,9 @@ public class inOrderService {
 			 return -3;
 		 }
 		
-		changeOrder order=inorderdao.findOrder(orderId).get(0);
+		
 		 if(inorderdao.hasorder(orderId)) {
+			 changeOrder order=inorderdao.findOrder(orderId).get(0);
 			 if(!(order.getType().equals("入库")&&wareHouseId.equals(order.getNextWarehouseId()))) {
 					System.out.println("订单重复");
 					 return -4;
