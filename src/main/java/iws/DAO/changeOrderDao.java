@@ -30,7 +30,7 @@ public class changeOrderDao extends orderDao{
 		}
 	 
 	public boolean addchangeorder(changeOrder changeorder ) {
-		String sql1="insert into orders(orderId,preWarehouseId,nextWarehouseId,type,state) values(?,?,?,?,?,?)";
+		String sql1="insert into orders(orderId,preWarehouseId,nextWarehouseId,type,state) values(?,?,?,?,?)";
 		int number1=jdbcTemplate.update(sql1,new Object[]{changeorder.getOrderId(),changeorder.getPreWarehouseId(),changeorder.getNextWarehouseId(),changeorder.getType(),changeorder.getState()});
 		String sql2="insert into order_goods(orderId,goodId) values(?,?)";
 		int number2=jdbcTemplate.update(sql2,new Object[]{changeorder.getOrderId(),changeorder.getGoodId()});
