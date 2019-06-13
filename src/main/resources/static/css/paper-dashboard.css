@@ -139,9 +139,11 @@ body {
     position: relative; }
 
 a {
-  color: #580ef1; }
+  color: #400040; 
+ font-weight:bold
+  }
   a:hover, a:focus {
-    color: #ff0000;
+    color: #400040;
     text-decoration: none; }
 button {
 	background-color: #00ffff;
@@ -1036,9 +1038,9 @@ textarea.form-control {
   position: relative; }
 
 .table-striped tbody > tr:nth-of-type(2n+1) {
-  background-color: #00ff80; }
+  background-color: #80ffff; }
 .table-striped tbody > tr:nth-of-type(2n) {
-  background-color: #80ff80; }
+  background-color: #ffffff; }
 .table-striped > thead > tr > th,
 .table-striped > tbody > tr > th,
 .table-striped > tfoot > tr > th,
@@ -1206,7 +1208,7 @@ textarea.form-control {
   margin-top: -5px; }
 
 .navbar-default {
-  background-color: #3498db;
+  background-color: #ffffff;
   border-bottom: 1px solid #DDDDDD; }
   .navbar-default .brand {
     color: #66615b !important; }
@@ -1485,7 +1487,7 @@ textarea.form-control {
   opacity:0.8;
   border-radius: 6px;
   box-shadow: 0 2px 2px rgba(204, 197, 185, 0.5);
-  background-color: #98F898;
+  background-color: #ffffff;
   color: #252422;
   margin-bottom: 20px;
   position: relative;
