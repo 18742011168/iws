@@ -110,5 +110,21 @@ public class goodsDao {
 		 return result;
 		 
 	 }
+    
+    public List<goods> findbycategory1(String category){
+    	
+    	String state="可移动";
+    	String sql="select * from goods where category='"+category+"' and warehouseId is NULL and state='"+state +"'";
+		List<goods> goodslist=jdbcTemplate.query(sql,new BeanPropertyRowMapper<goods>(goods.class));
+		return goodslist;
+    }
+    
+    public List<goods> findbycategory2(String category){
+    	
+    	String state="可移动";
+    	String sql="select * from goods where category='"+category+"' and warehouseId IS NOT NULL and state='"+state +"'";
+		List<goods> goodslist=jdbcTemplate.query(sql,new BeanPropertyRowMapper<goods>(goods.class));
+		return goodslist;
+    }
      
 }

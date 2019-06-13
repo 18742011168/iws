@@ -10,6 +10,8 @@ import iws.DAO.goodsDao;
 import iws.DAO.wareHouseDao;
 import iws.beans.changeOrder;
 import iws.beans.goods;
+import iws.beans.inOrder;
+import iws.beans.outOrder;
 import iws.beans.wareHouse;
 
 
@@ -23,6 +25,12 @@ public class changeOrderService {
 	
 	@Autowired
 	private wareHouseDao warehousedao;
+	
+	@Autowired
+	private inOrderService inorderservice;
+	
+	@Autowired
+	private outOrderService outorderservice;
 	
 	public int updatechangeorder(String orderId,String state) {
 		//List<changeOrder> orderlist=changeorderdao.findById(orderId);
@@ -102,7 +110,21 @@ public class changeOrderService {
 		System.out.println("订单删除失败");
 		 return 0;
 	 }
-	
+	public String recommendwarehouse(changeOrder changeorder) {
+		String goodId=changeorder.getGoodId();
+		List<goods> goodslist=goodsdao.findgoods(goodId);
+		String category=goodslist.get(0).getCategory();
+		List<wareHouse> warehouselist=warehousedao.findbyKind1(category);
+		
+		for(int i=0;i<warehouselist.size();i++) {
+			wareHouse warehouse=warehouselist.get(i);
+			if(warehouse.getVolume()-warehouse.getInventory()>1){
+				return warehouse.getWareHouseId();
+			}
+
+		}
+		return "无仓库可推荐";
+	}
 	public int addchangeorder(changeOrder changeorder ) {
 		String preWareHouseId=changeorder.getPreWarehouseId();
 		String nextWareHouseId=changeorder.getNextWarehouseId();
@@ -130,7 +152,7 @@ public class changeOrderService {
 		List<wareHouse> prewarehouselist=warehousedao.findbyId(preWareHouseId);
 		if(nextwarehouselist.isEmpty()) {
 			System.out.println("新库房库房号错误,请重新选择库房");
-			return -4;
+			return -6;
 		}
 		
 		wareHouse nextwarehouse=nextwarehouselist.get(0);
@@ -138,7 +160,11 @@ public class changeOrderService {
 			 System.out.println(nextWareHouseId+"库房已满,请重新选择库房");
 			 return -4;
 		 }
-		
+		String category=good.getCategory();
+		if(!category.equals(nextwarehouse.getKind())) {
+			System.out.println("本仓库存储 "+nextwarehouse.getKind());
+			 return -6;
+		}
 		if(changeorderdao.hasorder(orderId)) {
 			changeOrder order=changeorderdao.findOrder(orderId).get(0);
 			if(!(order.getType().equals("位置变更")&&nextWareHouseId.equals(order.getNextWarehouseId())&&preWareHouseId.equals(order.getPreWarehouseId()))) {
@@ -226,6 +252,68 @@ public class changeOrderService {
 		System.out.println("删除订单 "+orderId+"中 的货物 "+goodId+"失败");
 		return 0;
 		
+	 }
+	 
+	 public int intelligenceorderadd(String category,String nextWarehouseId,String type) {
+		 if(type.equals("入库")) {
+			 List<goods> goodslist=goodsdao.findbycategory1(category);
+			// System.out.println(category);
+			 List<wareHouse> warehouselist=warehousedao.findbyKind1(category);
+			 
+			 int goodsnumber=goodslist.size();
+			// System.out.println(goodsnumber);
+			// System.out.println(warehouselist.size());
+			 for(int i=0;i<warehouselist.size()&&goodsnumber>0;i++) {
+				 wareHouse warehouse=warehouselist.get(i);
+				 int space=warehouse.getVolume()-warehouse.getInventory();
+				 for(int j=0;j<space&&goodsnumber>0;j++) {
+					 inOrder inorder=new inOrder();
+					 inorder.setGoodId(goodslist.get(goodsnumber-1).getGoodId());
+					 inorder.setOrderId("自动入库单"+warehouse.getWareHouseId());
+					 inorder.setNextWarehouseId(warehouse.getWareHouseId());
+					 inorder.setState("未执行");
+					 inorder.setType("入库");
+					 System.out.println(inorder.getGoodId());
+					 System.out.println(inorder.getOrderId());
+					 System.out.println(inorder.getNextWarehouseId());
+					 System.out.println(inorder.getType());
+					 inorderservice.addinorder(inorder);
+					 
+					 goodsnumber--;
+					 System.out.println(goodsnumber);
+				 }
+			 }
+			 if(goodsnumber>0)
+				 return -1;
+			 else
+				 return 1;
+		 }
+		 if(type.equals("出库")) {
+			 
+			 List<wareHouse> warehouselist=warehousedao.findbyKind2(category);
+			 for(int i=0;i<warehouselist.size();i++) {
+				 wareHouse warehouse=warehouselist.get(i);
+				 List<goods> warehousegoods=goodsdao.findbywarehouse(warehouselist.get(i).getWareHouseId());
+				 int warehousegoodsnumber=warehousegoods.size();
+				 if(warehousegoodsnumber>0) {
+					 for(int j=0;j<warehousegoodsnumber;j++) {
+						 outOrder outorder=new outOrder();
+						 outorder.setGoodId(warehousegoods.get(j).getGoodId());
+						 outorder.setOrderId("自动出库单"+warehouse.getWareHouseId());
+						 outorder.setState("未执行");
+						 outorder.setType("出库");
+						 outorder.setPreWarehouseId(warehouse.getWareHouseId());
+						 outorderservice.addoutorder(outorder);
+						 
+					 }
+				 }
+				 
+			 }
+			 return 2;
+		 }
+		 return 0;
+		 
+		 
 	 }
 
 }

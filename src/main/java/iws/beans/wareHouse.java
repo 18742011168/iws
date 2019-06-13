@@ -11,6 +11,7 @@ public class wareHouse {
 	private List<goods> goods;
 	private int volume;
 	private int inventory;
+	private String kind;
 	
 	public void setWareHouseId(String wareHouseId) {
 		this.wareHouseId=wareHouseId;
@@ -38,6 +39,13 @@ public class wareHouse {
 	}
 	public int getInventory() {
 		return this.inventory;
+	}
+	
+	public String getKind() {
+		return this.kind;
+	}
+	public void setKind(String kind) {
+		this.kind=kind;
 	}
 
 }

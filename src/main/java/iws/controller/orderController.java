@@ -282,11 +282,17 @@ public class orderController {
 				model.addAttribute("message",message);
 				return "order_add";
 			case -1:
-				message="仓库  "+changeorder.getNextWarehouseId()+" 已满或库房好错误，请重新选择";
+				String recommendwarehouse=inorderservice.recommendwarehouse(inorder);
+				message="仓库  "+changeorder.getNextWarehouseId()+" 已满，建议选择仓库 "+recommendwarehouse;
 				model.addAttribute("message",message);
 				return "order_add";
 			case -4:
 				message="订单 "+changeorder.getOrderId()+" 重复";
+				model.addAttribute("message",message);
+				return "order_add";
+			case -5:
+				String recommendwarehouse2=inorderservice.recommendwarehouse(inorder);
+				message="仓库  "+changeorder.getNextWarehouseId()+" 不能存放该货物，建议选择仓库 "+recommendwarehouse2;
 				model.addAttribute("message",message);
 				return "order_add";
 			case 0:
@@ -321,11 +327,17 @@ public class orderController {
 				model.addAttribute("message",message);
 				return "order_add";
 			case -4:
-				message="仓库  "+changeorder.getNextWarehouseId()+" 错误或库房已满，请重新下选择库房";
+				String recommendwarehouse=changeorderservice.recommendwarehouse(changeorder);
+				message="仓库  "+changeorder.getNextWarehouseId()+" 库房已满，建议选择库房 "+recommendwarehouse;
 				model.addAttribute("message",message);
 				return "order_add";
 			case -5:
 				message="订单 "+changeorder.getOrderId()+" 重复";
+				model.addAttribute("message",message);
+				return "order_add";
+			case -6:
+				String recommendwarehouse2=changeorderservice.recommendwarehouse(changeorder);
+				message="仓库  "+changeorder.getNextWarehouseId()+" 不能存放该货物，建议选择仓库 "+recommendwarehouse2;
 				model.addAttribute("message",message);
 				return "order_add";
 			case 0:
@@ -350,8 +362,41 @@ public class orderController {
 			return "order_add";
 		}
 	}
+	@RequestMapping(value= {"/iws/order/intelligence_add_html"})
+	@RequiresPermissions("addorder")
+	public String intelligenceadd_html() {
+		return "intelligence_order_add";
+	}
 	
-	
+	@RequestMapping(value= {"/iws/order/intelligenceorderadd"})
+	@RequiresPermissions("addorder")
+	public String fintelligenceaddorder(String category,String nextWarehouseId,String type,Model model) {
+		int result=changeorderservice.intelligenceorderadd(category,nextWarehouseId,type);
+		String message="";
+		if(result==1) {
+			message="入库单自动生成 ";
+			
+		}
+		else if(result==-1) {
+			message="入库库位不足 ";
+		}
+		else if(result==2) {
+			message="出库单自动生成 ";
+		}
+		else
+			message="  ";
+		List<outOrder> outorderlist=outorderservice.alloutorder();
+		List<inOrder> inorderlist=inorderservice.allinorder();
+		List<changeOrder> changeorderlist=changeorderservice.allchangeorder();
+		
+		model.addAttribute("outorders",outorderlist);
+		model.addAttribute("inorders",inorderlist);
+		model.addAttribute("changeorders",changeorderlist);
+		model.addAttribute("message",message);
+		return "order";
+			
+		
+	}
 	
 	@GetMapping(value= {"/iws/order/update/{orderId}"})
 	@RequiresPermissions("updateorder")

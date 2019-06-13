@@ -57,7 +57,21 @@ public class inOrderService {
 		 System.out.println("订单删除失败");
 		 return 0;
 	 }
-	
+	public String recommendwarehouse(inOrder inorder) {
+		String goodId=inorder.getGoodId();
+		List<goods> goodslist=goodsdao.findgoods(goodId);
+		String category=goodslist.get(0).getCategory();
+		List<wareHouse> warehouselist=warehousedao.findbyKind1(category);
+		
+		for(int i=0;i<warehouselist.size();i++) {
+			wareHouse warehouse=warehouselist.get(i);
+			if(warehouse.getVolume()-warehouse.getInventory()>1){
+				return warehouse.getWareHouseId();
+			}
+
+		}
+		return "无仓库可推荐";
+	}
 	 public int addinorder(inOrder inorder) {
 		 
 		 String wareHouseId=inorder.getNextWarehouseId();
@@ -69,7 +83,7 @@ public class inOrderService {
 		 
 		 if(warehouselist.isEmpty()) {
 			 System.out.println("库房号错误,请重新选择库房");
-			 return -1;
+			 return -5;
 		 }
 		 wareHouse warehouse=warehouselist.get(0);
 		 if ((warehouse.getVolume()-warehouse.getInventory())<1){
@@ -88,7 +102,12 @@ public class inOrderService {
 			 System.out.println("货物已入库，或在运输中");
 			 return -3;
 		 }
-		
+		String category=good.getCategory();
+		if(!category.equals(warehouse.getKind())) {
+			System.out.println("本仓库存储 "+warehouse.getKind());
+			 return -5;
+		}
+			
 		
 		 if(inorderdao.hasorder(orderId)) {
 			 changeOrder order=inorderdao.findOrder(orderId).get(0);

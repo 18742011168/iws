@@ -132,20 +132,17 @@
                        <div class="card">        
                          
                             <div class="header">
-                                <p> <h5 class="title">添加订单</h5>
-                                   <a href="/iws/order/intelligence_add_html"> <button>自动添加订单</button></a> 
-                                
-                                
+                                <h5 class="title">自动添加订单</h5>
+                                   
                             </div>
                            
                           
                             <div class="content table-responsive table-full-width">    
                                
                                 
-                                <form action="/iws/order/add" method="post" >
-                                  <p>订单编号：<input type="text" name = "orderId" id="orderId"></p>
-                                                                                                     
-                                  <p>货物编号：<input type="text" name = "goodId" ></p>
+                                <form action="/iws/order/intelligenceorderadd" method="post" >
+                                   
+                                  <p>货物类型：<input type="text" name = "category" ></p>
                                   
                                   <p>出货仓库：<input type="text" name = "preWarehouseId" id="preWarehouseId" value="入库单不必填写" onfocus="this.value = ''"> </p>
                                  
@@ -157,33 +154,7 @@
                                   <label style="color: #580ef1;"><input type="radio" name = "type" value="位置变更" />位置变更</label>
                                   </p>
                                   
-                                  <p>订单状态：<input type="text" name = "state" value="未执行"> </p>
-                                  <script th:inline="javascript"> 
-                                 
-                                	  var orderId=[[${orderId}]];
-                                      var preWarehouseId=[[${preWarehouseId}]];
-                                      var nextWarehouseId=[[${nextWarehouseId}]];
-                                     
-                                      
-                                      if(orderId){
-                                    	  document.getElementById('orderId').value=orderId;
-                                      }
-                                      if(preWarehouseId){
-                                    	  document.getElementById('preWarehouseId').value=preWarehouseId;
-                                      }
-                                      if(nextWarehouseId){
-                                    	  document.getElementById('nextWarehouseId').value=nextWarehouseId;
-                                      }
-                                      if(preWarehouseId){
-                                    	  document.getElementById('type').value=type;
-                                      }
                                   
-                                 
-                                  
-                                   
-
-                               
-                              </script>                  
                                   
                                                                                                     
                                <input type="submit" value="完成"> 
@@ -194,39 +165,6 @@
  
                     </div>
                     
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="header">
-                                <h5 class="title">推荐货物</h5>
-                                
-                            </div>
-                            <div class="content table-responsive table-full-width">
-                                <table class="table table-striped" style="font-size:12px;">
-                                    <thead>
-                                    <tr>
-                                        <th>货物编号</th>
-                                    	<th>种类</th>
-                                    	<th>重量</th>
-                                    	<th>存放仓库</th>
-                                    	<th>状态</th>
-                                    </tr>	
-                                    </thead>
-                                    <tbody>
-                                        <tr th:each="goods : ${similargoodslist}">
-                                        	<td  th:text="${goods.goodId} "></td>
-                                            <td  th:text=" ${goods.category} "></td>
-                                            <td  th:text="${goods.weight} "></td>
-                                            <td  th:text="${goods.warehouseId} "></td>
-                                            <td  th:text="${goods.state} "></td>
-                                           
-                                        </tr>
-                                        
-                                    </tbody>
-                                </table>
-
-                            </div>
-                        </div>
-                    </div>
                     
 
                 </div>

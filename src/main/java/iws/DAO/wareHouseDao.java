@@ -28,6 +28,17 @@ public class wareHouseDao {
 		return warehouselist;
 	}
 	
+	public List<wareHouse> findbyKind1(String kind){
+		String sql="select * from wareHouse where kind='"+kind+"'";
+		List<wareHouse> warehouselist=jdbcTemplate.query(sql, new BeanPropertyRowMapper<wareHouse>(wareHouse.class));
+		return warehouselist;
+	}
+	
+	public List<wareHouse> findbyKind2(String kind){
+		String sql="select * from wareHouse where kind='"+kind+"' and inventory>0";
+		List<wareHouse> warehouselist=jdbcTemplate.query(sql, new BeanPropertyRowMapper<wareHouse>(wareHouse.class));
+		return warehouselist;
+	}
 	public boolean addwarehouse(wareHouse warehouse) {
 		 String sql="insert into wareHouse(wareHouseId,volume,inventory) values(?,?,?)";
 		 return jdbcTemplate.update(sql,new Object[]{warehouse.getWareHouseId(),warehouse.getVolume(),warehouse.getInventory()})==1;
@@ -56,5 +67,7 @@ public class wareHouseDao {
 		 return result;
 		 
 	 }
+	
+
 
 }
