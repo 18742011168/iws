@@ -152,30 +152,7 @@ public class orderController {
 		model.addAttribute("message",message);
 		return "order";
 	}
-	/*
-	@RequestMapping(value= {"/iws/finance/order"})
-	public String finance_allorder(Model model) {
-		List<outOrder> outorderlist=outorderservice.alloutorder();
-		List<inOrder> inorderlist=inorderservice.allinorder();
-		List<changeOrder> changeorderlist=changeorderservice.allchangeorder();
-		
-		model.addAttribute("outorders",outorderlist);
-		model.addAttribute("inorders",inorderlist);
-		model.addAttribute("changeorders",changeorderlist);
-		return "finance_order";
-	}
 	
-	@GetMapping(value= {"/iws/finance/order/goods/{orderId}"})
-	public String finance_order_goods(@PathVariable("orderId") String orderId,Model model) {
-		System.out.println(orderId);
-		List<goods> goodslist=goodsservice.findbyorder(orderId);
-		String message="订单 "+orderId+"包含的货物";
-		model.addAttribute("message",message);
-		model.addAttribute("goodslist",goodslist);
-		return "finance_order_warehouse_goods";
-		
-	}
-	*/
 	@GetMapping(value= {"/iws/order/delete/{orderId}"})
 	@RequiresPermissions("deleteorder")
 	public String finance_deleteorder(@PathVariable("orderId") String orderId,Model model) {
@@ -370,21 +347,23 @@ public class orderController {
 	
 	@RequestMapping(value= {"/iws/order/intelligenceorderadd"})
 	@RequiresPermissions("addorder")
-	public String fintelligenceaddorder(String category,String nextWarehouseId,String type,Model model) {
-		int result=changeorderservice.intelligenceorderadd(category,nextWarehouseId,type);
+	public String fintelligenceaddorder(String category,String time,String type,Model model) {
+		int result=changeorderservice.intelligence_add_order(category,time,type);
 		String message="";
 		if(result==1) {
 			message="入库单自动生成 ";
 			
 		}
 		else if(result==-1) {
-			message="入库库位不足 ";
+			message="库位不足 ";
 		}
 		else if(result==2) {
 			message="出库单自动生成 ";
 		}
+		else if(result==0)
+			message="不存在符合条件的货物";
 		else
-			message="  ";
+			message="输入错误";
 		List<outOrder> outorderlist=outorderservice.alloutorder();
 		List<inOrder> inorderlist=inorderservice.allinorder();
 		List<changeOrder> changeorderlist=changeorderservice.allchangeorder();

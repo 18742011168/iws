@@ -111,18 +111,34 @@ public class goodsDao {
 		 
 	 }
     
-    public List<goods> findbycategory1(String category){
+    public List<goods> findbycategory1(String category,String time){
     	
     	String state="可移动";
-    	String sql="select * from goods where category='"+category+"' and warehouseId is NULL and state='"+state +"'";
+    	String sql="";
+    	if(time==null||time=="") {
+    		sql="select * from goods where category='"+category+"' and warehouseId is NULL and state='"+state +"'";
+    	}
+    	else
+    	{
+    		String inplacetime=time+" 23:59:59";
+    		sql="select * from goods where category='"+category+"' and warehouseId is NULL and state='"+state +"' and inPlaceTime<='"+inplacetime+"'";
+    		
+    	}
 		List<goods> goodslist=jdbcTemplate.query(sql,new BeanPropertyRowMapper<goods>(goods.class));
 		return goodslist;
     }
     
-    public List<goods> findbycategory2(String category){
-    	
+    public List<goods> findbycategory2(String category,String time){
+    	String sql="";
     	String state="可移动";
-    	String sql="select * from goods where category='"+category+"' and warehouseId IS NOT NULL and state='"+state +"'";
+    	if(time==null||time=="") {
+    		sql="select * from goods where category='"+category+"' and warehouseId IS NOT NULL and state='"+state +"'";
+    	}
+    	else {
+    		String inplacetime=time+" 23:59:59";
+    		sql="select * from goods where category='"+category+"' and warehouseId IS NOT NULL and state='"+state +"' and inPlaceTime<='"+inplacetime+"'";
+    	}
+    	 
 		List<goods> goodslist=jdbcTemplate.query(sql,new BeanPropertyRowMapper<goods>(goods.class));
 		return goodslist;
     }

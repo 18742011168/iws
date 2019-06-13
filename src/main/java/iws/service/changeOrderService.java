@@ -1,5 +1,6 @@
 package iws.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -253,13 +254,43 @@ public class changeOrderService {
 		return 0;
 		
 	 }
-	 
-	 public int intelligenceorderadd(String category,String nextWarehouseId,String type) {
+	 public int intelligence_add_order(String category,String time,String type) {
+		 if(category==""||category==null) {
+			 if(time==""||time==null)
+				 return -2;
+			 int first=this.add_order_by_category("铁板", time, type);
+			 int second=this.add_order_by_category("铜板", time, type);
+			 int third=this.add_order_by_category("钢板", time, type);
+			if(first==0&&second==0&&third==0) {
+				return 0;
+			}
+			if(type.equals("入库")) {
+				return 1;
+			}
+			if(type.equals("出库"))
+				return 2;
+			return -2; 
+		 }
+		 else {
+			 return this.add_order_by_category(category, time, type);
+		 }
+		 
+	 }
+
+	 public int add_order_by_category(String category,String time,String type) {
 		 if(type.equals("入库")) {
-			 List<goods> goodslist=goodsdao.findbycategory1(category);
+			 List<goods> goodslist=new ArrayList<goods>();
+			 
+				goodslist=goodsdao.findbycategory1(category,time);
+			
+			 
+			 if(goodslist.isEmpty()) {
+				 System.out.println("不存在符合条件的货物 ");
+				 return 0;
+			 }
 			// System.out.println(category);
 			 List<wareHouse> warehouselist=warehousedao.findbyKind1(category);
-			 
+			
 			 int goodsnumber=goodslist.size();
 			// System.out.println(goodsnumber);
 			// System.out.println(warehouselist.size());
@@ -291,19 +322,43 @@ public class changeOrderService {
 		 if(type.equals("出库")) {
 			 
 			 List<wareHouse> warehouselist=warehousedao.findbyKind2(category);
+			 List<goods> goodslist=goodsdao.findbycategory2(category,time);
+			 if(goodslist.isEmpty()) {
+				 System.out.println("不存在符合条件的货物 ");
+				 return 0;
+			 }
 			 for(int i=0;i<warehouselist.size();i++) {
 				 wareHouse warehouse=warehouselist.get(i);
-				 List<goods> warehousegoods=goodsdao.findbywarehouse(warehouselist.get(i).getWareHouseId());
+				 List<goods> warehousegoods=new ArrayList<goods>();
+				 
+				 warehousegoods=goodsdao.findbywarehouse(warehouselist.get(i).getWareHouseId());
+				 
 				 int warehousegoodsnumber=warehousegoods.size();
 				 if(warehousegoodsnumber>0) {
 					 for(int j=0;j<warehousegoodsnumber;j++) {
-						 outOrder outorder=new outOrder();
-						 outorder.setGoodId(warehousegoods.get(j).getGoodId());
-						 outorder.setOrderId("自动出库单"+warehouse.getWareHouseId());
-						 outorder.setState("未执行");
-						 outorder.setType("出库");
-						 outorder.setPreWarehouseId(warehouse.getWareHouseId());
-						 outorderservice.addoutorder(outorder);
+						 if(time!=null&&time!="") {
+							 String inplacetime=time+" 23:59:59";
+							 if(warehousegoods.get(j).getInPlaceTime().compareTo(inplacetime)<0) {
+								 outOrder outorder=new outOrder();
+								 outorder.setGoodId(warehousegoods.get(j).getGoodId());
+								 outorder.setOrderId("自动出库单"+warehouse.getWareHouseId());
+								 outorder.setState("未执行");
+								 outorder.setType("出库");
+								 outorder.setPreWarehouseId(warehouse.getWareHouseId());
+								 outorderservice.addoutorder(outorder);
+								 
+							 }
+						 }
+						 else {
+							 outOrder outorder=new outOrder();
+							 outorder.setGoodId(warehousegoods.get(j).getGoodId());
+							 outorder.setOrderId("自动出库单"+warehouse.getWareHouseId());
+							 outorder.setState("未执行");
+							 outorder.setType("出库");
+							 outorder.setPreWarehouseId(warehouse.getWareHouseId());
+							 outorderservice.addoutorder(outorder);
+						 }
+						 
 						 
 					 }
 				 }
