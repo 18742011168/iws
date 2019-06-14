@@ -61,14 +61,21 @@ public class inOrderService {
 		String goodId=inorder.getGoodId();
 		List<goods> goodslist=goodsdao.findgoods(goodId);
 		String category=goodslist.get(0).getCategory();
+		List<goods> similargoods=goodsdao.findsimilargoods3(category, "可移动");
+		int goodsnumber=similargoods.size()+1;
 		List<wareHouse> warehouselist=warehousedao.findbyKind1(category);
-		
 		for(int i=0;i<warehouselist.size();i++) {
 			wareHouse warehouse=warehouselist.get(i);
-			if(warehouse.getVolume()-warehouse.getInventory()>1){
+			if(warehouse.getVolume()-warehouse.getInventory()>=goodsnumber){
 				return warehouse.getWareHouseId();
 			}
 
+		}
+		for(int j=warehouselist.size()-1;j>0;j--) {
+			wareHouse warehouse=warehouselist.get(j);
+			if(warehouse.getVolume()-warehouse.getInventory()>goodsnumber){
+				return warehouse.getWareHouseId();
+			}
 		}
 		return "无仓库可推荐";
 	}
@@ -78,7 +85,10 @@ public class inOrderService {
 		 String goodId=inorder.getGoodId();
 		 String orderId=inorder.getOrderId();
 		 
-		 
+		 if(wareHouseId==null||wareHouseId=="") {
+			 System.out.println("库房号错误,请重新选择库房");
+			 return -5;
+		 }
 		 List<wareHouse> warehouselist=warehousedao.findbyId(wareHouseId);
 		 
 		 if(warehouselist.isEmpty()) {

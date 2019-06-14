@@ -292,10 +292,37 @@ public class changeOrderService {
 			 List<wareHouse> warehouselist=warehousedao.findbyKind1(category);
 			
 			 int goodsnumber=goodslist.size();
-			// System.out.println(goodsnumber);
-			// System.out.println(warehouselist.size());
-			 for(int i=0;i<warehouselist.size()&&goodsnumber>0;i++) {
-				 wareHouse warehouse=warehouselist.get(i);
+			 wareHouse warehouse=new wareHouse();
+			 for(int m=warehouselist.size()-1;m>0;m--) {
+				 if(warehouselist.get(m).getVolume()-warehouselist.get(m).getInventory()>=goodsnumber) {
+					 warehouse=warehouselist.get(m);
+					 break;
+				 }
+	
+			 }
+			 if(warehouse==null) {
+				 for(int i=0;i<warehouselist.size()&&goodsnumber>0;i++) {
+					 warehouse=warehouselist.get(i);
+					 int space=warehouse.getVolume()-warehouse.getInventory();
+					 for(int j=0;j<space&&goodsnumber>0;j++) {
+						 inOrder inorder=new inOrder();
+						 inorder.setGoodId(goodslist.get(goodsnumber-1).getGoodId());
+						 inorder.setOrderId("自动入库单"+warehouse.getWareHouseId());
+						 inorder.setNextWarehouseId(warehouse.getWareHouseId());
+						 inorder.setState("未执行");
+						 inorder.setType("入库");
+						 System.out.println(inorder.getGoodId());
+						 System.out.println(inorder.getOrderId());
+						 System.out.println(inorder.getNextWarehouseId());
+						 System.out.println(inorder.getType());
+						 inorderservice.addinorder(inorder);
+						 
+						 goodsnumber--;
+						 System.out.println(goodsnumber);
+					 }
+				 }
+			 }
+			 else {
 				 int space=warehouse.getVolume()-warehouse.getInventory();
 				 for(int j=0;j<space&&goodsnumber>0;j++) {
 					 inOrder inorder=new inOrder();
@@ -314,6 +341,10 @@ public class changeOrderService {
 					 System.out.println(goodsnumber);
 				 }
 			 }
+			 
+			// System.out.println(goodsnumber);
+			// System.out.println(warehouselist.size());
+			 
 			 if(goodsnumber>0)
 				 return -1;
 			 else

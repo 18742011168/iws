@@ -29,13 +29,13 @@ public class wareHouseDao {
 	}
 	
 	public List<wareHouse> findbyKind1(String kind){
-		String sql="select * from wareHouse where kind='"+kind+"'";
+		String sql="select * from wareHouse where kind='"+kind+"' order by inventory asc";
 		List<wareHouse> warehouselist=jdbcTemplate.query(sql, new BeanPropertyRowMapper<wareHouse>(wareHouse.class));
 		return warehouselist;
 	}
 	
 	public List<wareHouse> findbyKind2(String kind){
-		String sql="select * from wareHouse where kind='"+kind+"' and inventory>0";
+		String sql="select * from wareHouse where kind='"+kind+"' and inventory>0 order by inventory asc";
 		List<wareHouse> warehouselist=jdbcTemplate.query(sql, new BeanPropertyRowMapper<wareHouse>(wareHouse.class));
 		return warehouselist;
 	}

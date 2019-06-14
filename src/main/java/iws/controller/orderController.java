@@ -64,31 +64,7 @@ public class orderController {
 		return "order_goods";
 		
 	}
-	/*
-	@RequestMapping(value= {"/iws/godownner/order"})
-	public String godownner_allorder(Model model) {
-		List<outOrder> outorderlist=outorderservice.alloutorder();
-		List<inOrder> inorderlist=inorderservice.allinorder();
-		List<changeOrder> changeorderlist=changeorderservice.allchangeorder();
-		
-		model.addAttribute("outorders",outorderlist);
-		model.addAttribute("inorders",inorderlist);
-		model.addAttribute("changeorders",changeorderlist);
-		return "godownner_order";
-	}
 	
-	@GetMapping(value= {"/iws/godownner/order/goods/{orderId}"})
-	public String godownner_order_goods(@PathVariable("orderId") String orderId,Model model) {
-		System.out.println(orderId);
-		List<goods> goodslist=goodsservice.findbyorder(orderId);
-		String message="订单 "+orderId+"包含的货物";
-		model.addAttribute("message",message);
-		model.addAttribute("goodslist",goodslist);
-		model.addAttribute("orderId",orderId);
-		return "godownner_order_goods";
-		
-	}
-	*/
 	@GetMapping(value= {"/iws/order/begin/{orderId}"})
 	@RequiresPermissions("updateorderstate")
 	public String beginorder(@PathVariable("orderId") String orderId,Model model) {
